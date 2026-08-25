@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE7 ψの正体 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="波動関数ψとは何か。シュレディンガー本人は「電子が雲のように広がった実体」と考えて間違えた。ボルンの答えは「|ψ|²はその場所で電子が見つかる確率の濃さ」。規格化・確率密度・二重スリットの再解釈まで、量子力学でいちばん深い問いに向き合う。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage7.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE7 ψの正体 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="シュレディンガー本人も間違えた問い「ψとは何か」。ボルンの確率解釈を検証する。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage7.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .sq-svg .prob{fill:rgba(197,154,58,.18);stroke:var(--gold-dark);stroke-width:2}
+  .sq-svg .prob2{fill:rgba(47,111,166,.12);stroke:#2f6fa6;stroke-width:2}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .wall{stroke:var(--ink);stroke-width:3}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .lbR{fill:#b5504a;font-size:11px;font-weight:900}
+  .sq-svg .dotp{fill:var(--ink);opacity:.75}
+  .sq-svg .slit{fill:var(--line);stroke:var(--muted);stroke-width:1}
+  .sq-svg .screenline{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .node{stroke:#c8433f;stroke-width:1.5;stroke-dasharray:4 3}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 7 ― ψ の正体 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 7</span><span class="chapter-title">ψ の正体</span>
+        <div class="chapter-sub">ボルンの確率解釈</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">|ψ|² を「その場所で電子が見つかる確率の濃さ」として読めるようになろう。規格化の意味を説明でき、箱の中の電子の |ψ|² の形（見つかりやすい場所・絶対に見つからない場所）を読み取れれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">「ψ とは何か」。今日はこの旅でいちばん深い問いに向き合う。まず、<strong>シュレディンガー本人の答え</strong>から聞いてもらおうか。彼はこう考えた。「電子は本当に波なのだ。ψ は、<strong>電子の電気が雲のように空間に薄く塗り広げられた、その濃さ</strong>を表している」。つまり電子という粒はもう存在せず、実体としての波だけがある、と。……美しい絵だね。ところが、この絵は実験に殺される。理由を考えてごらん。もし電子が本当に雲のように広がった実体なら、蛍光スクリーンで観測したとき、何が見えるはずかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">広がった雲がそのまま当たるなら、スクリーンには<strong>ぼんやり広がった光のしみ</strong>が見えるはずです。半分だけ光る、ということもあっていい。……でも、二重スリットの実験で実際に見たのは違いました。<strong>電子は必ず「1個まるごと」が、1点にパチッと当たる</strong>。半分の電子とか、薄まった電子なんて、一度も観測されていません。広がって伝わるくせに、見つかるときは必ず点。ここが矛盾します。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。そこで1926年の夏、<strong>マックス・ボルン</strong>がまったく別の読み方を提案した。<strong>ψ は物質の濃さではない。「見つかりやすさ」の濃さだ</strong>。正確に言おう。場所 x での波の大きさの2乗 <strong>|ψ(x)|² は、そこで電子が「見つかる確率の濃さ（確率密度）」</strong>である――。「濃さ」という言い方に注意してね。1点ぴったりの確率ではなく、<strong>小さな区間 Δx の中で見つかる確率が |ψ(x)|²×Δx</strong>、という「幅あたり」の量だ。人口密度が「1km²あたりの人数」であるのと同じ文法だよ。面白いことに、ボルンは最初の論文の本文でうっかり「確率は |ψ| に比例」と書き、<strong>校正刷りの脚注で「2乗に比例」と訂正した</strong>。ノーベル賞（1954年）につながる大発見の核心が、脚注に書かれていたんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">なぜ2乗なんですか？ ψ そのものではなく。……いえ、待ってください、ψ のままでは<strong>そもそも確率になれない</strong>んでした。ψ は複素数――回る矢印です。確率は「0以上の普通の数」でないと意味をなさない。矢印から作れる0以上の実数といえば、<strong>矢印の長さ |ψ|</strong>。そして波の世界では、明るさや音の強さは<strong>振幅の2乗</strong>に比例するのが定番でしたよね。だから |ψ|²。ステージ2の伏線「観測にかかるのは |ψ|（の2乗）」も、これで回収ですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">見事な回収だ。すると、ひとつ<strong>会計上の義務</strong>が生まれる。電子は必ず<strong>どこかに1個</strong>いる。だから「見つかる確率」を全空間ぶん合計したら、ちょうど<strong>1（100%）</strong>にならないといけない。合計のやり方はこうだ。空間を細かい区間に切って、各区間の確率 |ψ|²Δx を全部足す――この「細かく切って足す」操作を<strong>積分</strong>と呼び、∫（インテグラル）と書く。グラフで言えば <strong>|ψ|² の曲線の下の面積</strong>だ。義務は式で ∫|ψ|²dx＝1 と書けて、これを満たすように振幅 A を調整することを<strong>規格化</strong>と呼ぶ。箱の中の電子でやってみよう。|A sin(nπx/L)|² の面積は、sin² が 0 と 1 を対称に行き来する（平均すると常にちょうど ½ になる）ことから A²×L/2。これが 1 だから <strong>A＝√(2/L)</strong>。波の高さまで、確率の会計から決まってしまうんだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 240" width="100%" role="img" aria-label="箱の中の電子の確率分布。n=1では中央が最も見つかりやすい山。n=2では中央がちょうどゼロの節になり、そこでは電子が絶対に見つからない">
+          <text class="strong" x="14" y="16">|ψ|² を読む：見つかりやすい場所、見つからない場所</text>
+          <line class="wall" x1="40" y1="28" x2="40" y2="120"></line>
+          <line class="wall" x1="300" y1="28" x2="300" y2="120"></line>
+          <line class="axis" x1="40" y1="112" x2="300" y2="112"></line>
+          <path class="prob" d="M40 112 C 105 112 105 44 170 44 C 235 44 235 112 300 112 Z"></path>
+          <text class="lbA" x="170" y="36" text-anchor="middle">n＝1：まん中がいちばん見つかりやすい</text>
+          <line class="wall" x1="40" y1="140" x2="40" y2="232"></line>
+          <line class="wall" x1="300" y1="140" x2="300" y2="232"></line>
+          <line class="axis" x1="40" y1="224" x2="300" y2="224"></line>
+          <path class="prob2" d="M40 224 C 83 224 83 162 105 162 C 127 162 127 224 170 224 C 213 224 213 162 235 162 C 257 162 257 224 300 224 Z"></path>
+          <line class="node" x1="170" y1="150" x2="170" y2="232"></line>
+          <text class="lbB" x="105" y="154" text-anchor="middle">n＝2：山が2つ</text>
+          <text class="lbR" x="176" y="160">節：ここでは絶対に見つからない</text>
+        </svg>
+        <div class="diagram-caption">箱の中の電子の確率密度 |φₙ|²。<strong>n＝1</strong> では中央がいちばん見つかりやすい。<strong>n＝2</strong> では中央がちょうどゼロ（<strong>節</strong>）で、<strong>箱の中にいるのに、中央では決して見つからない</strong>。粒のイメージでは説明しようのないこの分布は、実験で実際に確認されている</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">n＝2 の図、あらためて見ると異様ですね。電子は箱の左半分にも右半分にもいるのに、<strong>真ん中を通れない</strong>……いえ、この言い方がもう粒の発想なんだ。ψ は「どこを通るか」の物語ではなくて、<strong>「観測したらどこで見つかるか」の台帳</strong>なんですね。……そうすると、二重スリットの縞模様も、この台帳で読み直せる気がします。やってみていいですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ぜひ聞かせてもらおう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">波 ψ は<strong>両方のスリットを通って</strong>広がり、スクリーンの手前で重なり合う。山と山が重なる場所は |ψ|² が大きく、山と谷が打ち消し合う場所は |ψ|²＝0。つまりスクリーン上に<strong>「見つかりやすさの縞模様」の台帳</strong>ができる。電子1個を飛ばすと、台帳の確率にしたがって<strong>どこか1点</strong>がランダムに選ばれ、そこにパチッと当たる。1個だけでは縞は見えない。でも何千個も飛ばせば、当たった点の集まりが台帳の濃淡を浮かび上がらせて――<strong>縞模様になる</strong>。「広がって伝わるのは確率の波、見つかるのは1個の粒」。矛盾していたように見えた2つの顔が、1つの台帳で両立します。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="slit-svg" viewBox="0 0 340 230" width="100%" role="img" aria-label="二重スリットの再解釈。左からψの波が2つのスリットを通って広がり、スクリーン上に確率の縞模様の台帳を作る。電子は1個ずつランダムな1点に当たり、たくさん集まると縞模様が浮かび上がる">
+          <text class="strong" x="14" y="16">二重スリット：確率の台帳 |ψ|² と、1個ずつの着弾</text>
+          <rect class="slit" x="80" y="28" width="8" height="56"></rect>
+          <rect class="slit" x="80" y="104" width="8" height="30"></rect>
+          <rect class="slit" x="80" y="154" width="8" height="56"></rect>
+          <text class="label" x="84" y="224" text-anchor="middle">スリット2本</text>
+          <text class="label" x="30" y="120">電子 →</text>
+          <line class="screenline" x1="250" y1="28" x2="250" y2="210"></line>
+          <text class="label" x="250" y="224" text-anchor="middle">スクリーン</text>
+          <path class="prob" id="sl-prob"></path>
+          <text class="lbA" x="330" y="40" text-anchor="end">|ψ|²（台帳）</text>
+          <g id="sl-dots"></g>
+        </svg>
+        <div class="diagram-caption">ψ は両方のスリットを通って重なり合い、スクリーン上に<strong>確率の縞模様の台帳 |ψ|²</strong>を作る（金の曲線）。電子は1個ずつ、台帳の確率にしたがってランダムな1点に当たる（黒い点）。点が積もるほど、台帳の濃淡＝縞模様が浮かび上がる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【ボルンの確率解釈】　区間 Δx で電子が見つかる確率 ＝ |ψ(x)|² Δx</span>
+        <span class="step">【規格化】　全空間の合計 ∫|ψ|²dx ＝ 1（電子は必ずどこかに1個）→ 箱の中では A＝√(2/L)</span>
+        <span class="step multi"><span class="item">ψ：複素数の波（回る矢印の台帳）</span>　<span class="item">|ψ|²：観測で見つかる確率の濃さ</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ひとつ、誤解されやすい点を釘刺ししておこうね。「量子力学＝何でも確率まかせのデタラメ」ではないんだ。シュレディンガー方程式そのものは、<strong>完全に決定論的</strong>だ。いまの ψ が分かれば、未来の ψ は方程式が1通りに決めてくれる。F＝ma と同じくらい厳密にね。<strong>サイコロが振られるのは、観測の瞬間だけ</strong>。台帳（ψ）の進化は厳密で、台帳から1点を選ぶところだけが確率的。……この「観測の瞬間に何が起きているのか」は、実は今日でも完全には決着していない大問題で、アインシュタインは「神はサイコロを振らない」と生涯抵抗した。シュレディンガー自身も、この解釈への抗議として、有名な「箱の中の猫」の思考実験を書いたんだよ。方程式の作者が、方程式の意味に抗議し続けた――科学史でも稀有な光景だね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">道具（方程式）は完璧に働くのに、意味の解釈では作者本人が反対派……。物理学って人間くさいですね。……残る宿題は<strong>時間</strong>です。ステージ6で「エネルギーが決まった状態では、すべての針がそろって回る」と教わりました。針が回っているのに、|ψ|² の形は動かない気がします。原子が安定でいられることと、関係がありそうな予感がするんですが。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最終ステージの主題を、また先読みされてしまったね。そのとおり、針は回るのに<strong>確率の景色は静止する</strong>。それが「定常状態」――原子が潰れない理由の核心だ。最後の旅で、時間の全貌を見届けよう。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. ボルンの解釈で、|ψ(x)|² Δx が表すものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子の電気が区間 Δx に塗り広げられている量</button>
+          <button class="choice-btn">観測したとき、区間 Δx の中で電子が見つかる確率</button>
+          <button class="choice-btn">電子が区間 Δx を通過するのにかかる時間</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ |ψ|² は「見つかりやすさの濃さ（確率密度）」で、幅 Δx を掛けて初めて確率になる。選択肢1はシュレディンガー本人の解釈だが、「電子は必ず1個まるごと1点で見つかる」という実験事実と矛盾して敗れた。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 箱の中の電子が n＝2 の状態にあるとき、箱のちょうど中央で電子が見つかる確率は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">どこよりも高い</button>
+          <button class="choice-btn">他の場所と同じ</button>
+          <button class="choice-btn">ゼロ（中央は |ψ|²＝0 の節だから）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ φ₂＝A sin(2πx/L) は中央 x＝L/2 で sin(π)＝0。確率密度もゼロで、箱の中にいるのに中央では決して見つからない。「どこを通るか」ではなく「どこで見つかるか」の台帳だからこそ許される、波ならではの分布だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 規格化 ∫|ψ|²dx＝1 が要求される物理的な理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子は必ずどこかに1個いるので、全空間での発見確率の合計が100%でなければならないから</button>
+          <button class="choice-btn">波の速さを一定にするため</button>
+          <button class="choice-btn">エネルギーを最小にするため</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 確率の合計は必ず1。この会計ルールから、波の振幅まで決まってしまう（箱の中なら A＝√(2/L)）。∫ は「細かく切って足す」＝曲線の下の面積を測る記号だ。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage6.html">← STAGE6へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(7);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('slit-svg');
+  if (!svg) return;
+  var prob = document.getElementById('sl-prob'), dotsG = document.getElementById('sl-dots');
+  var NS = 'http://www.w3.org/2000/svg';
+  var SX = 250, Y0 = 30, Y1 = 208, CY = 119;
+
+  // スクリーン上の確率分布（干渉縞 × 包絡線）。横方向に山を描く
+  function density(y) {
+    var u = (y - CY) / 24;
+    var env = Math.exp(-u * u / 14);
+    var fringe = Math.cos(u * 2.0);
+    return env * fringe * fringe;
+  }
+  var d = '', first = true;
+  for (var y = Y0; y <= Y1; y += 1.5) {
+    var x = SX + 6 + 68 * density(y);
+    d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+    first = false;
+  }
+  prob.setAttribute('d', 'M' + (SX + 6) + ' ' + Y0 + ' ' + d + ' L' + (SX + 6) + ' ' + Y1 + ' Z');
+
+  // 棄却法で、分布にしたがう着弾点を生成
+  var pts = [];
+  var seed = 12345;
+  function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+  while (pts.length < 130) {
+    var y = Y0 + (Y1 - Y0) * rnd();
+    if (rnd() < density(y)) pts.push([SX - 4 - 14 * rnd(), y]);
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var shown = 0;
+  function addDot() {
+    var p = pts[shown];
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('class', 'dotp');
+    c.setAttribute('cx', p[0].toFixed(1)); c.setAttribute('cy', p[1].toFixed(1)); c.setAttribute('r', '1.7');
+    dotsG.appendChild(c);
+    shown++;
+  }
+  if (reduce) { while (shown < pts.length) addDot(); return; }
+
+  var running = false, timer = null;
+  function tick() {
+    if (!running) return;
+    if (shown < pts.length) { addDot(); timer = setTimeout(tick, 90); }
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; tick(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (timer) clearTimeout(timer); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; tick(); }
+})();
+</script>
+</body>
+</html>

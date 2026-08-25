@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ruglerugle.github.io/schrodinger-equation/sitemap.xml

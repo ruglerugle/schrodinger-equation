@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>シュレディンガー方程式を導く ― 全8ステージの無料学習ゲーム</title>
+<meta name="description" content="量子力学の心臓、シュレディンガー方程式（シュレーディンガー方程式）はどこから来たのか。波の式・複素数・E=hν・p=h/λ・微分――道具を一つずつそろえて、1926年の方程式を自分の手で組み立てる全8ステージの無料学習サイト。ねこ博士とうさ美が案内します。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="シュレディンガー方程式を導く ― 全8ステージの無料学習ゲーム">
+<meta property="og:description" content="量子力学の心臓 iℏ∂ψ/∂t＝Ĥψ は、暗記するものではない。波の式と微分だけで、1926年の方程式を自分の手で組み立てる。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "シュレディンガー方程式を導く",
+  "alternateName": "SCHRÖDINGER QUEST",
+  "description": "量子力学の基礎方程式であるシュレディンガー方程式を、波の数式化・複素数の波・光量子仮説と物質波・微分演算子・エネルギー保存則から自分の手で組み立て、井戸型ポテンシャルを解いて確率解釈と時間発展まで学ぶ全8ステージの無料学習サイト。",
+  "url": "https://ruglerugle.github.io/schrodinger-equation/",
+  "inLanguage": "ja",
+  "learningResourceType": "learning activity",
+  "educationalLevel": "中学生以上",
+  "teaches": "シュレディンガー方程式の導出（波の式・オイラーの公式・E=hν・p=h/λ・微分演算子・エネルギー保存則・井戸型ポテンシャル・ボルンの確率解釈・定常状態と時間発展）",
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "ruglerugle" }
+}
+</script>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🌊</span>
+    <span class="brand-copy">
+      <strong>シュレディンガー方程式を導く</strong>
+      <small>SCHRÖDINGER QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">シュレディンガー方程式は、暗記するものではない。</span><span class="line accent">1926年の発見を、自分の手でやり直そう。</span></h1>
+      <p>量子力学の心臓 <span class="nowrap">iℏ∂ψ/∂t＝Ĥψ</span>。教科書では天から降ってくるこの式は、実は「波を数式で書く」「波から運動量とエネルギーを取り出す」「エネルギー保存則に代入する」という、たった3手で組み上がる。このクエストでは、波の式・複素数・<span class="nowrap">E=hν</span>・<span class="nowrap">p=h/λ</span>・微分と、必要な道具を一つずつそろえて、シュレディンガーが1926年にやったことを自分の手で再現する。そして組み上げた方程式を実際に解いて、エネルギーが「飛び飛び」になる瞬間まで見届ける。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="quest-heading">
+      <div class="board-head">
+        <div><h2 id="quest-heading">クエストを選ぼう！</h2></div>
+        <p>ステージ1から順番にクリアしよう（前のステージをクリアすると次が解放されます）</p>
+      </div>
+
+      <div class="quest-grid">
+        <a class="quest-card" href="stage1.html" data-stage="1" style="--accent:#a6742a;--accent-bg:#fdf3e0">
+          <div class="q-top"><span class="q-num">1</span><span class="q-suit" aria-hidden="true">🌊</span></div>
+          <div class="q-meta"><span class="q-tag">sin と波</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">波を数式で書く</div>
+          <p class="q-desc">方程式の主役は波。ならばまず、波そのものを数式にできなければ始まらない。sin の定義から、動く波の式まで一気に組み立てる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage2.html" data-stage="2" style="--accent:#5b3fa6;--accent-bg:#efe9f9">
+          <div class="q-top"><span class="q-num">2</span><span class="q-suit" aria-hidden="true">🌀</span></div>
+          <div class="q-meta"><span class="q-tag">e^iθ</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">回る矢印 e<sup>iθ</sup></div>
+          <p class="q-desc">なぜ量子力学は複素数を使うのか。オイラーの公式で「波＝回る矢印」と見抜くと、微分が驚くほど簡単になる。その仕掛けを先に手に入れる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage3.html" data-stage="3" style="--accent:#2f6fa6;--accent-bg:#e8f1fa">
+          <div class="q-top"><span class="q-num">3</span><span class="q-suit" aria-hidden="true">💡</span></div>
+          <div class="q-meta"><span class="q-tag">E=hν・p=h/λ</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">光の粒と物質の波</div>
+          <p class="q-desc">プランクとアインシュタインが光に見つけ、ド・ブロイが電子に裏返した2本の翻訳ルール。粒の言葉と波の言葉をつなぐ辞書を用意する。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage4.html" data-stage="4" style="--accent:#2f8f65;--accent-bg:#eaf7ef">
+          <div class="q-top"><span class="q-num">4</span><span class="q-suit" aria-hidden="true">🔍</span></div>
+          <div class="q-meta"><span class="q-tag">∂/∂x・∂/∂t</span><span class="q-time">⏱ 約11分</span></div>
+          <div class="q-title">微分という検出器</div>
+          <p class="q-desc">波を x で微分すると運動量が、t で微分するとエネルギーが飛び出してくる。導出の最大の山場、「演算子」の発見。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage5.html" data-stage="5" style="--accent:#a63f6f;--accent-bg:#fbe9f1">
+          <div class="q-top"><span class="q-num">5</span><span class="q-suit" aria-hidden="true">⚡</span></div>
+          <div class="q-meta"><span class="q-tag">E=p²/2m+V</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">方程式が生まれる瞬間</div>
+          <p class="q-desc">エネルギー保存則に、手に入れた検出器を代入する。3つの道具がカチリと噛み合い、シュレディンガー方程式が目の前で組み上がる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage6.html" data-stage="6" style="--accent:#2f8a8f;--accent-bg:#e6f5f5">
+          <div class="q-top"><span class="q-num">6</span><span class="q-suit" aria-hidden="true">📦</span></div>
+          <div class="q-meta"><span class="q-tag">井戸型ポテンシャル</span><span class="q-time">⏱ 約11分</span></div>
+          <div class="q-title">箱の中の電子</div>
+          <p class="q-desc">組み上げた方程式を、いちばん簡単な問題で実際に解く。ギターの弦と同じ理屈から、エネルギーの「飛び飛び」が自動的に出てくる。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage7.html" data-stage="7" style="--accent:#b5504a;--accent-bg:#fdefed">
+          <div class="q-top"><span class="q-num">7</span><span class="q-suit" aria-hidden="true">🎲</span></div>
+          <div class="q-meta"><span class="q-tag">|ψ|²</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">ψ の正体</div>
+          <p class="q-desc">計算はできた。でも ψ とは何なのか。シュレディンガー本人も間違えたこの問いに、ボルンが出した答え――「確率の波」を検証する。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+        <a class="quest-card" href="stage8.html" data-stage="8" style="--accent:#7a6a2f;--accent-bg:#f7f3e2">
+          <div class="q-top"><span class="q-num">8</span><span class="q-suit" aria-hidden="true">⏳</span></div>
+          <div class="q-meta"><span class="q-tag">定常状態</span><span class="q-time">⏱ 約10分</span></div>
+          <div class="q-title">定常状態と時間発展</div>
+          <p class="q-desc">「時間に依存しない方程式」との関係を整理し、原子が安定な理由と、方程式が水素原子で成し遂げたことまで。旅の総まとめ。</p>
+          <span class="q-cta">はじめる →</span>
+        </a>
+
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🌊</span><span>Ψ</span><span>ℏ</span><span>∂</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script src="js/progress.js"></script>
+<script>SQ.initCoverPage();</script>
+</body>
+</html>

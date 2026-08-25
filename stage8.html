@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE8 定常状態と時間発展 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="エネルギーが決まった状態では、針は回るのに確率の景色は静止する――定常状態。原子が潰れない理由、時間に依存しない方程式 Ĥφ=Eφ との関係、重ね合わせが生む「うなり」と光の放出 hν=E₂−E₁、そして水素原子の完全解決まで。旅の総まとめ。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage8.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE8 定常状態と時間発展 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="針は回るのに、確率の景色は静止する。原子が安定な理由と、方程式が水素原子で成し遂げたこと。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage8.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .sq-svg .prob{fill:rgba(197,154,58,.18);stroke:var(--gold-dark);stroke-width:2}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .wall{stroke:var(--ink);stroke-width:3}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .lbR{fill:#b5504a;font-size:11px;font-weight:900}
+  .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
+  .sq-svg .handdot{fill:var(--gold-dark)}
+  .sq-svg .lvl{stroke:var(--gold-dark);stroke-width:2.5}
+  .sq-svg .photon{stroke:#b5504a;stroke-width:2;fill:none}
+  .sq-svg .arrowR{stroke:#b5504a;stroke-width:2}
+  .sq-svg .arrowRh{fill:#b5504a}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 8 ― 定常状態と時間発展 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 8</span><span class="chapter-title">定常状態と時間発展</span>
+        <div class="chapter-sub">方程式が世界を動かす</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">定常状態では |ψ|² が時間変化しないことを自分で確かめ、原子が潰れない理由と、光の色が hν＝E₂−E₁ で決まる仕組みを説明できるようになろう。これが最終ステージ。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最終ステージだ。前回きみが立てた予想――「針は回るのに、確率の景色は動かないのでは」を、まず計算で確かめてもらおう。エネルギー E が決まった状態は ψ(x,t)＝φ(x) e<sup>−iEt/ℏ</sup> だったね。この状態の確率密度 |ψ|² を計算してごらん。複素数の大きさには、便利な性質がある。<strong>積の大きさは、大きさの積</strong>――|ab|＝|a||b| だ（矢印の掛け算は「長さを掛けて、角度を足す」操作だから、長さだけ見ればこうなる）。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">|ψ|² ＝ |φ(x)|² × |e<sup>−iEt/ℏ</sup>|²。そして e の肩に i×実数が乗った形は「回る矢印」で、<strong>長さは常に1</strong>でした（ステージ2の強みその1）。だから |e<sup>−iEt/ℏ</sup>|²＝1 で――<br><strong>|ψ|² ＝ |φ(x)|²</strong><br><strong>t が消えました</strong>。針は角度をぐるぐる変えているのに、長さの景色はまったく動かない。確率の台帳が、時間について完全に凍結しています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">これが<strong>定常状態</strong>――「定まって常なる状態」だ。そしてこれこそ、<strong>原子が潰れない理由</strong>の核心なんだよ。歴史を少しだけ。20世紀初頭、原子は「太陽系ミニチュア」――電子が原子核の周りを回る絵で描かれていた。ところがこの絵には致命傷があった。電磁気学によれば、<strong>ぐるぐる回る（＝加速し続ける）電荷は電波を出してエネルギーを失う</strong>。計算すると、電子は1億分の1秒ほどで原子核に墜落する。この宇宙に安定な原子は存在できないはずだった。……ところが量子力学の答えはこうだ。原子の中の電子は「回って」などいない。<strong>定常状態という、観測できる景色が一切動かない波</strong>として存在している。動く電荷がなければ電波も出ない。しかも、エネルギーの段は飛び飛びで<strong>最下段 E₁ がある</strong>。そこより下に落ちる段が存在しないから、墜落のしようがない。きみの部屋の机も、体の原子も、この仕組みで100億年でも安定でいられる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="stat-svg" viewBox="0 0 340 220" width="100%" role="img" aria-label="定常状態の図。上段：箱の中のn=2の波の各地点に立つ針が、同じペースでいっせいに回り続ける。下段：確率密度|ψ|²の形は時間がたってもまったく動かない">
+          <text class="strong" x="14" y="16">定常状態：針は回る、けれど景色は凍っている</text>
+          <line class="wall" x1="40" y1="28" x2="40" y2="110"></line>
+          <line class="wall" x1="300" y1="28" x2="300" y2="110"></line>
+          <line class="axis" x1="40" y1="70" x2="300" y2="70"></line>
+          <g id="st-hands"></g>
+          <text class="label" x="14" y="126">↑ 各地点の針（長さ＝|φ|、そろって回転中）</text>
+          <line class="wall" x1="40" y1="140" x2="40" y2="208"></line>
+          <line class="wall" x1="300" y1="140" x2="300" y2="208"></line>
+          <line class="axis" x1="40" y1="200" x2="300" y2="200"></line>
+          <path class="prob" d="M40 200 C 83 200 83 150 105 150 C 127 150 127 200 170 200 C 213 200 213 150 235 150 C 257 150 257 200 300 200 Z"></path>
+          <text class="lbA" x="170" y="136" text-anchor="middle">|ψ|²＝|φ|²：時間がたっても微動だにしない</text>
+        </svg>
+        <div class="diagram-caption">定常状態（図は箱の n＝2）。各地点の針は E/ℏ のペースでそろって回り続けるが、<strong>針の長さの分布 |ψ|² は完全に静止</strong>している。観測にかかる景色に動きがない＝電波も出さない＝安定。原子が潰れない理由がこれだ</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">ここで、教科書との橋を架けておこう。ステージ6で私たちは、ψ＝φe<sup>−iEt/ℏ</sup> を方程式に入れて時間を割り落とし、「形 φ だけの方程式」を作ったね。V(x) を残して一般に書くと<br><strong>−(ℏ²/2m) φ″ ＋ V(x)φ ＝ Eφ</strong>　つまり　<strong>Ĥφ ＝ Eφ</strong><br>これを<strong>時間に依存しないシュレディンガー方程式</strong>と呼ぶ。役割分担はこうだ。本家 iℏ∂ψ/∂t＝Ĥψ は<strong>どんな波でも動かせる進行係</strong>。時間に依存しない方は、<strong>「許される形 φ と、はしごの段 E」を探し出す段さがし係</strong>。教科書で延々と解かされるのはもっぱら後者だけれど、それは後者が前者の部品――定常状態のカタログ作り――だからなんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">整理できました。……でも、そうすると逆に不思議です。定常状態が「一切動かない」なら、<strong>世界はなぜ動くんですか？</strong> 原子は光を出すし、化学反応も起きます。全部が凍っているわけではないですよね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">最後にして最高の問いだね。答えは<strong>重ね合わせ</strong>にある。シュレディンガー方程式は都合のいい性質を持っていてね。ψ₁ と ψ₂ がどちらも解なら、<strong>足し合わせた ψ₁＋ψ₂ も解</strong>になる（方程式に入っている操作――微分も V を掛けるのも――が「和を保つ」からだ）。そこで、段 E₁ の状態と段 E₂ の状態を<strong>混ぜた</strong>状態を考えてごらん。E₁ の針は E₁/ℏ のペースで、E₂ の針は E₂/ℏ のペースで回る。<strong>回るペースが違う</strong>。すると2つの波は、合わさったり打ち消し合ったりを繰り返して、|ψ|² が<strong>ゆさゆさと揺れ始める</strong>んだ。ギターの弦を2本、わずかに違う音程で鳴らすと「わんわん」と<strong>うなり</strong>が聞こえる、あれと同じ理屈だよ。揺れの振動数を計算すると、位相差が (E₂−E₁)t/ℏ で進むから、ν＝(E₂−E₁)/h。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ν＝(E₂−E₁)/h……これ、見覚えがあります。両辺に h を掛けると <strong>hν＝E₂−E₁</strong>。量子力学の教室で天下りに教わった「電子が段を飛び移るとき、エネルギー差ぶんの光を出す」というボーアの規則そのものじゃないですか。<strong>電荷の分布が振動数 ν で揺れるから、振動数 ν の光（電磁波）が出る</strong>――アンテナと同じだ。天下りだった規則が、方程式から導かれてしまった。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、これが方程式の底力だ。世界の動きの正体は、<strong>エネルギーの違う定常状態どうしの、回転ペースのずれ</strong>なんだよ。そして1926年、シュレディンガーは本丸に攻め込んだ。<strong>水素原子</strong>――V(x) を原子核の電気的な引力にして方程式を解くと、はしごの段が E<sub>n</sub>＝−13.6 eV／n² と出てくる。段差から hν で計算した光の色は、分光器で測られていた水素のスペクトル線と<strong>小数点以下まで一致</strong>した。さらに、解の形 φ（軌道、オービタルと呼ばれる）は原子の中の電子の「雲の形」を与えて、<strong>元素の周期表がなぜあの並びなのか、化学結合がなぜできるのか</strong>まで、この方程式から説明されていく。化学という学問まるごとが、実はこの式の応用問題だったわけだ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="エネルギーのはしごの2つの段の間を電子が移るとき、差額のエネルギーが振動数ν=(E₂−E₁)/hの光として放出される図">
+          <text class="strong" x="14" y="16">光の色は、はしごの「段差」で決まる</text>
+          <line class="axis" x1="50" y1="180" x2="50" y2="30"></line>
+          <polygon class="arrowhead" points="50,24 46,33 54,33"></polygon>
+          <text class="label" x="14" y="30">エネルギー</text>
+          <line class="lvl" x1="70" y1="60" x2="170" y2="60"></line>
+          <text class="lbA" x="176" y="64">E₂</text>
+          <line class="lvl" x1="70" y1="150" x2="170" y2="150"></line>
+          <text class="lbA" x="176" y="154">E₁</text>
+          <line class="arrowR" x1="120" y1="64" x2="120" y2="142"></line>
+          <polygon class="arrowRh" points="120,148 115,138 125,138"></polygon>
+          <path class="photon" d="M140 100 q8 -8 16 0 q8 8 16 0 q8 -8 16 0 q8 8 16 0 q8 -8 16 0"></path>
+          <polygon class="arrowRh" points="228,100 219,95 219,105"></polygon>
+          <text class="lbR" x="240" y="104">光：hν ＝ E₂−E₁</text>
+          <text class="label" x="14" y="196">段差が大きいほど ν が大きい（青い光）。水素の実測スペクトルと小数点以下まで一致した</text>
+        </svg>
+        <div class="diagram-caption">2つの定常状態を混ぜると、回転ペースの差から |ψ|² が振動数 ν＝(E₂−E₁)/h で揺れ、その振動数の光が放出される。ボーアが天下りに仮定した hν＝E₂−E₁ が、方程式から導かれる――水素のスペクトルの完全な説明</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【旅の全体図】</span>
+        <span class="step">波の式 ψ＝Ae<sup>i(kx−ωt)</sup>（S1–S2）＋ 辞書 E＝ℏω・p＝ℏk（S3）＋ 検出器 −iℏ∂/∂x・iℏ∂/∂t（S4）</span>
+        <span class="step">→ エネルギー保存則に代入：　iℏ∂ψ/∂t ＝ −(ℏ²/2m)∂²ψ/∂x² ＋ V(x)ψ　（S5）</span>
+        <span class="step multi"><span class="item">解くと量子化 En∝n²（S6）</span>　<span class="item">|ψ|²＝確率の台帳（S7）</span>　<span class="item">定常状態と hν＝E₂−E₁（S8）</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">出発点は「波を数式で書けますか？」でした。そこから sin、回る矢印、2本の辞書、微分の検出器……一つずつ積んだ道具が、最後はエネルギー保存則の上でカチリと噛み合って、原子の安定も、光の色も、化学まで説明する方程式になった。……教科書の1ページ目で天から降ってきたあの式が、いまは<strong>自分の手で組んだ機械</strong>に見えます。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが今回の旅で、いちばん持ち帰ってほしかったものだよ。もちろん、この方程式にも守備範囲はある。電子が光速に近い速さで動くときは、相対性理論と合体させた方程式（ディラックが1928年に作った）が要る。それでも、身の回りの物質世界――原子、分子、光、半導体――のほとんどは、きみが今日組み上げた1行の上に建っている。最後のクイズに答えたら、クリア画面で旅を振り返ろう。よくここまで登り切ったね。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 定常状態 ψ＝φ(x)e<sup>−iEt/ℏ</sup> で、時間がたっても変わらないものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">各地点の針（ψ の複素数の値）そのもの</button>
+          <button class="choice-btn">針の回る速さがだんだん遅くなる</button>
+          <button class="choice-btn">確率の景色 |ψ|²（＝|φ|²。回転部分の大きさが常に1だから）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 針そのもの（ψ の値）は E/ℏ のペースで回り続けるが、|e^(−iEt/ℏ)|＝1 なので |ψ|²＝|φ|² から時間が消える。観測にかかる景色が凍っている――これが「定常」の意味だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. 量子力学で原子が潰れない理由の組み合わせとして正しいのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">定常状態では観測できる景色が動かず電波を出さない＋エネルギーに最下段 E₁ があり、それより下に落ちる段がない</button>
+          <button class="choice-btn">電子が非常に速く回っているので落ちる暇がない</button>
+          <button class="choice-btn">原子核が電子を跳ね返しているから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 「回る電荷は電波を出して墜落する」という古典物理の死刑判決は、電子が回っていない（定常状態＝景色が静止）ことで回避され、さらに飛び飛びのはしごに最下段があることで「落ちる先」自体が存在しない。二段構えの安定だ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 電子が段 E₂ から段 E₁ に移るとき出る光の振動数 ν は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">ν ＝ E₂ × E₁ / h</button>
+          <button class="choice-btn">ν ＝ (E₂ − E₁) / h　（2つの状態の回転ペースの差が、|ψ|² の揺れの振動数になる）</button>
+          <button class="choice-btn">ν は段によらず一定</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2つの定常状態を混ぜると、針の回転ペースの差 (E₂−E₁)/ℏ で |ψ|² が揺れ、その振動数の光が出る。hν＝E₂−E₁――ボーアが仮定した規則が方程式から導かれ、水素のスペクトルが完全に説明された。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage7.html">← STAGE7へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>クリア画面へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(8);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('stat-svg');
+  if (!svg) return;
+  var g = document.getElementById('st-hands');
+  var NS = 'http://www.w3.org/2000/svg';
+  var X0 = 55, X1 = 285, N = 11, AXIS = 70, HRMAX = 30;
+  var hands = [], dots = [], amps = [], i;
+  for (i = 0; i < N; i++) {
+    var x = X0 + (X1 - X0) * i / (N - 1);
+    var amp = Math.sin(2 * Math.PI * (x - 40) / 260); // n=2 の形（箱40〜300）
+    var ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('class', 'hand');
+    ln.setAttribute('x1', x); ln.setAttribute('y1', AXIS);
+    g.appendChild(ln);
+    var dt = document.createElementNS(NS, 'circle');
+    dt.setAttribute('class', 'handdot'); dt.setAttribute('r', '2.4');
+    g.appendChild(dt);
+    hands.push(ln); dots.push(dt); amps.push(amp);
+  }
+
+  function draw(t) {
+    for (var i = 0; i < N; i++) {
+      var x = X0 + (X1 - X0) * i / (N - 1);
+      var r = HRMAX * amps[i]; // 符号込み：位相が180°反転する側は逆向き
+      var px = x + r * Math.cos(t), py = AXIS - r * Math.sin(t);
+      hands[i].setAttribute('x2', px.toFixed(1)); hands[i].setAttribute('y2', py.toFixed(1));
+      dots[i].setAttribute('cx', px.toFixed(1)); dots[i].setAttribute('cy', py.toFixed(1));
+    }
+  }
+  draw(Math.PI / 3);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.03;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

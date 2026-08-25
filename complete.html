@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>全ステージクリア ― シュレディンガー方程式を導く</title>
+<meta name="description" content="シュレディンガー方程式を導く、全8ステージクリアおめでとう。ここまでの導出の旅を振り返ろう。">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/complete.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="全ステージクリア ― シュレディンガー方程式を導く">
+<meta property="og:description" content="全8ステージクリアおめでとう。導出の旅を振り返ろう。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/complete.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar" aria-label="サイト情報">
+    <span class="brand-badge" aria-hidden="true">🌊</span>
+    <span class="brand-copy">
+      <strong>シュレディンガー方程式を導く</strong>
+      <small>SCHRÖDINGER QUEST</small>
+    </span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy">
+      <h1><span class="line">導出完了。iℏ∂ψ/∂t ＝ Ĥψ ∎</span></h1>
+      <p>「波を数式でどう書くんですか？」という素朴な問いから出発して、sin、回る矢印 e<sup>iθ</sup>、2本の辞書、微分の検出器、そしてエネルギー保存則。1926年にシュレディンガーが世界に示した方程式を、きみは部品集めから最終組み立てまで、自分の手でやり切った。そのうえで方程式を実際に解いて、量子化・確率解釈・原子の安定まで見届けた。旅を振り返ろう。</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="board" aria-labelledby="recap-heading">
+      <div class="board-head">
+        <div><h2 id="recap-heading">ここまでの旅を振り返ろう</h2></div>
+      </div>
+
+      <div class="recap-list">
+        <div class="recap-item">
+          <span class="recap-num">1</span>
+          <div class="recap-body"><span class="recap-title">波を数式で書く。</span> <span class="recap-desc">sin＝円を回る点の高さ。平行移動の技で波を走らせ、y＝A sin(kx−ωt) を組み立てた。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">2</span>
+          <div class="recap-body"><span class="recap-title">回る矢印 e^iθ。</span> <span class="recap-desc">オイラーの公式で「波＝回る針の列」。大きさが消えず、微分で形が崩れない複素数の波 ψ＝Ae^i(kx−ωt) に乗り換えた。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">3</span>
+          <div class="recap-body"><span class="recap-title">光の粒と物質の波。</span> <span class="recap-desc">光電効果の E＝hν、ド・ブロイの裏返し p＝h/λ。ℏ を使って辞書 E＝ℏω・p＝ℏk を整えた。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">4</span>
+          <div class="recap-body"><span class="recap-title">微分という検出器。</span> <span class="recap-desc">肩の係数が前に飛び出す。−iℏ∂/∂x が p を、iℏ∂/∂t が E を、−ℏ²∂²/∂x² が p² を波から読み出した。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">5</span>
+          <div class="recap-body"><span class="recap-title">方程式が生まれる瞬間。</span> <span class="recap-desc">E＝p²/2m＋V に検出器を代入。iℏ∂ψ/∂t＝−(ℏ²/2m)∂²ψ/∂x²＋Vψ が組み上がり、i が居座った。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">6</span>
+          <div class="recap-body"><span class="recap-title">箱の中の電子。</span> <span class="recap-desc">壁にちょうどはまる波だけが生き残り、En＝n²h²/8mL²。量子化と零点エネルギーが計算から転がり出た。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">7</span>
+          <div class="recap-body"><span class="recap-title">ψ の正体。</span> <span class="recap-desc">シュレディンガーの「実体の雲」は敗れ、ボルンの |ψ|²＝確率の台帳が勝った。規格化で振幅まで決まった。</span></div>
+        </div>
+        <div class="recap-item">
+          <span class="recap-num">8</span>
+          <div class="recap-body"><span class="recap-title">定常状態と時間発展。</span> <span class="recap-desc">針は回るのに景色は凍る。原子は潰れず、段差が光の色 hν＝E₂−E₁ を決め、水素原子が完全に解けた。</span></div>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">一番驚いたのは、組み立てに使った部品がぜんぶ「ありもの」だったことです。円を回る点の高さ、複利の e、光電効果の式、傾きを読む微分、エネルギー保存則……。新発明はひとつもないのに、正しい順番で噛み合わせたら、原子の世界を丸ごと予言する機械になってしまった。そして、その設計図のいちばん深いところに、2乗して −1 になる「ありえない数」が本質として埋まっているのが、なんだか痛快です。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが物理の醍醐味だよ。教科書で天下りに見える式には、必ず組み立ての物語がある。きみは今日、その物語を最初から最後まで自分の手でなぞった。この先、量子力学のどんな式に出会っても、きっと問えるはずだ――「この式は、どんな部品から、どう組まれたのか？」とね。その問いを持ち続ける人を、物理学者と呼ぶんだ。お疲れさま！</div>
+        </div>
+      </div>
+
+      <div class="complete-actions">
+        <a class="btn btn-primary" id="btn-share" href="#" target="_blank" rel="noopener">𝕏 クリアをシェアする</a>
+        <a class="btn" href="index.html">トップに戻る →</a>
+        <button class="btn" id="btn-reset-all">🔄 進捗をリセットして最初から</button>
+      </div>
+    </section>
+
+    <div id="book-recommend"></div>
+  </main>
+
+  <footer>
+    <p>NO DOWNLOAD. NO REGISTRATION. JUST LEARN. &nbsp;© <span id="year"></span> ruglerugle</p>
+    <div class="footer-suits" aria-hidden="true"><span>🌊</span><span>Ψ</span><span>ℏ</span><span>∂</span></div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("btn-share").href =
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent("シュレディンガー方程式 iℏ∂ψ/∂t＝Ĥψ を、部品集めから最終組み立てまで自分の手で導出しました！🌊") +
+    "&url=" + encodeURIComponent("https://ruglerugle.github.io/schrodinger-equation/");
+</script>
+<script src="js/progress.js"></script>
+<script>SQ.initCompletePage();</script>
+</body>
+</html>

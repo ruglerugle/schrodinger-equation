@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE5 方程式が生まれる瞬間 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="エネルギー保存則 E=p²/2m+V に、波から E と p を読み出す検出器を代入する。3つの道具がカチリと噛み合い、シュレディンガー方程式 iℏ∂ψ/∂t=−(ℏ²/2m)∂²ψ/∂x²+Vψ が目の前で組み上がる。1926年の発見を自分の手で再現する山場。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage5.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE5 方程式が生まれる瞬間 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="エネルギー保存則に検出器を代入すると、シュレディンガー方程式が目の前で組み上がる。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage5.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .lbR{fill:#b5504a;font-size:11px;font-weight:900}
+  .sq-svg .hill{fill:none;stroke:var(--muted);stroke-width:2}
+  .sq-svg .ball{fill:var(--gold-dark)}
+  .sq-svg .barK{fill:#2f6fa6}
+  .sq-svg .barV{fill:#b5504a}
+  .sq-svg .barframe{fill:none;stroke:var(--muted);stroke-width:1}
+  .sq-svg .slotbox{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.4}
+  .sq-svg .slotboxB{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.4}
+  .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
+  .sq-svg .flowhead{fill:var(--ink)}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 5 ― 方程式が生まれる瞬間 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 5</span><span class="chapter-title">方程式が生まれる瞬間</span>
+        <div class="chapter-sub">エネルギー保存則に代入する</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">エネルギー保存則 E＝p²/2m＋V に、前回組み立てた検出器（演算子）を代入して、シュレディンガー方程式を自分の手で組み上げよう。各項が何を表しているか読み下せれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">今日が組み立ての日だ。設計図になるのは、物理でいちばん頼りになる背骨――<strong>エネルギー保存則</strong>。まず言葉をそろえよう。動いている物体は<strong>運動エネルギー</strong>を持つ。質量 m の物体が速さ v で動くとき、その大きさは <strong>½mv²</strong> だ。一方、<strong>位置エネルギー V</strong> は「場所に応じて預けてあるエネルギー」。高い棚の上のボールは、落ちれば速さに変わる分をあらかじめ蓄えているし、押し縮めたバネの中の球や、原子核に引かれる電子も、位置に応じたエネルギーを持つ。場所 x の関数だから V(x) と書く。そして保存則はこう言う。<strong>合計 E ＝ 運動エネルギー ＋ V(x) は、途中で形を変えながらも、総額は一定に保たれる</strong>。ジェットコースターが谷で速く、山の上で遅いのは、V と運動エネルギーを両替しながら総額を守っているからだね。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">保存則は分かりました。ただ、私たちの手持ちの検出器は E と p と p² のものです。½mv² には v が入っていて、そのままでは検出器が当てはまりません。<strong>v を p で書き直す</strong>必要がありますね。……p＝mv でしたから、v＝p/m。代入すると ½m(p/m)² ＝ ½ m p²/m² ＝ <strong>p²/2m</strong>。できました。運動エネルギーは p²/2m。だから保存則は<br><strong>E ＝ p²/2m ＋ V(x)</strong><br>これで全部の登場人物が、検出器を持っている量になりました。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">見事な準備だ。ではシュレディンガーの一手を再現しよう。発想はこうだ。<strong>「このエネルギーの帳簿は、電子の波 ψ の上でも成り立っていなければならない」</strong>。そこで保存則の両辺に ψ を掛ける。<br>E ψ ＝ (p²/2m) ψ ＋ V(x) ψ<br>ただの掛け算に見えるね。ところが、ここに前回の成果を思い出してほしい。<strong>Eψ も p²ψ も、ψ への微分操作で作れる</strong>んだった。つまりこの式の各部品は、そっくり検出器に置き換えられる――</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 232" width="100%" role="img" aria-label="エネルギー保存則 Eψ＝(p²/2m)ψ＋Vψ の各項を検出器で置き換える組み立て図。Eψはiℏ∂ψ/∂tに、p²ψは−ℏ²∂²ψ/∂x²に置き換わり、シュレディンガー方程式が完成する">
+          <text class="strong" x="14" y="18">設計図：エネルギー保存則 × ψ</text>
+          <text class="strong" x="30" y="46">E ψ</text>
+          <text class="strong" x="90" y="46">＝</text>
+          <text class="strong" x="120" y="46">(p²/2m) ψ</text>
+          <text class="strong" x="230" y="46">＋</text>
+          <text class="strong" x="258" y="46">V(x) ψ</text>
+          <line class="flow" x1="42" y1="56" x2="42" y2="86"></line>
+          <polygon class="flowhead" points="42,92 38,83 46,83"></polygon>
+          <line class="flow" x1="162" y1="56" x2="162" y2="86"></line>
+          <polygon class="flowhead" points="162,92 158,83 166,83"></polygon>
+          <line class="flow" x1="278" y1="56" x2="278" y2="86"></line>
+          <polygon class="flowhead" points="278,92 274,83 282,83"></polygon>
+          <rect class="slotboxB" x="8" y="98" width="88" height="40" rx="7"></rect>
+          <text class="lbB" x="52" y="115" text-anchor="middle">Eの検出器</text>
+          <text class="strong" x="52" y="131" text-anchor="middle">iℏ ∂ψ/∂t</text>
+          <rect class="slotbox" x="108" y="98" width="122" height="40" rx="7"></rect>
+          <text class="lbA" x="169" y="115" text-anchor="middle">p²の検出器 ÷ 2m</text>
+          <text class="strong" x="169" y="131" text-anchor="middle">−(ℏ²/2m) ∂²ψ/∂x²</text>
+          <rect class="slotbox" x="242" y="98" width="90" height="40" rx="7"></rect>
+          <text class="lbA" x="287" y="115" text-anchor="middle">そのまま</text>
+          <text class="strong" x="287" y="131" text-anchor="middle">V(x) ψ</text>
+          <line class="flow" x1="170" y1="150" x2="170" y2="176"></line>
+          <polygon class="flowhead" points="170,182 166,173 174,173"></polygon>
+          <text class="strong" x="170" y="206" text-anchor="middle" font-size="14">iℏ ∂ψ/∂t ＝ −(ℏ²/2m) ∂²ψ/∂x² ＋ V(x)ψ</text>
+          <text class="lbA" x="170" y="226" text-anchor="middle">シュレディンガー方程式（1926）</text>
+        </svg>
+        <div class="diagram-caption">組み立ての瞬間。保存則 Eψ＝(p²/2m)ψ＋Vψ の <strong>Eψ</strong> をエネルギー検出器 iℏ∂ψ/∂t に、<strong>p²ψ</strong> を p² 検出器 −ℏ²∂²ψ/∂x²（÷2m）に置き換える。V(x)ψ はただの掛け算なのでそのまま。3つの部品がはまると、シュレディンガー方程式が現れる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【シュレディンガー方程式】　iℏ ∂ψ/∂t ＝ −(ℏ²/2m) ∂²ψ/∂x² ＋ V(x) ψ</span>
+        <span class="step multi"><span class="item">左辺：波の時間変化（＝エネルギーの読み取り）</span>　<span class="item">右辺第1項：波の曲がり具合（＝運動エネルギー）</span>　<span class="item">右辺第2項：場所ごとの位置エネルギー</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……これが、あのシュレディンガー方程式。教科書の最初のページで天から降ってきた式が、<strong>「エネルギー保存則に、波の検出器をはめ込んだだけ」</strong>の形をしている。読み下すと、こうですね。「<strong>波 ψ の時間変化のペース（左辺）は、波の曲がり具合が表す運動エネルギーと、その場所の位置エネルギーの合計（右辺）で決まる</strong>」。F＝ma が「力が加速を決める」と言うように、この式は「エネルギーの帳簿が波の変化を決める」と言っている。……ただ、正直に言うと、少し引っかかります。検出器が正しく E や p を返すことを確かめたのは、<strong>まっすぐ進む波 e<sup>i(kx−ωt)</sup> だけ</strong>でした。V(x) が場所ごとに変わる状況では、波はもうあの単純な形ではいられないはずです。この方程式を信じていい理由はあるんですか？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その慎重さは科学者のものだよ。正直に答えよう。まず、V＝0（力を受けない自由な電子）の場合は、検算できる。ψ＝A e<sup>i(kx−ωt)</sup> を方程式に入れてごらん。左辺は Eψ、右辺第1項は (p²/2m)ψ になって、方程式は「E＝p²/2m」――自由な粒子のエネルギーの式そのものに戻る。<strong>つじつまは完全に合っている</strong>。だが V(x) がある一般の場合はどうか。ここは、はっきり言えば<strong>飛躍</strong>なんだ。シュレディンガーは「単純な場合にこの形なら、複雑な場合も同じ形の法則が成り立つはずだ」と<strong>賭けた</strong>。物理の基本法則は、証明されるものではなく<strong>推測され、実験で裁かれる</strong>ものだからね。そして裁きは即座に下った。1926年、彼はこの方程式を水素原子（V は原子核の引力）に適用して解き、<strong>実験で測られていた水素の光の色（スペクトル）を、ことごとく言い当てた</strong>んだ。賭けは勝ちだった。以来100年、この方程式が外れた例はない。半導体もレーザーも化学結合も、ぜんぶこの式の上に建っている。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「導出」と言っても、数学の証明ではなくて、<strong>もっともらしい設計図を組んで、自然に審査してもらった</strong>んですね。むしろ誠実で好きです。……あ、それともう1つ、回収したい伏線があります。ステージ2の「<strong>i が方程式に居座る</strong>」。本当に居座っていますね、左辺の先頭に。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">よく気づいた。ここが物理学史でも特別な場所なんだ。この方程式は、<strong>i を消すことができない</strong>。もし ψ が実数の波なら、左辺（実数×i）は純虚数、右辺は実数になって、両辺が等しくなれるのは両方ゼロのときだけ――波が存在できない。つまり方程式自身が「<strong>解 ψ は本質的に複素数でなければならない</strong>」と宣言している。海の波や音では複素数はただの便利道具だったけれど、量子の世界では<strong>自然そのものが複素数で帳簿をつけている</strong>。シュレディンガー本人すら、最初はこの i に当惑して、実数の方程式に書き直そうと苦闘したほどだよ。……ちなみに、右辺の操作ぜんぶ（曲がり具合を読む＋V を掛ける）をひとまとめにして <strong>Ĥ（ハミルトニアン）</strong>と呼ぶ。すると方程式は <strong>iℏ∂ψ/∂t＝Ĥψ</strong> と、たった一行になる。トップページに掲げてあった式は、これだったんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">山頂に着いた気分です。でも、方程式は<strong>持っているだけでは役に立たない</strong>ですよね。F＝ma だって、実際に投げたボールの軌道を計算して初めて意味がある。この方程式も、何か具体的な問題を<strong>解いて</strong>みたいです。水素原子は……いきなりだと難しそうですけど。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その意気だ。次のステージでは、量子力学でいちばん簡単で、いちばん教えの多い問題を解く。<strong>「箱の中に閉じ込められた電子」</strong>だ。解いてみると、驚くべきことが起きる。誰も頼んでいないのに、方程式が勝手に「<strong>エネルギーは飛び飛びの値しか取れない</strong>」と答えてくるんだ。量子（quantum）という名前の由来そのものが、計算から転がり出てくるよ。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【検算：V＝0 のとき】　ψ＝Ae<sup>i(kx−ωt)</sup> を代入すると</span>
+        <span class="step">左辺＝Eψ、右辺＝(p²/2m)ψ　→　方程式は E＝p²/2m（自由な粒子の式）に一致 ✓</span>
+        <span class="step multi"><span class="item">V(x)ありの形は「推測」であり、水素原子のスペクトルを言い当てて実証された</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 運動エネルギー ½mv² を運動量 p＝mv で書き直すと？</p>
+        <div class="choice-list">
+          <button class="choice-btn">p²m/2</button>
+          <button class="choice-btn">p/2m</button>
+          <button class="choice-btn">p²/2m</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ v＝p/m を代入して ½m(p/m)²＝p²/2m。この書き換えのおかげで、保存則の全員（E, p², V）が検出器を持つ量になり、演算子への置き換えが可能になった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. シュレディンガー方程式の右辺第1項 −(ℏ²/2m)∂²ψ/∂x² が表しているものは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">位置エネルギー</button>
+          <button class="choice-btn">波の曲がり具合から読み取った、運動エネルギー（p²/2m）の項</button>
+          <button class="choice-btn">波の振幅の大きさ</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 2回微分は「傾きの傾き」＝波の曲がり具合を読む。細かく波打つ（鋭く曲がる）波ほど p²が大きい、という対応で、これが運動エネルギー p²/2m の項になっている。位置エネルギーは V(x)ψ のほう。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 方程式の左辺に i が「居座っている」ことから言えるのは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">解 ψ は本質的に複素数であり、実数の波では方程式を満たせない</button>
+          <button class="choice-btn">方程式が間違っている</button>
+          <button class="choice-btn">i は計算の途中で必ず消える</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ψ が実数だと左辺は純虚数・右辺は実数になり、両立するのは ψ＝0 だけ。つまり方程式自身が「解は複素数であれ」と要求している。海の波と違い、量子力学では複素数が本質――ステージ2の伏線がここで回収された。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage4.html">← STAGE4へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(5);</script>
+</body>
+</html>

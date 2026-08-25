@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE2 回る矢印 e^iθ ― シュレディンガー方程式を導く</title>
+<meta name="description" content="なぜ量子力学は複素数を使うのか。オイラーの公式 e^iθ＝cosθ＋i sinθ を「回る矢印」として理解し、電子の波を ψ＝Ae^i(kx−ωt) に書き換える。大きさが消えず、微分しても形が崩れない――複素数の波の2つの強みを手に入れる。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage2.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE2 回る矢印 e^iθ ― シュレディンガー方程式を導く">
+<meta property="og:description" content="オイラーの公式を「回る矢印」として理解し、電子の波を複素数の波 ψ＝Ae^i(kx−ωt) に書き換える。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage2.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .circle{fill:none;stroke:var(--line);stroke-width:1.2}
+  .sq-svg .vecA{stroke:var(--gold-dark);stroke-width:2.4}
+  .sq-svg .vecAh{fill:var(--gold-dark)}
+  .sq-svg .vecB{stroke:#2f6fa6;stroke-width:2.4}
+  .sq-svg .vecBh{fill:#2f6fa6}
+  .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
+  .sq-svg .ra{fill:none;stroke:var(--muted);stroke-width:1}
+  .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
+  .sq-svg .handdot{fill:var(--gold-dark)}
+  .sq-svg .imwave{fill:none;stroke:#b5504a;stroke-width:1.6;stroke-dasharray:5 4}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 2 ― 回る矢印 e^iθ ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 2</span><span class="chapter-title">回る矢印 e<sup>iθ</sup></span>
+        <div class="chapter-sub">複素数の波</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">オイラーの公式 e<sup>iθ</sup>＝cosθ＋i sinθ を「回る矢印」として説明できるようになり、電子の波を ψ＝A e<sup>i(kx−ωt)</sup> に書き換えよう。複素数の波が sin より優れている理由を2つ言えれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">前回きみは、鋭い違和感を残してくれたね。「sin の波は周期的に高さ 0 を通る。電子の波がそれだと、電子が周期的に薄れて消えることにならないか」。今日はその違和感に正面から答えよう。結論から言うと、電子の波は sin では書かない。<strong>複素数の波</strong>で書くんだ。きみが複素数の教室で鍛えた道具が、今日は物理の主役になる。まずは復習を兼ねて、要点を自分の言葉で整理してごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい。<strong>複素数</strong>は、2乗すると −1 になる数 i（i²＝−1）を認めて、a＋bi の形に広げた数でした。ただの記号遊びではなくて、<strong>平面の点（あるいは原点から伸びる矢印）</strong>だと思うのがいちばん分かりやすかったです。横軸が普通の数（実部 a）、縦軸が i の個数（虚部 b）。そして掛け算がきれいでした。<strong>i を掛けると、矢印が反時計回りに90°回る</strong>。実際、1 に i を掛けると i（真上）、もう一度掛けると i²＝−1（真横の逆）、もう一度で −i（真下）、4回で 1 に戻る。90°回転を4回で一周、辻褄が合っています。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">完璧な復習だよ。今日はそこに、道具をもう一つだけ積む。<strong>オイラーの公式</strong>だ。<br><strong>e<sup>iθ</sup> ＝ cosθ ＋ i sinθ</strong><br>まず記号の説明からね。cos（コサイン）は sin の相棒で、前回の円の絵で言えば、円を回る点の<strong>横の位置</strong>のこと（sin は縦の位置だったね）。そして e は約 2.718 という定数。複素数の教室では「1円を年利100%で、利息を無限に細かく分けて複利にすると1年後に e 円になる」という<strong>成長の極限</strong>として出会ったはずだ。この公式が主張しているのは、驚くべきことだよ。<strong>e の肩に「i×角度」を乗せると、単位円の上の、角度 θ の位置の点になる</strong>――つまり e<sup>iθ</sup> は<strong>長さ1の、角度 θ を向いた矢印</strong>そのものだ、と言っているんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">横の位置が cosθ、縦の位置が sinθ の点だから、複素数として書けば cosθ＋i sinθ。<strong>右辺が「単位円上の角度θの点」を表す</strong>ことは、定義そのままなので納得です。引っかかるのは左辺です。お金の成長の数 e と、円の上の点。<strong>なぜこの2つが等しいんですか？</strong> 復習のときも、ここが一番不思議でした。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">理由の心臓部だけ、きちんと見ておこう。e という数のいちばん大事な性質は、大きさそのものではなくてね、関数 e<sup>t</sup> が持つ<strong>「増える速さが、いまの量に等しい」</strong>という性質なんだ。お金の複利がまさにそれで、残高が多いほど利息も多い――変化のペースが現在の値そのもので決まる。この性質を肩の上の i ごと使うと、e<sup>iθ</sup> の<strong>変化の速さは「i × いまの値」</strong>になる。さて、i を掛けるとどうなるのだったかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">90°回転です。……ということは、e<sup>iθ</sup> という矢印は、θ が増えるとき<strong>「いま向いている向きと直角の方向」に動く</strong>ってことですか。あ、それ、知っています。ひもの先に石をつけて振り回すのと同じだ。石の速度はいつもひもと直角。<strong>進む向きが常に直角なら、その点は円を描く</strong>。だから e<sup>iθ</sup> は円の上をぐるぐる回るんですね！</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのアナロジーは満点だ。しかも都合のいいことに、スタートは θ＝0 で e<sup>0</sup>＝1、つまり<strong>単位円の真横（3時の位置）</strong>から。矢印の長さは1で、変化の速さも |i×1|＝1 だから、<strong>θ はちょうど「円周上を歩いた道のり」</strong>になる。前回ラジアンを「半径1の円で歩いた道のり＝角度」と決めたね。だから θ はそのまま角度だ。まとめると――e<sup>iθ</sup> は、<strong>単位円上を反時計回りに、角度 θ まで回った矢印</strong>。横の位置（実部）が cosθ、縦の位置（虚部）が sinθ。オイラーの公式は、この観察を1行に書いたものなんだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="euler-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="複素数平面の単位円上を回る矢印e^iθ。横の位置がcosθ、縦の位置がsinθ。iを掛けるたびに90°回転し、1→i→−1→−iと巡る">
+          <text class="strong" x="14" y="16">e<tspan baseline-shift="super" font-size="9">iθ</tspan> ＝ 単位円上を回る、長さ1の矢印</text>
+          <line class="axis" x1="20" y1="115" x2="220" y2="115"></line>
+          <line class="axis" x1="120" y1="30" x2="120" y2="200"></line>
+          <text class="label" x="216" y="128" text-anchor="end">実部（普通の数）</text>
+          <text class="label" x="126" y="40">虚部（i の個数）</text>
+          <circle class="circle" cx="120" cy="115" r="62"></circle>
+          <line class="vecA" id="e-vec" x1="120" y1="115" x2="182" y2="115"></line>
+          <polygon class="vecAh" id="e-vech" points="182,115 174,111 174,119"></polygon>
+          <line class="tie" id="e-tx" x1="182" y1="115" x2="182" y2="115"></line>
+          <line class="tie" id="e-ty" x1="182" y1="115" x2="120" y2="115"></line>
+          <text class="lbA" id="e-lb" x="190" y="110">e<tspan baseline-shift="super" font-size="8">iθ</tspan></text>
+          <text class="lbB" id="e-cos" x="150" y="130">cosθ</text>
+          <text class="lbB" id="e-sin" x="128" y="80">sinθ</text>
+          <text class="label" x="186" y="132">1</text>
+          <text class="label" x="112" y="46" text-anchor="end">i</text>
+          <text class="label" x="48" y="132">−1</text>
+          <text class="label" x="112" y="192" text-anchor="end">−i</text>
+          <text class="strong" x="240" y="70">i を掛ける＝90°回転</text>
+          <text class="label" x="240" y="92">1 → i → −1 → −i → 1</text>
+          <text class="label" x="240" y="112">（4回で一周）</text>
+          <text class="strong" x="240" y="150">θが増える向き</text>
+          <path class="ra" d="M258 176 A 22 22 0 1 1 280 160"></path>
+          <polygon class="arrowhead" points="282,156 274,160 281,167"></polygon>
+        </svg>
+        <div class="diagram-caption">オイラーの公式の絵解き。e<sup>iθ</sup> は複素数平面（横軸＝実部、縦軸＝虚部）の<strong>単位円上を反時計回りに回る長さ1の矢印</strong>で、横の位置が cosθ、縦の位置が sinθ。「変化の速さ＝i×いまの値」＝いつも進行方向と直角、だから円を描く。ひもの先で振り回した石と同じ理屈</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【オイラーの公式】　e<sup>iθ</sup> ＝ cosθ ＋ i sinθ</span>
+        <span class="step multi"><span class="item">e<sup>iθ</sup>＝長さ1・角度θの矢印</span>　<span class="item">実部＝cosθ（横の位置）</span>　<span class="item">虚部＝sinθ（縦の位置）</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、この矢印で<strong>波</strong>を作ろう。前回の波 y＝A sin(kx−ωt) の心臓部は、位相 kx−ωt だった。この位相を、sin の中身ではなく<strong>矢印の角度</strong>として使うんだ。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針（矢印）が1本ずつ立っている</strong>。x の地点の針の角度が kx−ωt だ。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">針の縦成分（虚部）だけを取り出せば A sin(kx−ωt)、横成分（実部）なら A cos(kx−ωt)。つまり<strong>前回の波は、この回る針の「影」だった</strong>んですね。針ぜんぶが回ると、影の波形が横に走って見える。……本体は針で、sin は影。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ物理学者はわざわざ本体（複素数）で書くのか。強みは2つある。<strong>強みその1</strong>は、きみの前回の違和感への直接の答えだ。矢印の<strong>長さ</strong>を考えてごらん。sin の値は 1→0→−1 と暴れるけれど、回っている矢印の長さは？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ずっと 1 のままです。回転は向きを変えるだけで、長さは変えない。……そうか。ψ＝A e<sup>i(kx−ωt)</sup> なら、どの場所でもどの瞬間でも<strong>矢印の長さは A のまま</strong>。「波の強さ」が場所によって消えたり現れたりしない。<strong>電子が周期的に薄れる、あの気持ち悪さが消える</strong>んですね。影（sin）だけ見ていたから 0 に見えた。本体の針は、0 になった瞬間も横を向いて堂々と存在していた。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。複素数の大きさ（矢印の長さ）は |ψ| と書く。|a＋bi|＝√(a²＋b²)、三平方の定理そのものだね。cos²θ＋sin²θ＝1 だから |e<sup>iθ</sup>|＝1、よって |ψ|＝A で一定。<strong>強みその2</strong>は、この先の導出の生命線になる。予告だけしておこう。次の次のステージで、私たちは波を<strong>微分</strong>という道具にかける。詳しくはそのときやるけれど、sin は微分すると cos に化け、cos は −sin に化ける。<strong>形がころころ変わる</strong>んだ。ところが e<sup>iθ</sup> は、微分しても <strong>i が1個前に出てくるだけで、自分自身のまま</strong>。「変化の速さ＝i×いまの値」という、さっき円運動を導いたあの性質そのものだよ。形が崩れないから、方程式の材料として圧倒的に扱いやすい。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="hands-svg" viewBox="0 0 340 220" width="100%" role="img" aria-label="数直線の各地点に立つ小さな矢印の列。場所とともに向きがねじれ、時間とともに全部がいっせいに回る。下段はその虚部を結んだサインカーブで、矢印が回ると波が右に走る">
+          <text class="strong" x="14" y="16">ψ＝Ae<tspan baseline-shift="super" font-size="9">i(kx−ωt)</tspan>：各地点に立つ「回る針」の列</text>
+          <line class="axis" x1="14" y1="70" x2="326" y2="70"></line>
+          <g id="h-hands"></g>
+          <text class="label" x="14" y="112">↑ 各 x 地点の針（角度 kx−ωt）。右へ行くほど kx ぶん回っている</text>
+          <line class="axis" x1="14" y1="170" x2="326" y2="170"></line>
+          <path class="wave" id="h-wave"></path>
+          <text class="label" x="14" y="214">↑ 針の縦成分（虚部）だけを結ぶと sin の波。針が回ると波が走る</text>
+        </svg>
+        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の縦成分（虚部）だけを影として取り出すと、見慣れた sin の走る波になる。<strong>本体は針、sin は影</strong></div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">1つ確認させてください。海の波や音の波も、同じ理由で複素数で書くべきなんですか？ 水面の高さが複素数というのは、さすがに変な気がします。水面の高さは、メジャーで測れる普通の数のはずです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">とても大事な区別だよ。海の波や音では、複素数は<strong>計算を楽にするための便利な道具</strong>にすぎない。計算の最後に「実部だけ取り出す」と約束して、本当の答えはあくまで実数だ。ところが量子力学では事情がまったく違う。<strong>ψ そのものが本質的に複素数</strong>で、実部だけ取り出しても正しい物理にならないんだ。なぜそう言い切れるかは、方程式が完成したステージ5で、方程式自身が教えてくれる。式の中に <strong>i が堂々と居座る</strong>のを、きみは目撃することになる。……ここでは伏線として、こう覚えておいてほしい。<strong>ψ は観測にかかる「高さ」ではない</strong>。じゃあ観測にかかるのは何か――それはステージ7で、|ψ| が主役になって答えてくれる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">伏線が2本になりましたね。「i が方程式に居座る」と「観測にかかるのは |ψ|」。……道具はそろってきました。波の式 ψ＝A e<sup>i(kx−ωt)</sup> の中には、波の細かさ k と、振動の速さ ω が入っています。でもこれはまだ<strong>波の言葉</strong>だけの式です。電子は粒でもあって、エネルギー E や運動量 p という<strong>粒の言葉</strong>を持っているはず。次は、この2つの言葉をつなぐんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その接続こそ、次のステージの仕事だよ。翻訳ルールはたった2本。しかもどちらも、量子力学の教室ですでに出会っている式だ。プランクとアインシュタインが光に見つけ、ド・ブロイが電子へ裏返した、あの2本――E＝hν と p＝h/λ。次回、この「辞書」を丁寧に読み直そう。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【このステージの成果】　電子の波：　ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></span>
+        <span class="step multi"><span class="item">強み①：|ψ|＝A で一定（波の強さが場所や時間で消えない）</span>　<span class="item">強み②：微分しても形が崩れない（i が前に出るだけ・詳細はSTAGE4）</span></span>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 複素数に i を掛けることの、図形的な意味は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">矢印の長さを2倍にする</button>
+          <button class="choice-btn">矢印を上下にひっくり返す</button>
+          <button class="choice-btn">矢印を反時計回りに90°回す</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 1×i＝i（真横→真上）、i×i＝−1（真上→逆の真横）と、i を掛けるたびに90°回る。4回で i⁴＝1、ちょうど一周。この「i＝90°回転」が、e^iθ が円を描く理由の心臓部だった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. e<sup>iθ</sup> の大きさ（矢印の長さ）|e<sup>iθ</sup>| は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">θ によらず、いつも 1</button>
+          <button class="choice-btn">θ が増えるほど大きくなる</button>
+          <button class="choice-btn">sinθ と同じように 1 と −1 の間で振動する</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ e^iθ は単位円の上を回る矢印だから、長さはいつも1（|e^iθ|²＝cos²θ＋sin²θ＝1）。回転は向きを変えるだけで長さを変えない。だから ψ＝Ae^i(kx−ωt) の大きさは常に A で、「波が周期的に消える」問題が解決した。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 電子の波を sin ではなく e<sup>i(kx−ωt)</sup> で書く強みとして、このステージで挙げた2つの組み合わせは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">計算が速くなる／メモリを節約できる</button>
+          <button class="choice-btn">大きさ |ψ| が一定に保たれる／微分しても形が崩れない</button>
+          <button class="choice-btn">波の速さが上がる／振幅が大きくなる</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ①回る矢印の長さは一定だから、波の強さが場所や時間で消えたり現れたりしない。②e^iθ は「変化の速さ＝i×いまの値」なので、微分しても i が前に出るだけで自分自身のまま。この②が、次の次のステージで方程式を組み上げる生命線になる。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage1.html">← STAGE1へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(2);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('euler-svg');
+  if (!svg) return;
+  var vec = document.getElementById('e-vec'), vech = document.getElementById('e-vech'),
+      tx = document.getElementById('e-tx'), ty = document.getElementById('e-ty'),
+      lb = document.getElementById('e-lb'), lbc = document.getElementById('e-cos'), lbs = document.getElementById('e-sin');
+  var CX = 120, CY = 115, R = 62;
+
+  function draw(th) {
+    var px = CX + R * Math.cos(th), py = CY - R * Math.sin(th);
+    vec.setAttribute('x2', px.toFixed(1)); vec.setAttribute('y2', py.toFixed(1));
+    var bx = CX + (R - 9) * Math.cos(th), by = CY - (R - 9) * Math.sin(th);
+    var nx = Math.sin(th) * 4, ny = Math.cos(th) * 4;
+    vech.setAttribute('points', px.toFixed(1) + ',' + py.toFixed(1) + ' ' + (bx - nx).toFixed(1) + ',' + (by - ny).toFixed(1) + ' ' + (bx + nx).toFixed(1) + ',' + (by + ny).toFixed(1));
+    tx.setAttribute('x1', px.toFixed(1)); tx.setAttribute('y1', py.toFixed(1));
+    tx.setAttribute('x2', px.toFixed(1)); tx.setAttribute('y2', CY);
+    ty.setAttribute('x1', px.toFixed(1)); ty.setAttribute('y1', py.toFixed(1));
+    ty.setAttribute('x2', CX); ty.setAttribute('y2', py.toFixed(1));
+    lb.setAttribute('x', (CX + (R + 12) * Math.cos(th)).toFixed(1));
+    lb.setAttribute('y', (CY - (R + 12) * Math.sin(th) + 4).toFixed(1));
+    lbc.setAttribute('x', (CX + R * Math.cos(th) / 2 - 16).toFixed(1));
+    lbs.setAttribute('y', (CY - R * Math.sin(th) / 2 + 4).toFixed(1));
+  }
+  draw(Math.PI / 5);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var t = Math.PI / 5, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.012;
+    if (t > 2 * Math.PI) t -= 2 * Math.PI;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('hands-svg');
+  if (!svg) return;
+  var g = document.getElementById('h-hands'), wave = document.getElementById('h-wave');
+  var X0 = 30, X1 = 316, N = 13, AXIS1 = 70, AXIS2 = 170, HR = 24, AMP = 34, LAM = 143;
+  var NS = 'http://www.w3.org/2000/svg';
+  var hands = [], dots = [], i;
+  for (i = 0; i < N; i++) {
+    var x = X0 + (X1 - X0) * i / (N - 1);
+    var ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('class', 'hand');
+    ln.setAttribute('x1', x); ln.setAttribute('y1', AXIS1);
+    g.appendChild(ln);
+    var dt = document.createElementNS(NS, 'circle');
+    dt.setAttribute('class', 'handdot'); dt.setAttribute('r', '2.6');
+    g.appendChild(dt);
+    hands.push(ln); dots.push(dt);
+  }
+
+  function draw(t) {
+    for (var i = 0; i < N; i++) {
+      var x = X0 + (X1 - X0) * i / (N - 1);
+      var th = 2 * Math.PI * (x - t) / LAM;
+      var px = x + HR * Math.cos(th), py = AXIS1 - HR * Math.sin(th);
+      hands[i].setAttribute('x2', px.toFixed(1)); hands[i].setAttribute('y2', py.toFixed(1));
+      dots[i].setAttribute('cx', px.toFixed(1)); dots[i].setAttribute('cy', py.toFixed(1));
+    }
+    var d = '', first = true;
+    for (var x2 = X0 - 16; x2 <= X1 + 16; x2 += 3) {
+      var y = AXIS2 - AMP * Math.sin(2 * Math.PI * (x2 - t) / LAM);
+      d += (first ? 'M' : 'L') + x2.toFixed(1) + ' ' + y.toFixed(1);
+      first = false;
+    }
+    wave.setAttribute('d', d);
+  }
+  draw(0);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.8;
+    if (t > LAM) t -= LAM;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

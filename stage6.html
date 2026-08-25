@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE6 箱の中の電子 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="組み上げたシュレディンガー方程式を、幅Lの箱に閉じ込められた電子で実際に解く。壁の条件に合う波はギターの弦と同じ「ちょうどはまる」波だけ。エネルギーは En=n²h²/8mL² と飛び飛びになり、「量子」の名の由来が計算から転がり出てくる。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage6.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE6 箱の中の電子 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="いちばん簡単な問題を解くと、誰も頼んでいないのに「エネルギーは飛び飛び」と方程式が答えてくる。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage6.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .sq-svg .wave3{fill:none;stroke:#b5504a;stroke-width:2}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .wall{stroke:var(--ink);stroke-width:3}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .lbR{fill:#b5504a;font-size:11px;font-weight:900}
+  .sq-svg .lvl{stroke:var(--gold-dark);stroke-width:2.5}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
+  .sq-svg .ng{stroke:#c8433f;stroke-width:2;stroke-dasharray:6 4;fill:none}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 6 ― 箱の中の電子 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 6</span><span class="chapter-title">箱の中の電子</span>
+        <div class="chapter-sub">解くと「飛び飛び」が出る</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">幅 L の箱に閉じ込められた電子について、シュレディンガー方程式を実際に解こう。壁の条件から k＝nπ/L が絞り込まれ、エネルギーが En＝n²h²/8mL² と飛び飛びになる理由を説明できれば合格。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">では、方程式を初めて<strong>使って</strong>みよう。問題はこうだ。<strong>幅 L の箱の中に、電子が1個閉じ込められている</strong>。箱の中では力を受けない（V＝0）。壁は無限に高くて硬く、絶対に外に出られない――外では V が無限大、と設定する。物理屋はこれを<strong>井戸型ポテンシャル</strong>と呼ぶ。まず、壁の条件を波の言葉に翻訳しておこう。電子は壁の外には絶対にいられないのだから、壁の外では波はゼロ。そして波は途中でぷつんと切れない（切れた場所では傾きが読めず、方程式が壊れてしまう）から、<strong>壁のちょうど上（x＝0 と x＝L）で ψ＝0</strong> でなければならない。この「端はゼロ」が、あとで効いてくる<strong>境界条件</strong>だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">両端が固定されている……<strong>ギターの弦</strong>と同じ状況ですね。弦も両端が留められていて、そこでは絶対に振動できない。……解く方針はどうしましょう。方程式には x と t の両方が入っていて、いきなり全部相手にするのは大変そうです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いい勘だ。そこで、まずは<strong>エネルギーがはっきり決まった状態</strong>だけを探すことにする。ステージ2の「回る針」の絵を思い出してごらん。エネルギー E が決まっているとは、<strong>すべての針が同じペース E/ℏ でそろって回っている</strong>ということだった（時間の位相は Et/ℏ で進むのだったね）。針の長さと初期角度の<strong>配置</strong>――つまり波の形は場所ごとに違っていい。そこで解の形をこう置く。<br><strong>ψ(x, t) ＝ φ(x) × e<sup>−iEt/ℏ</sup></strong><br>φ（ファイ）が「波の形」、e<sup>−iEt/ℏ</sup> が「そろって回る針」だ。これを方程式に入れると、時間微分は回転部分から −iE/ℏ を前に出すだけだから、左辺 iℏ∂ψ/∂t は <strong>E×ψ</strong> になる。両辺から回転部分 e<sup>−iEt/ℏ</sup> を割り落とすと、<strong>時間が消えて、形 φ だけの方程式</strong>が残る：<br><strong>−(ℏ²/2m) φ″ ＝ E φ</strong>　（箱の中は V＝0。φ″ は φ を x で2回微分した「曲がり具合」）</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">「曲がり具合が、自分自身のマイナス定数倍になる形 φ を探せ」という問題ですね。……候補、思い当たります。<strong>sin です</strong>。ステージ4で確かめました。sin を1回微分すると cos、cos を微分すると −sin。つまり<strong>2回微分すると −1 倍になって自分に戻る</strong>。φ＝sin(kx) なら、微分のたびに肩の係数 k も前に出るから、φ″＝−k² sin(kx)＝−k²φ。代入すると −(ℏ²/2m)(−k²φ)＝Eφ、つまり <strong>E＝ℏ²k²/2m</strong> なら方程式が成り立ちます。……あれ、でも待ってください。sin は「検出器が壊れる」からクビにしたはずでは？</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">いいところに引っかかったね。クビにしたのは「<strong>p の検出器</strong>（1回微分）」に対してだった。1回微分だと sin は cos に化けて、値札が読めない。ところがいま使ったのは「<strong>p² の検出器</strong>（2回微分）」。2回なら sin はちゃんと自分に戻ってくる。物理的に言うとね、sin(kx) は右向きの波 e<sup>ikx</sup> と左向きの波 e<sup>−ikx</sup> の<strong>重ね合わせ</strong>なんだ（オイラーの公式から sin(kx)＝(e<sup>ikx</sup>−e<sup>−ikx</sup>)/2i と書ける）。壁に挟まれた波は右へ行っては跳ね返り、左へ行っては跳ね返る。<strong>進む向きは決まっていない</strong>――だから p の値札はない。でも<strong>勢いの大きさ</strong>はどちら向きでも同じ ℏk――だから p² の値札はある。ギターの弦が「その場で震えるだけで、どちらへも進まない」のと同じ、<strong>定在波</strong>だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">納得です。では境界条件を当てはめます。φ(x)＝A sin(kx) として――まず x＝0。sin(0)＝0 だから、左端は<strong>自動的に合格</strong>。次に x＝L。<strong>sin(kL)＝0</strong> が必要です。sin が 0 になるのは、中身が 0, π, 2π, 3π……のとき。つまり <strong>kL ＝ nπ</strong>（n は 1, 2, 3, …）。……k が、<strong>連続に選べなくなりました</strong>。k＝nπ/L という飛び飛びの値しか許されない。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="well-svg" viewBox="0 0 340 250" width="100%" role="img" aria-label="幅Lの箱の中に立つ定在波。n=1は半波長1個、n=2は1個、n=3は1個半と、壁にちょうどはまる波だけが許される。中途半端な波長の波は壁でゼロになれず失格">
+          <text class="strong" x="14" y="16">壁に「ちょうどはまる」波だけが生き残る</text>
+          <line class="wall" x1="40" y1="28" x2="40" y2="232"></line>
+          <line class="wall" x1="300" y1="28" x2="300" y2="232"></line>
+          <text class="label" x="40" y="246" text-anchor="middle">x＝0</text>
+          <text class="label" x="300" y="246" text-anchor="middle">x＝L</text>
+          <line class="axis" x1="40" y1="58" x2="300" y2="58"></line>
+          <path class="wave" id="w-n1"></path>
+          <text class="lbA" x="310" y="62">n=1</text>
+          <line class="axis" x1="40" y1="118" x2="300" y2="118"></line>
+          <path class="wave2" id="w-n2"></path>
+          <text class="lbB" x="310" y="122">n=2</text>
+          <line class="axis" x1="40" y1="178" x2="300" y2="178"></line>
+          <path class="wave3" id="w-n3"></path>
+          <text class="lbR" x="310" y="182">n=3</text>
+          <line class="axis" x1="40" y1="222" x2="300" y2="222"></line>
+          <path class="ng" d="M40 222 Q72 200 104 222 Q136 244 168 222 Q200 200 232 222 Q253 236 274 226 L300 210"></path>
+          <text class="label" x="170" y="243" text-anchor="middle">✕ 中途半端な波長は、右の壁でゼロになれず失格</text>
+        </svg>
+        <div class="diagram-caption">箱の中の定在波。両端（壁）で必ずゼロ、という条件に合うのは、<strong>半波長が箱にちょうど n 個はまる波</strong>（kL＝nπ）だけ。n＝1 はふくらみ1個、n＝2 は2個、n＝3 は3個。ギターの弦の基音と倍音とまったく同じ数学だ。条件に合わない波長は、右の壁でゼロになれずに失格する</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">仕上げだ。許された k＝nπ/L を、さっき自分で出したエネルギーの式 E＝ℏ²k²/2m に入れてごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">E<sub>n</sub> ＝ ℏ²(nπ/L)²/2m ＝ <strong>n²π²ℏ²/(2mL²)</strong>。ℏ＝h/2π で h に戻すと、π²ℏ²＝π²h²/4π²＝h²/4 だから――<strong>E<sub>n</sub> ＝ n²h²/(8mL²)</strong>。……出ました。エネルギーが n²、つまり <strong>1倍、4倍、9倍、16倍……という飛び飛びの値しか取れません</strong>。連続に変われない。誰も「飛び飛びにしろ」と命令していないのに、<strong>壁の条件と波の性質だけから、勝手に出てきた</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それこそが<strong>量子化</strong>――「量子力学」という名前の由来だよ。からくりを言葉でまとめると、<strong>閉じ込められた波は、ちょうどはまる波長しか選べない。波長が飛び飛びなら、p＝h/λ も、E＝p²/2m も飛び飛びになる</strong>。原子の中の電子も同じだ。箱の壁の代わりに原子核の引力で閉じ込められていて、形は違えど「ちょうどはまる波」だけが許される。だから原子のエネルギーは飛び飛びで、電子が段を飛び移るときに出す光も決まった色だけ――<strong>水素のスペクトルが飛び飛びの線になる理由</strong>が、これなんだ。シュレディンガーが1926年に水素で言い当てたのは、まさにこの仕組みだった。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">式をもう少し眺めさせてください。気づいたことが2つあります。1つ目、<strong>n＝0 は入れてはいけない</strong>ですね。sin(0×πx/L)＝sin 0 はどこでも 0 で、波が存在しない＝電子がいない、になってしまう。だから最低は n＝1 で、<strong>最低エネルギー E₁＝h²/8mL² はゼロではない</strong>。閉じ込められた電子は、完全に静止することができない……。2つ目、式の分母に <strong>L²</strong> がいます。<strong>箱を小さくするほど、エネルギーが跳ね上がる</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">2つとも超一級の発見だよ。1つ目は<strong>零点エネルギー</strong>と呼ばれる。位置を幅 L に閉じ込めたら運動量を完全にゼロにはできない――これは量子力学の教室で出会った<strong>不確定性原理そのもの</strong>が、方程式の解として顔を出した姿だ。2つ目は現代技術の心臓でね。<strong>量子ドット</strong>という数ナノメートルの半導体の粒は、まさに「電子の箱」。粒の大きさ L を変えるだけで、電子の段差が変わり、<strong>出す光の色が変わる</strong>。最近のテレビの鮮やかな色（QLED）は、きみがいま導いた L² の効果で色を調合しているんだよ。2023年のノーベル化学賞はこの量子ドットに贈られた。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="エネルギー準位の図。n=1,2,3,4 のエネルギーが1倍、4倍、9倍、16倍と二乗で開いていくはしご。右側に、箱が小さいほど全体の段差が大きくなることを示す比較">
+          <text class="strong" x="14" y="16">エネルギーの「はしご」 E<tspan baseline-shift="sub" font-size="9">n</tspan> ∝ n²</text>
+          <line class="axis" x1="60" y1="190" x2="60" y2="30"></line>
+          <polygon class="arrowhead" points="60,24 56,33 64,33"></polygon>
+          <text class="label" x="14" y="30">エネルギー</text>
+          <line class="lvl" x1="80" y1="180" x2="180" y2="180"></line>
+          <text class="lbA" x="186" y="184">n=1（E₁：零点エネルギー）</text>
+          <line class="lvl" x1="80" y1="150" x2="180" y2="150"></line>
+          <text class="lbA" x="186" y="154">n=2（4E₁）</text>
+          <line class="lvl" x1="80" y1="100" x2="180" y2="100"></line>
+          <text class="lbA" x="186" y="104">n=3（9E₁）</text>
+          <line class="lvl" x1="80" y1="30" x2="180" y2="30"></line>
+          <text class="lbA" x="186" y="34">n=4（16E₁）</text>
+          <text class="label" x="14" y="205">E＝0（静止）に段はない ＝ 完全静止は許されない</text>
+        </svg>
+        <div class="diagram-caption">箱の中の電子のエネルギーは、E₁ の 1倍・4倍・9倍・16倍……という<strong>飛び飛びのはしご</strong>。段と段の間の値は取れない。最下段 E₁＝h²/8mL² はゼロより上にあり（零点エネルギー）、箱を半分に縮めると全段が4倍の高さに跳ね上がる</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【箱の中の電子（幅 L・壁で ψ＝0）の答え】</span>
+        <span class="step">許される波：φ<sub>n</sub>(x)＝A sin(nπx/L)　　許されるエネルギー：E<sub>n</sub>＝n²h²/(8mL²)　（n＝1, 2, 3, …）</span>
+        <span class="step multi"><span class="item">閉じ込め＋波 → 波長が飛び飛び → エネルギーが飛び飛び（量子化）</span>　<span class="item">最低段 E₁＞0（零点エネルギー）</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">方程式が本当に「使える」ことが分かりました。……でも、解けば解くほど、置き去りにしてきた疑問が大きくなります。φ(x)＝A sin(nπx/L) という<strong>波の形そのもの</strong>は、いったい何を表しているんですか？ 電子は1個の粒として見つかるはずなのに、波の形が箱じゅうに広がっている。この ψ の<strong>正体</strong>を、そろそろはっきりさせたいです。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">それが次のステージの主題だよ。実はこの問いは、<strong>シュレディンガー本人が答えを間違えた</strong>いわくつきの難問なんだ。正しい答えを出したのはボルン。ステージ2に張った伏線――「観測にかかるのは |ψ|」――を、いよいよ回収しに行こう。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 箱の中の電子で、波数 k が k＝nπ/L という飛び飛びの値に限られる理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">両端の壁で ψ＝0 という条件を満たせるのが、半波長がちょうど n 個はまる波だけだから</button>
+          <button class="choice-btn">電子が小さすぎて波長を測れないから</button>
+          <button class="choice-btn">プランク定数 h が小さい値だから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ sin(kL)＝0 となるのは kL＝nπ のときだけ。ギターの弦が決まった高さの音（基音と倍音）しか出せないのと同じで、「閉じ込められた波はちょうどはまる波長しか選べない」。ここから p も E も飛び飛びになる――量子化のからくりだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. n＝0（E＝0 で静止した状態）が許されない理由は？</p>
+        <div class="choice-list">
+          <button class="choice-btn">エネルギーが大きすぎるから</button>
+          <button class="choice-btn">sin(0)＝0 で波がどこでもゼロになり、「電子がいない」ことになってしまうから</button>
+          <button class="choice-btn">壁が壊れてしまうから</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ n＝0 だと φ＝A sin(0×πx/L)≡0、つまり波が存在しない。電子が箱の中にいる以上、最低でも n＝1 のふくらみ1個ぶんの波が必要で、そのエネルギー E₁＝h²/8mL²＞0 が零点エネルギー。閉じ込められた電子は完全には静止できない――不確定性原理の現れだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. 箱の幅 L を小さくすると、最低エネルギー E₁＝h²/8mL² はどうなる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">小さくなる</button>
+          <button class="choice-btn">変わらない</button>
+          <button class="choice-btn">大きくなる（分母の L² が小さくなるため）</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ L が分母に2乗で入っているので、箱を半分にすると E₁ は4倍。狭く閉じ込めるほど波長が短くなり、運動量とエネルギーが跳ね上がる。量子ドットはこの効果で、粒の大きさを変えるだけで光の色を調合している。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage5.html">← STAGE5へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(6);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('well-svg');
+  if (!svg) return;
+  var paths = [document.getElementById('w-n1'), document.getElementById('w-n2'), document.getElementById('w-n3')];
+  var X0 = 40, X1 = 300, AX = [58, 118, 178], AMP = 24;
+
+  function draw(t) {
+    for (var n = 1; n <= 3; n++) {
+      var osc = Math.cos(t * (0.6 + 0.5 * n));
+      var d = '', first = true;
+      for (var x = X0; x <= X1 + 0.001; x += 3) {
+        var s = Math.sin(n * Math.PI * (x - X0) / (X1 - X0));
+        var y = AX[n - 1] - AMP * s * osc;
+        d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+        first = false;
+      }
+      paths[n - 1].setAttribute('d', d);
+    }
+  }
+  draw(0);
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var t = 0, running = false, raf = null;
+  function loop() {
+    if (!running) return;
+    t += 0.06;
+    draw(t);
+    raf = requestAnimationFrame(loop);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; loop(); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; loop(); }
+})();
+</script>
+</body>
+</html>

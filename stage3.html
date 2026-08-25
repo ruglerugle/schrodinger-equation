@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#451c30">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9RTQCP2HXM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9RTQCP2HXM');
+</script>
+<title>STAGE3 光の粒と物質の波 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="E=hν はアインシュタインが光電効果から見抜いた「光の粒」の式。p=h/λ をド・ブロイが電子へ裏返して「物質の波」が生まれた。ℏ=h/2π を使って E=ℏω・p=ℏk に書き換え、波の言葉と粒の言葉をつなぐ辞書を完成させる。">
+<link rel="canonical" href="https://ruglerugle.github.io/schrodinger-equation/stage3.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="シュレディンガー方程式を導く">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="STAGE3 光の粒と物質の波 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="E=hν と p=h/λ。粒の言葉と波の言葉をつなぐ2本の翻訳ルールを、発見の物語ごと手に入れる。">
+<meta property="og:url" content="https://ruglerugle.github.io/schrodinger-equation/stage3.html">
+<meta property="og:image" content="https://ruglerugle.github.io/schrodinger-equation/images/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
+  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
+  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
+  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
+  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
+  .sq-svg .metal{fill:var(--line);stroke:var(--muted);stroke-width:1}
+  .sq-svg .lightR{stroke:#b5504a;stroke-width:2}
+  .sq-svg .lightB{stroke:#2f6fa6;stroke-width:2}
+  .sq-svg .elec{fill:var(--gold-dark)}
+  .sq-svg .evec{stroke:var(--gold-dark);stroke-width:1.8}
+  .sq-svg .evech{fill:var(--gold-dark)}
+  .sq-svg .boxL{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.2}
+  .sq-svg .boxR{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.2}
+  .sq-svg .bigarrow{stroke:var(--ink);stroke-width:2}
+  .sq-svg .bigarrowhead{fill:var(--ink)}
+</style>
+</head>
+<body>
+<div class="app-shell side-collapsed" id="app-shell">
+  <header class="game-header">
+    <div class="brand">
+      <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
+      <div class="brand-sub">STAGE 3 ― 光の粒と物質の波 ―</div>
+    </div>
+    <div class="head-progress-wrap">
+      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="header-actions">
+      <button class="head-reset" id="btn-reset-all">🔄 最初から</button>
+      <button class="head-reset" id="head-nav-toggle" title="ステージ一覧の表示切替">☰ ナビ</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <div class="side-backdrop" id="side-backdrop"></div>
+    <aside class="side-panel">
+      <div class="side-head">
+        <button class="side-toggle" id="sidebar-toggle" title="ステージ一覧の表示切替" aria-label="ステージ一覧の表示切替">☰</button>
+        <span class="side-head-text">📚 ステージ一覧</span>
+      </div>
+      <div class="side-list" id="side-list"></div>
+    </aside>
+
+    <main class="main-area">
+      <div class="chapter-head">
+        <span class="chapter-badge">STAGE 3</span><span class="chapter-title">光の粒と物質の波</span>
+        <div class="chapter-sub">E=hν と p=h/λ</div>
+      </div>
+
+      <div class="mission-box">
+        <div class="mission-label">🎯 ミッション</div>
+        <div class="mission-text">E＝hν と p＝h/λ がどんな実験から生まれたかを説明できるようになり、ℏ＝h/2π を使って E＝ℏω・p＝ℏk という「波と粒の辞書」に書き換えよう。</div>
+        <span class="mission-status" id="mission-status">未達成</span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">現在地を確認しよう。私たちは電子の波を ψ＝A e<sup>i(kx−ωt)</sup> と書けるようになった。この式に入っているのは、波の細かさ k と、振動の速さ ω――どちらも<strong>波の言葉</strong>だ。ところが、私たちが最終的に知りたい電子の性質は、エネルギー E や運動量 p――<strong>粒の言葉</strong>だね。今日はこの2つの言葉をつなぐ<strong>辞書</strong>を用意する。量子力学の教室で出会った、あの2本の式だ。まず1本目、<strong>E＝hν</strong>。どんな実験から生まれたのだったか、覚えているところまで話してごらん。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">はい、<strong>光電効果</strong>ですね。金属に光を当てると、表面から電子が飛び出してくる現象。復習を兼ねて、不思議だった点を整理します。もし光がただの波なら、<strong>明るくすればするほど</strong>波のエネルギーが増えて、飛び出す電子の勢いも増すはずです。ところが実験では違った。<strong>明るさを増やしても、電子1個1個の勢いは変わらず、個数だけが増える</strong>。逆に、光の<strong>色を青側（振動数 ν が大きい側）に変える</strong>と、電子1個の勢いが増す。そして振動数がある限界より小さい赤い光では、どんなに明るくしても電子は<strong>1個も</strong>出てこない。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">完璧だ。1905年、アインシュタインはこの結果をこう読み解いた。<strong>光は、エネルギーの粒（光子）の集まりである</strong>。そして粒1個のエネルギーは、光の振動数に比例する――<strong>E＝hν</strong>。比例定数 h は<strong>プランク定数</strong>、約 6.6×10⁻³⁴ ジュール秒という、とてつもなく小さい数だ。この読み方なら、実験の謎が全部ほどける。電子を叩き出すのは<strong>光子1個との衝突</strong>だから、電子1個がもらえるエネルギーは光子1個ぶんの hν で決まる。明るくする＝光子の<strong>個数</strong>を増やすことだから、飛び出す電子の個数が増えるだけ。色を青くする＝<strong>1個あたりのエネルギー</strong>を増やすことだから、電子の勢いが増す。そして hν が、電子を金属から引きはがすのに必要な代金に届かなければ、何個ぶつかっても1個ずつでは足りない――赤い光では何も起きない。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 240" width="100%" role="img" aria-label="光電効果の図。左：明るい赤色光を当てると、飛び出す電子の数は多いが1個1個は遅い。右：暗い青色光を当てると、電子の数は少ないが1個1個は速い">
+          <text class="strong" x="14" y="16">光電効果 ― 「明るさ」と「色」で、起きることが違う</text>
+          <text class="lbA" x="14" y="40">① 明るい赤色光（ν 小・光子が多い）</text>
+          <rect class="metal" x="14" y="88" width="140" height="18" rx="3"></rect>
+          <text class="label" x="84" y="122" text-anchor="middle">金属</text>
+          <line class="lightR" x1="28" y1="52" x2="42" y2="86"></line>
+          <line class="lightR" x1="58" y1="52" x2="72" y2="86"></line>
+          <line class="lightR" x1="88" y1="52" x2="102" y2="86"></line>
+          <line class="lightR" x1="118" y1="52" x2="132" y2="86"></line>
+          <circle class="elec" cx="52" cy="76" r="3.4"></circle>
+          <line class="evec" x1="52" y1="76" x2="46" y2="64"></line>
+          <polygon class="evech" points="44,60 43,68 51,64"></polygon>
+          <circle class="elec" cx="92" cy="76" r="3.4"></circle>
+          <line class="evec" x1="92" y1="76" x2="88" y2="64"></line>
+          <polygon class="evech" points="86,60 85,68 93,64"></polygon>
+          <circle class="elec" cx="126" cy="76" r="3.4"></circle>
+          <line class="evec" x1="126" y1="76" x2="122" y2="64"></line>
+          <polygon class="evech" points="120,60 119,68 127,64"></polygon>
+          <text class="label" x="14" y="140">電子はたくさん出るが、</text>
+          <text class="label" x="14" y="156">1個1個は<tspan class="lbA">ゆっくり</tspan></text>
+          <text class="lbB" x="190" y="40">② 暗い青色光（ν 大・光子が少ない）</text>
+          <rect class="metal" x="190" y="88" width="140" height="18" rx="3"></rect>
+          <text class="label" x="260" y="122" text-anchor="middle">金属</text>
+          <line class="lightB" x1="236" y1="52" x2="250" y2="86"></line>
+          <circle class="elec" cx="252" cy="74" r="3.4"></circle>
+          <line class="evec" x1="252" y1="74" x2="242" y2="50"></line>
+          <polygon class="evech" points="240,46 239,55 248,51"></polygon>
+          <text class="label" x="190" y="140">電子は少ないが、</text>
+          <text class="label" x="190" y="156">1個1個は<tspan class="lbB">速い</tspan></text>
+          <text class="strong" x="14" y="192">読み解き：光は粒（光子）の集まりで、1個のエネルギーが E＝hν。</text>
+          <text class="strong" x="14" y="212">明るさ＝粒の個数、色（ν）＝粒1個のエネルギー。</text>
+          <text class="strong" x="14" y="232">電子1個を叩き出すのは、光子1個との衝突。</text>
+        </svg>
+        <div class="diagram-caption">光電効果の核心。<strong>明るさを変えても電子1個の勢いは変わらない</strong>（個数が変わるだけ）。<strong>色を青側に変えると電子1個が速くなる</strong>。光が粒（1個のエネルギー hν）の集まりだと考えると、この振る舞いがすべて説明できる――アインシュタインが1921年にノーベル賞を受けた仕事</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">2本目の式に進む前に、<strong>運動量</strong>という言葉をきちんと決めておこう。物体の運動量 p は、<strong>質量 m × 速度 v</strong>。直感的には「動きの勢い」だ。同じ速さでも、卓球の球よりボウリングの球のほうが止めにくい――質量のぶん勢いが大きいからだね。物理学者がこの量を特別扱いするのは、<strong>衝突の前後で全体の運動量が必ず保存される</strong>という、宇宙で例外の見つかっていない法則があるからなんだ。さて、光もぶつかった相手を押す。彗星の尾が太陽と反対側にたなびくのは、太陽の光が塵を押すからだ。つまり<strong>光も運動量を持つ</strong>。光子1個の運動量を計算すると（光のエネルギーと運動量の関係 E＝pc を使う。c は光速）、p＝E/c＝hν/c。そして光の速さは c＝λν（1秒に ν 個ぶんの波長 λ が通過する）だから ν/c＝1/λ。代入すると――<strong>p＝h/λ</strong>。エネルギーの式と対になる、美しい式が出てくる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ここまでは<strong>光</strong>の話ですね。波だと思われていた光が、実は粒の性質（E と p）も持っていた。E＝hν と p＝h/λ は、<strong>波の量（ν, λ）から粒の量（E, p）への翻訳ルール</strong>になっている。……そして量子力学の教室で習ったのは、1924年にド・ブロイがこれを<strong>裏返した</strong>ことでした。「光が『波なのに粒』なら、電子は『粒なのに波』ではないのか。翻訳ルールは同じ式のはずだ」。つまり運動量 p の電子は、波長 <strong>λ＝h/p</strong>（※ p＝h/λ と同じ式）の波として振る舞う。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そう、大胆きわまりない類推だ。発表当時は「論文の体裁をした冗談」扱いさえされた。ところが3年後の1927年、デイヴィソンとガーマーが電子をニッケルの結晶に当てる実験で、電子がまさに波長 h/p の波として<strong>回折</strong>する（波にしかできない縞模様を作る）ことを確認してしまう。冗談は実験事実になり、ド・ブロイは1929年にノーベル賞を受けた。……これで役者がそろったよ。<strong>電子は、E＝hν と p＝h/λ という翻訳ルールを持つ波である</strong>。実験が保証してくれた、これが私たちの出発点だ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="ド・ブロイの裏返しの図。左の箱：光は波だと思われていたが粒の性質E=hνとp=h/λを持っていた。右の箱：電子は粒だと思われていたが、同じ式で波の性質λ=h/pを持つはず。下に電子回折の実験で確認と記す">
+          <text class="strong" x="14" y="16">ド・ブロイの「裏返し」（1924年）</text>
+          <rect class="boxL" x="14" y="30" width="148" height="92" rx="8"></rect>
+          <text class="lbB" x="88" y="50" text-anchor="middle">光</text>
+          <text class="label" x="88" y="70" text-anchor="middle">「波」だと思っていたら</text>
+          <text class="label" x="88" y="86" text-anchor="middle">粒でもあった</text>
+          <text class="strong" x="88" y="110" text-anchor="middle">E＝hν　p＝h/λ</text>
+          <rect class="boxR" x="178" y="30" width="148" height="92" rx="8"></rect>
+          <text class="lbA" x="252" y="50" text-anchor="middle">電子</text>
+          <text class="label" x="252" y="70" text-anchor="middle">「粒」だと思っていたら</text>
+          <text class="label" x="252" y="86" text-anchor="middle">波でもあるはず</text>
+          <text class="strong" x="252" y="110" text-anchor="middle">λ＝h/p　ν＝E/h</text>
+          <line class="bigarrow" x1="162" y1="76" x2="172" y2="76"></line>
+          <polygon class="bigarrowhead" points="178,76 169,72 169,80"></polygon>
+          <text class="strong" x="14" y="152">同じ翻訳ルールを、逆向きに使う。</text>
+          <text class="label" x="14" y="174">→ 1927年、電子の回折実験（デイヴィソン＝ガーマー）で本当に波長 h/p の波だと確認された</text>
+        </svg>
+        <div class="diagram-caption">光で見つかった「波の量↔粒の量」の翻訳ルールを、ド・ブロイは電子に裏返して適用した。運動量 p で飛ぶ電子は波長 λ＝h/p の波として振る舞う――3年後、結晶での回折実験が縞模様を映し出し、この類推は実験事実になった</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">仕上げに、この辞書を<strong>私たちの波の式の言葉</strong>に合わせて磨いておこう。ステージ1で、波は λ や ν よりも、k＝2π/λ と ω＝2πν で書くのがきれいだと学んだね。辞書も同じ言葉に翻訳する。計算はただの代入だよ。<br>E ＝ hν ＝ h × (ω/2π) ＝ <strong>(h/2π) ω</strong><br>p ＝ h/λ ＝ h × (k/2π) ＝ <strong>(h/2π) k</strong><br>どちらにも h/2π という同じ塊が現れた。あまりに頻繁に出てくるので、この塊には専用の記号がある。<strong>ℏ（エイチバー）＝ h/2π ≈ 1.05×10⁻³⁴ J·s</strong>。これを使うと、辞書はたった2本、しかも見事に対称な形になる。</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【波と粒の辞書】　E ＝ ℏω　　p ＝ ℏk</span>
+        <span class="step multi"><span class="item">E：エネルギー（粒の言葉）↔ ω：角振動数（波の言葉）</span>　<span class="item">p：運動量 ↔ k：波数</span>　<span class="item">ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">読み下してみます。<strong>E＝ℏω：速く振動する波ほど、エネルギーが大きい。p＝ℏk：細かい波ほど、運動量が大きい</strong>。橋渡し役はどちらも同じ定数 ℏ。……そうすると、電子の波はこう書き直せますね。ψ＝A e<sup>i(kx−ωt)</sup> の k に p/ℏ を、ω に E/ℏ を代入して――ψ＝A e<sup>i(px−Et)/ℏ</sup>。<strong>波の式の中に、運動量とエネルギーが直接入った</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その書き換えが、今日の到達点だよ。眺めてごらん。<strong>電子の波そのものが、E と p を「位相の進むペース」として体内に記録している</strong>。空間方向に p のペースでねじれ、時間方向に E のペースで回る。……そこで、次の問いが自然に生まれる。波の中に記録されているなら、<strong>取り出せる</strong>はずだ。式 ψ から、掛け算や足し算のような操作で、p や E を引きずり出す方法はないか？　その道具が<strong>微分</strong>――次のステージの主役だ。ステージ2で予告した「e<sup>iθ</sup> は微分しても形が崩れない」という強みが、いよいよ火を噴くよ。</div>
+        </div>
+      </div>
+
+      <div class="quiz-head">確認クイズ</div>
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q1. 光電効果で、当てる光の「色」を赤から青に変える（振動数 ν を上げる）と何が起きる？</p>
+        <div class="choice-list">
+          <button class="choice-btn">飛び出す電子1個1個の勢いが増す</button>
+          <button class="choice-btn">飛び出す電子の個数だけが増える</button>
+          <button class="choice-btn">何も変わらない</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ 色（振動数）は光子1個のエネルギー E＝hν を決める。青いほど1個が強く、叩き出される電子1個の勢いが増す。個数を決めるのは明るさ（光子の数）のほう。この「明るさと色の役割分担」こそ、光が粒であることの動かぬ証拠だった。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q2. ド・ブロイが1924年にやったことは？</p>
+        <div class="choice-list">
+          <button class="choice-btn">電子を結晶に当てて回折の縞模様を観測した</button>
+          <button class="choice-btn">光電効果の実験から E＝hν を発見した</button>
+          <button class="choice-btn">光で見つかった波↔粒の翻訳ルールを裏返し、「電子も波長 h/p の波のはずだ」と予言した</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ド・ブロイの仕事は理論的な「裏返し」の予言。実験で確認したのは1927年のデイヴィソンとガーマー（選択肢1）、E＝hν の発見はアインシュタイン（選択肢2）。類推→予言→実験による確認、という科学の王道リレーだ。</div>
+      </div>
+
+      <div class="quiz-card" data-quiz>
+        <p class="quiz-q">Q3. ℏ（エイチバー）とは何？</p>
+        <div class="choice-list">
+          <button class="choice-btn">プランク定数 h を 2 で割ったもの</button>
+          <button class="choice-btn">プランク定数 h を 2π で割ったもので、辞書を E＝ℏω・p＝ℏk と対称な形にする定数</button>
+          <button class="choice-btn">光の速さを表す定数</button>
+        </div>
+        <div class="quiz-explain" hidden>正解！ ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s。波の言葉を ν・λ から ω・k に乗り換えたとき、換算で必ず 2π が現れるので、h/2π をひとまとめにした。以後、量子力学の式にはほぼ ℏ の顔しか出てこない。</div>
+      </div>
+
+      <div class="stage-nav">
+        <a class="btn" href="stage2.html">← STAGE2へ</a>
+        <button class="btn btn-primary" id="btn-next" disabled>次へ →</button>
+      </div>
+
+      <div id="book-recommend"></div>
+    </main>
+  </div>
+</div>
+
+<script src="js/progress.js"></script>
+<script>SQ.initStagePage(3);</script>
+</body>
+</html>
