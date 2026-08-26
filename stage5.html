@@ -43,6 +43,13 @@
   .sq-svg .slotboxB{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.4}
   .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
   .sq-svg .flowhead{fill:var(--ink)}
+  .sq-svg .lvl{stroke:var(--gold-dark);stroke-width:2.2}
+  .sq-svg .tiny{fill:var(--muted);font-size:9px;font-weight:700}
+  .sq-svg .zero{stroke:var(--muted);stroke-width:1;stroke-dasharray:5 4}
+  .sq-svg .fall{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
+  .sq-svg .strip{fill:#1d1330;stroke:var(--muted);stroke-width:1}
+  .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
+  .sq-svg .el{fill:var(--gold-dark)}
 </style>
 </head>
 <body>
@@ -159,6 +166,55 @@
           </div>
           <div class="dialog-bubble">その慎重さは科学者のものだよ。正直に答えよう。まず、V＝0（力を受けない自由な電子）の場合は、検算できる。ψ＝A e<sup>i(kx−ωt)</sup> を方程式に入れてごらん。左辺は Eψ、右辺第1項は (p²/2m)ψ になって、方程式は「E＝p²/2m」――自由な粒子のエネルギーの式そのものに戻る。<strong>つじつまは完全に合っている</strong>。だが V(x) がある一般の場合はどうか。ここは、はっきり言えば<strong>飛躍</strong>なんだ。シュレディンガーは「単純な場合にこの形なら、複雑な場合も同じ形の法則が成り立つはずだ」と<strong>賭けた</strong>。物理の基本法則は、証明されるものではなく<strong>推測され、実験で裁かれる</strong>ものだからね。そして裁きは即座に下った。1926年、彼はこの方程式を水素原子（V は原子核の引力）に適用して解き、<strong>実験で測られていた水素の光の色（スペクトル）を、ことごとく言い当てた</strong>んだ。賭けは勝ちだった。以来100年、この方程式が外れた例はない。半導体もレーザーも化学結合も、ぜんぶこの式の上に建っている。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="hyd-svg" viewBox="0 0 340 260" width="100%" role="img" aria-label="水素原子でのシュレディンガー方程式の検証。左は方程式を解いて出てきたエネルギーのはしごで、n=3、4、5の段から n=2 へ電子が飛び降りるたびに、段差ぶんの光が飛び出す。右上は方程式が予言した光の線、右下は実験で測られていた線。赤・青緑・青紫の線の位置がことごとく一致する">
+          <text class="strong" x="14" y="16">水素原子を解く ― 計算した色 vs 測った色</text>
+          <text class="label" x="14" y="34">① 方程式が出した「はしご」</text>
+          <line class="zero" x1="36" y1="40" x2="140" y2="40"></line>
+          <text class="tiny" x="143" y="43">0 eV</text>
+          <line class="lvl" x1="36" y1="48" x2="140" y2="48"></line>
+          <text class="tiny" x="14" y="46">n=5</text>
+          <line class="lvl" x1="36" y1="56" x2="140" y2="56"></line>
+          <text class="tiny" x="14" y="60">n=4</text>
+          <line class="lvl" x1="36" y1="66" x2="140" y2="66"></line>
+          <text class="tiny" x="14" y="70">n=3</text>
+          <line class="lvl" x1="36" y1="89" x2="140" y2="89"></line>
+          <text class="tiny" x="14" y="93">n=2</text>
+          <text class="tiny" x="104" y="86">−3.4 eV</text>
+          <line class="lvl" x1="36" y1="225" x2="140" y2="225"></line>
+          <text class="tiny" x="14" y="229">n=1</text>
+          <text class="tiny" x="98" y="221">−13.6 eV</text>
+          <text class="tiny" x="36" y="243">E<tspan baseline-shift="sub" font-size="7">n</tspan>＝−13.6/n² eV</text>
+          <line class="fall" x1="70" y1="48" x2="70" y2="89"></line>
+          <line class="fall" x1="95" y1="56" x2="95" y2="89"></line>
+          <line class="fall" x1="120" y1="66" x2="120" y2="89"></line>
+          <circle class="el" id="hy-el" r="4" cx="120" cy="66"></circle>
+          <circle id="hy-ph" r="3.2" cx="0" cy="0" style="display:none"></circle>
+          <text class="lbA" x="192" y="64">② 方程式の予言</text>
+          <rect class="strip" x="192" y="70" width="136" height="38" rx="4"></rect>
+          <rect id="hy-p1" x="308.5" y="72" width="3" height="34" fill="#e0453a"></rect>
+          <rect id="hy-p2" x="232.5" y="72" width="3" height="34" fill="#2fa8a0"></rect>
+          <rect id="hy-p3" x="210.5" y="72" width="3" height="34" fill="#6b4fd8"></rect>
+          <line class="tie" x1="310" y1="108" x2="310" y2="142"></line>
+          <line class="tie" x1="234" y1="108" x2="234" y2="142"></line>
+          <line class="tie" x1="212" y1="108" x2="212" y2="142"></line>
+          <text class="lbB" x="192" y="136">③ 実験で測った線</text>
+          <rect class="strip" x="192" y="142" width="136" height="38" rx="4"></rect>
+          <rect x="308.5" y="144" width="3" height="34" fill="#e0453a"></rect>
+          <rect x="232.5" y="144" width="3" height="34" fill="#2fa8a0"></rect>
+          <rect x="210.5" y="144" width="3" height="34" fill="#6b4fd8"></rect>
+          <text class="tiny" x="310" y="192" text-anchor="middle">Hα</text>
+          <text class="tiny" x="234" y="192" text-anchor="middle">Hβ</text>
+          <text class="tiny" x="212" y="192" text-anchor="middle">Hγ</text>
+          <text class="tiny" x="260" y="206" text-anchor="middle">紫 ←　色　→ 赤</text>
+          <text class="strong" x="14" y="254">→ 予言した線の位置が、実験とことごとく一致した</text>
+        </svg>
+        <div class="diagram-caption">シュレディンガー方程式の最終試験（1926年）。<strong>①</strong> 方程式を水素原子（V＝原子核の引力）で解くと、エネルギーのはしご E<sub>n</sub>＝−13.6/n² eV がひとりでに出てくる。電子が上の段から n＝2 の段へ飛び降りるとき、段差ぶんのエネルギーが1個の光になって飛び出す（この仕組み自体はSTAGE8で導く）。<strong>②</strong> 段差から計算した光の色（線の位置）と、<strong>③</strong> 分光器ですでに測られていた水素の線スペクトル。赤（Hα）・青緑（Hβ）・青紫（Hγ）、どの線も位置がぴったり一致した</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -238,5 +294,72 @@
 
 <script src="js/progress.js"></script>
 <script>SQ.initStagePage(5);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('hyd-svg');
+  if (!svg) return;
+  var Y2 = 89;
+  // 3→2（Hα・赤）、4→2（Hβ・青緑）、5→2（Hγ・青紫）
+  var TR = [
+    { x: 120, y0: 66, color: '#e0453a', tx: 310, line: 'hy-p1' },
+    { x: 95,  y0: 56, color: '#2fa8a0', tx: 234, line: 'hy-p2' },
+    { x: 70,  y0: 48, color: '#6b4fd8', tx: 212, line: 'hy-p3' }
+  ];
+  var dot = document.getElementById('hy-el'), ph = document.getElementById('hy-ph');
+  var lines = TR.map(function(t){ return document.getElementById(t.line); });
+
+  function setLit(i, on){ lines[i].style.opacity = on ? 1 : 0.12; }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    dot.style.display = 'none';
+    return; // 静止時は予言の線を最初から全点灯のまま表示
+  }
+
+  var SEG = 2600, HOLD = 1600, TOTAL = SEG * TR.length + HOLD;
+  var running = false, raf = null, t0 = null;
+
+  function frame(now){
+    if (!running) return;
+    if (t0 === null) t0 = now - 1;
+    var t = (now - t0) % TOTAL;
+    var k = Math.floor(t / SEG);
+    if (k >= TR.length) {
+      // 全部そろった状態でしばらく見せる
+      dot.style.display = 'none'; ph.style.display = 'none';
+      TR.forEach(function(_, i){ setLit(i, true); });
+    } else {
+      if (k === 0 && t < 60) TR.forEach(function(_, i){ setLit(i, false); });
+      var tr = TR[k], p = (t - k * SEG) / SEG;
+      if (p < 0.4) {
+        // 電子が上の段から n=2 へ飛び降りる
+        var q = p / 0.4;
+        dot.style.display = ''; ph.style.display = 'none';
+        dot.setAttribute('cx', tr.x);
+        dot.setAttribute('cy', (tr.y0 + (Y2 - tr.y0) * q).toFixed(1));
+      } else if (p < 0.85) {
+        // 段差ぶんの光が、スペクトルの位置へ飛んでいく
+        var q2 = (p - 0.4) / 0.45;
+        dot.setAttribute('cy', Y2);
+        ph.style.display = '';
+        ph.setAttribute('fill', tr.color);
+        ph.setAttribute('cx', (tr.x + (tr.tx - tr.x) * q2).toFixed(1));
+        ph.setAttribute('cy', Y2);
+        if (q2 > 0.97) setLit(k, true);
+      } else {
+        ph.style.display = 'none';
+        setLit(k, true);
+      }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; t0 = null; raf = requestAnimationFrame(frame); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; raf = requestAnimationFrame(frame); }
+})();
+</script>
 </body>
 </html>
