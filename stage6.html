@@ -87,14 +87,28 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">では、方程式を初めて<strong>使って</strong>みよう。問題はこうだ。<strong>幅 L の箱の中に、電子が1個閉じ込められている</strong>。箱の中では、電子はどこにいても力を受けない――前回の地形図の言葉で言えば、<strong>V の地形が完全に平ら</strong>ということだ。平らな床の高さは基準の取り方にすぎないから、いちばん簡単な 0 に選ぶ（V＝0）。壁は無限に高くて切り立った崖で、絶対に外に出られない――外では V が無限大、と設定する。物理屋はこれを<strong>井戸型ポテンシャル</strong>と呼ぶ。まず、壁の条件を波の言葉に翻訳しておこう。電子は壁の外には絶対にいられないのだから、壁の外では波はゼロ。そして波は途中でぷつんと切れない（切れた場所では傾きが読めず、方程式が壊れてしまう）から、<strong>壁のちょうど上（x＝0 と x＝L）で ψ＝0</strong> でなければならない。この「端はゼロ」が、あとで効いてくる<strong>境界条件</strong>だ。</div>
+          <div class="dialog-bubble">では、方程式を初めて<strong>使って</strong>みよう。問題はこうだ。<strong>幅 L の箱の中に、電子が1個閉じ込められている</strong>。箱の中では、電子はどこにいても力を受けない――前回の地形図の言葉で言えば、<strong>V の地形が完全に平ら</strong>ということだ。平らな床の高さは基準の取り方にすぎないから、いちばん簡単な 0 に選ぶ（V＝0）。壁は無限に高くて切り立った崖で、絶対に外に出られない――外では V が無限大、と設定する。物理屋はこれを<strong>井戸型ポテンシャル</strong>と呼ぶ。まず、壁の条件を波の言葉に翻訳しておこう。第一歩は、<strong>壁の外では ψ＝0</strong>、ということ。理由はエネルギーの帳簿だ。方程式の位置エネルギーの項は V×ψ だったね。V が無限大の場所に波が少しでもかかっていたら、そこの支払いは<strong>無限大</strong>。有限のエネルギー E しか持たない電子に、その請求は払えない。だから波は、壁の外には一切はみ出せないんだ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">外でゼロ、は納得です。でも、それだけなら<strong>壁の内側ぎりぎりまで波が高いままで、壁を境に段差でストンとゼロに落ちる</strong>形も、まだ許されていませんか？ 「壁のちょうど上で ψ＝0」とまで言い切るには、もうひと押し要る気がします。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのもうひと押しは、前のステージで組んだ検出器が与えてくれる。波の<strong>傾きは、運動量の読み取り</strong>だったね（−iℏ∂/∂x）。段差でぷつんと切れた波は、その一点で<strong>無限に急な傾き</strong>を持つことになる。読み取られる運動量は無限大、運動エネルギー p²/2m も無限大――こちらの請求も、有限の E では払えない。つまり<strong>「外にはみ出す」のも「段差を作る」のも、どちらも無限のエネルギーがかかって不可能</strong>なんだ。波は途切れずなめらかにつながるしかなく、外側のゼロと連続につながるには、<strong>壁のちょうど上（x＝0 と x＝L）で ψ＝0</strong> でなければならない。これが、あとで効いてくる<strong>境界条件</strong>だ。……ちなみに壁の高さが<strong>有限</strong>なら、請求が有限で済むぶん話が変わって、波は壁の中へわずかに染み込む。量子力学の教室で見た<strong>トンネル効果</strong>がそれだよ。壁を無限に高くした極限で、染み込みがゼロに潰れて「端でゼロ」になる、と思ってもいい。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">両端が固定されている……<strong>ギターの弦</strong>と同じ状況ですね。弦も両端が留められていて、そこでは絶対に振動できない。……解く方針はどうしましょう。方程式には x と t の両方が入っていて、いきなり全部相手にするのは大変そうです。</div>
+          <div class="dialog-bubble">はみ出しは位置エネルギーの請求、段差は運動エネルギーの請求で、どちらも無限大だから却下。帳簿ひとつで説明がつくんですね。……そうすると、両端が固定されている――<strong>ギターの弦</strong>と同じ状況ですね。弦も両端が留められていて、そこでは絶対に振動できない。……解く方針はどうしましょう。方程式には x と t の両方が入っていて、いきなり全部相手にするのは大変そうです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -162,7 +176,7 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">……はい、ひとつ腑に落ちないことが。壁で φ＝0 という条件は分かりました。でも、条件が「壁でゼロ」だけなら、<strong>壁の直前まで高いままで、間際だけ崖のように急降下する形</strong>でも満たせますよね。図のような、なだらかな山の形になる理由が、まだ見えていません。</div>
+          <div class="dialog-bubble">……はい、ひとつ腑に落ちないことが。壁で φ＝0 になることと、段差（ぷつんと切れる形）が禁止なことは分かりました。でも、<strong>途切れずつながってさえいれば、壁の直前まで高いままで、間際だけ崖のように急降下する形</strong>も許されますよね。段差ではなく、あくまで連続な急坂です。図のような、なだらかな山の形になる理由が、まだ見えていません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
