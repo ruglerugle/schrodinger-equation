@@ -62,7 +62,7 @@
 
 # ファイル構成
 - `design-system.css` — quest-template由来の共通デザイン。配色は `:root` の変数で管理（黄昏のワインレッド×ゴールド）
-- `js/progress.js` — 進捗管理・クイズ判定。**クイズの正解は `ANSWERS`**。localStorageキーは `schrodingerQuestProgress`、グローバルは `SQ`
+- `js/progress.js` — 進捗管理・クイズ判定。**クイズの正解は `ANSWERS`**。localStorageキーは `schrodingerQuestProgress_v2`、グローバルは `SQ`
 - `stage1.html` 〜 `stage8.html` — 各ステージ。`index.html`（表紙）、`complete.html`（クリア画面）
 - `images/` — キャラ画像はWebP（幅300px程度、kennard-inequality/quantum-questから流用）。`<img>` には `width`/`height` 属性を必ず付ける。
   favicon.png は quantum-quest 由来のΨマーク（流用。差し替え検討）。ogp.png は未作成
