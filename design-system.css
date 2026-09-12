@@ -126,7 +126,7 @@ a.head-reset{text-decoration:none;display:inline-flex;align-items:center}
 .chapter-head{margin-bottom:12px}
 .chapter-badge{display:inline-block;background:linear-gradient(#e8c07f,var(--gold-dark));color:#3a2705;border-radius:7px;
   padding:4px 11px;font-size:12px;font-weight:950;letter-spacing:.02em;margin-right:8px;box-shadow:0 2px 0 rgba(0,0,0,.15)}
-.chapter-title{display:inline;font-size:20px;font-weight:950;color:#1c2f2b}
+.chapter-title{display:inline;margin:0;font-size:20px;font-weight:950;color:#1c2f2b}
 .chapter-sub{font-size:13px;color:var(--muted);margin-top:4px;font-weight:700}
 
 /* ==========================================================
@@ -193,6 +193,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .choice-btn{border:1.5px solid #b6c9c2;background:#fff;border-radius:8px;padding:.55rem 1rem;font-size:14px;font-weight:800;
   cursor:pointer;color:#20463d;touch-action:manipulation;text-align:left}
 .choice-btn:hover{background:#eef7f3}
+.choice-btn[aria-disabled="true"]{cursor:default}
 .choice-btn.choice-ok{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}
 .choice-btn.choice-ng{background:var(--ng-bg);border-color:var(--ng-bd);color:var(--ng)}
 /* 色だけに頼らない正誤表示（色覚特性への配慮） */

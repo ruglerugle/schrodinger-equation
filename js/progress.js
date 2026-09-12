@@ -134,7 +134,10 @@
           var correct = answers[cardIndex] === btnIndex;
           live.textContent = correct ? "正解です" : "不正解です。もう一度選んでください";
           if (correct) {
-            buttons.forEach(function (b) { b.disabled = true; });
+            // 正解のボタンは disabled にせず、フォーカスを保ったまま操作だけ止める
+            // （押した瞬間にフォーカスが body へ飛ぶと、キーボード利用者が位置を見失うため）
+            buttons.forEach(function (b) { if (b !== btn) b.disabled = true; });
+            btn.setAttribute("aria-disabled", "true");
             btn.classList.add("choice-ok");
             markSolved(card);
             if (allSolved(document)) {
