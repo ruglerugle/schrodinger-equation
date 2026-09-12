@@ -1,0 +1,16 @@
+name: Trigger quantum series sync
+
+# mainへのpush時に、配信リポジトリ（quantum-quest）の同期ワークフローを即起動する。
+# QUANTUM_SYNC_TOKEN は quantum-quest の Actions 起動権限のみを持つ fine-grained PAT。
+on:
+  push:
+    branches: [main]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run sync workflow in quantum-quest
+        env:
+          GH_TOKEN: ${{ secrets.QUANTUM_SYNC_TOKEN }}
+        run: gh workflow run sync-quests.yml -R ruglerugle/quantum-quest
