@@ -43,6 +43,12 @@
   .sq-svg .arrowRh{fill:#b5504a}
   .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
   .sq-svg .arrowhead{fill:var(--muted)}
+  .sq-svg .tiny{fill:var(--muted);font-size:9px;font-weight:700}
+  .sq-svg .zero{stroke:var(--muted);stroke-width:1;stroke-dasharray:5 4}
+  .sq-svg .fall{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
+  .sq-svg .strip{fill:#1d1330;stroke:var(--muted);stroke-width:1}
+  .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
+  .sq-svg .el{fill:var(--gold-dark)}
 </style>
 </head>
 <body>
@@ -159,7 +165,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう、これが方程式の底力だ。世界の動きの正体は、<strong>エネルギーの違う定常状態どうしの、回転ペースのずれ</strong>なんだよ。そして1926年、シュレディンガーは本丸に攻め込んだ。<strong>水素原子</strong>――V(x) を原子核の電気的な引力にして方程式を解くと、はしごの段が E<sub>n</sub>＝−13.6 eV／n² と出てくる。段差から hν で計算した光の色は、分光器で測られていた水素のスペクトル線と<strong>小数点以下まで一致</strong>した。さらに、解の形 φ（軌道、オービタルと呼ばれる）は原子の中の電子の「雲の形」を与えて、<strong>元素の周期表がなぜあの並びなのか、化学結合がなぜできるのか</strong>まで、この方程式から説明されていく。化学という学問まるごとが、実はこの式の応用問題だったわけだ。</div>
+          <div class="dialog-bubble">そう、これが方程式の底力だ。世界の動きの正体は、<strong>エネルギーの違う定常状態どうしの、回転ペースのずれ</strong>なんだよ。そして1926年、シュレディンガーは本丸に攻め込んだ。<strong>水素原子</strong>――V(x) を原子核の電気的な引力にして方程式を解くと、はしごの段が Eₙ＝−13.6 eV／n² と出てくる。段差から hν で計算した光の色は、分光器で測られていた水素のスペクトル線と<strong>小数点以下まで一致</strong>した。さらに、解の形 φ（軌道、オービタルと呼ばれる）は原子の中の電子の「雲の形」を与えて、<strong>元素の周期表がなぜあの並びなのか、化学結合がなぜできるのか</strong>まで、この方程式から説明されていく。化学という学問まるごとが、実はこの式の応用問題だったわけだ。</div>
         </div>
       </div>
 
@@ -184,11 +190,57 @@
         <div class="diagram-caption">2つの定常状態を混ぜると、回転ペースの差から |ψ|² が振動数 ν＝(E₂−E₁)/h で揺れ、その振動数の光が放出される。ボーアが天下りに仮定した hν＝E₂−E₁ が、方程式から導かれる――水素のスペクトルの完全な説明</div>
       </div>
 
+      <div class="diagram-box">
+        <svg class="sq-svg" id="hyd-svg" viewBox="0 0 340 260" width="100%" role="img" aria-label="水素原子でのシュレディンガー方程式の検証。左は方程式を解いて出てきたエネルギーのはしごで、n=3、4、5の段から n=2 へ電子が飛び降りるたびに、段差ぶんの光が飛び出す。右上は方程式が予言した光の線、右下は実験で測られていた線。赤・青緑・青紫の線の位置がことごとく一致する">
+          <text class="strong" x="14" y="16">水素原子を解く ― 計算した色 vs 測った色</text>
+          <text class="label" x="14" y="34">① 方程式が出した「はしご」</text>
+          <line class="zero" x1="36" y1="40" x2="140" y2="40"></line>
+          <text class="tiny" x="143" y="43">0 eV</text>
+          <line class="lvl" x1="36" y1="48" x2="140" y2="48"></line>
+          <text class="tiny" x="14" y="46">n=5</text>
+          <line class="lvl" x1="36" y1="56" x2="140" y2="56"></line>
+          <text class="tiny" x="14" y="60">n=4</text>
+          <line class="lvl" x1="36" y1="66" x2="140" y2="66"></line>
+          <text class="tiny" x="14" y="70">n=3</text>
+          <line class="lvl" x1="36" y1="89" x2="140" y2="89"></line>
+          <text class="tiny" x="14" y="93">n=2</text>
+          <text class="tiny" x="104" y="86">−3.4 eV</text>
+          <line class="lvl" x1="36" y1="225" x2="140" y2="225"></line>
+          <text class="tiny" x="14" y="229">n=1</text>
+          <text class="tiny" x="98" y="221">−13.6 eV</text>
+          <text class="tiny" x="36" y="243">E<tspan baseline-shift="sub" font-size="7">n</tspan>＝−13.6/n² eV</text>
+          <line class="fall" x1="70" y1="48" x2="70" y2="89"></line>
+          <line class="fall" x1="95" y1="56" x2="95" y2="89"></line>
+          <line class="fall" x1="120" y1="66" x2="120" y2="89"></line>
+          <circle class="el" id="hy-el" r="4" cx="120" cy="66"></circle>
+          <circle id="hy-ph" r="3.2" cx="0" cy="0" style="display:none"></circle>
+          <text class="lbA" x="192" y="64">② 方程式の予言</text>
+          <rect class="strip" x="192" y="70" width="136" height="38" rx="4"></rect>
+          <rect id="hy-p1" x="308.5" y="72" width="3" height="34" fill="#e0453a"></rect>
+          <rect id="hy-p2" x="232.5" y="72" width="3" height="34" fill="#2fa8a0"></rect>
+          <rect id="hy-p3" x="210.5" y="72" width="3" height="34" fill="#6b4fd8"></rect>
+          <line class="tie" x1="310" y1="108" x2="310" y2="142"></line>
+          <line class="tie" x1="234" y1="108" x2="234" y2="142"></line>
+          <line class="tie" x1="212" y1="108" x2="212" y2="142"></line>
+          <text class="lbB" x="192" y="136">③ 実験で測った線</text>
+          <rect class="strip" x="192" y="142" width="136" height="38" rx="4"></rect>
+          <rect x="308.5" y="144" width="3" height="34" fill="#e0453a"></rect>
+          <rect x="232.5" y="144" width="3" height="34" fill="#2fa8a0"></rect>
+          <rect x="210.5" y="144" width="3" height="34" fill="#6b4fd8"></rect>
+          <text class="tiny" x="310" y="192" text-anchor="middle">Hα</text>
+          <text class="tiny" x="234" y="192" text-anchor="middle">Hβ</text>
+          <text class="tiny" x="212" y="192" text-anchor="middle">Hγ</text>
+          <text class="tiny" x="260" y="206" text-anchor="middle">紫 ←　色　→ 赤</text>
+          <text class="strong" x="14" y="254">→ 予言した線の位置が、実験とことごとく一致した</text>
+        </svg>
+        <div class="diagram-caption">シュレディンガー方程式の最終試験（1926年）。<strong>①</strong> 方程式を水素原子（V＝原子核の引力）で解くと、エネルギーのはしご Eₙ＝−13.6/n² eV がひとりでに出てくる。電子が上の段から n＝2 の段へ飛び降りるとき、段差ぶんのエネルギーが1個の光になって飛び出す（いま導いた hν＝E₂−E₁ の仕組み）。<strong>②</strong> 段差から計算した光の色（線の位置）と、<strong>③</strong> 分光器ですでに測られていた水素の線スペクトル。赤（Hα）・青緑（Hβ）・青紫（Hγ）、どの線も位置がぴったり一致した</div>
+      </div>
+
       <div class="formula-box">
         <span class="step">【旅の全体図】</span>
         <span class="step">波の式 ψ＝Ae<sup>i(kx−ωt)</sup>（S1–S2）＋ 辞書 E＝ℏω・p＝ℏk（S3）＋ 検出器 −iℏ∂/∂x・iℏ∂/∂t（S4）</span>
         <span class="step">→ エネルギー保存則に代入：　iℏ∂ψ/∂t ＝ −(ℏ²/2m)∂²ψ/∂x² ＋ V(x)ψ　（S5）</span>
-        <span class="step multi"><span class="item">解くと量子化 En∝n²（S6）</span>　<span class="item">|ψ|²＝確率の台帳（S7）</span>　<span class="item">定常状態と hν＝E₂−E₁（S8）</span></span>
+        <span class="step multi"><span class="item">解くと量子化 Eₙ∝n²（S6）</span>　<span class="item">|ψ|²＝確率の台帳（S7）</span>　<span class="item">定常状態と hν＝E₂−E₁（S8）</span></span>
       </div>
 
       <div class="dialogue-scene">
@@ -216,7 +268,7 @@
           <button class="choice-btn">針の回る速さがだんだん遅くなる</button>
           <button class="choice-btn">確率の景色 |ψ|²（＝|φ|²。回転部分の大きさが常に1だから）</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 針そのもの（ψ の値）は E/ℏ のペースで回り続けるが、|e^(−iEt/ℏ)|＝1 なので |ψ|²＝|φ|² から時間が消える。観測にかかる景色が凍っている――これが「定常」の意味だ。</div>
+        <div class="quiz-explain" hidden>正解！ 針そのもの（ψ の値）は E/ℏ のペースで回り続けるが、|e<sup>−iEt/ℏ</sup>|＝1 なので |ψ|²＝|φ|² から時間が消える。観測にかかる景色が凍っている――これが「定常」の意味だ。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
@@ -251,6 +303,73 @@
 
 <script src="js/progress.js"></script>
 <script>SQ.initStagePage(8);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('hyd-svg');
+  if (!svg) return;
+  var Y2 = 89;
+  // 3→2（Hα・赤）、4→2（Hβ・青緑）、5→2（Hγ・青紫）
+  var TR = [
+    { x: 120, y0: 66, color: '#e0453a', tx: 310, line: 'hy-p1' },
+    { x: 95,  y0: 56, color: '#2fa8a0', tx: 234, line: 'hy-p2' },
+    { x: 70,  y0: 48, color: '#6b4fd8', tx: 212, line: 'hy-p3' }
+  ];
+  var dot = document.getElementById('hy-el'), ph = document.getElementById('hy-ph');
+  var lines = TR.map(function(t){ return document.getElementById(t.line); });
+
+  function setLit(i, on){ lines[i].style.opacity = on ? 1 : 0.12; }
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    dot.style.display = 'none';
+    return; // 静止時は予言の線を最初から全点灯のまま表示
+  }
+
+  var SEG = 2600, HOLD = 1600, TOTAL = SEG * TR.length + HOLD;
+  var running = false, raf = null, t0 = null;
+
+  function frame(now){
+    if (!running) return;
+    if (t0 === null) t0 = now - 1;
+    var t = (now - t0) % TOTAL;
+    var k = Math.floor(t / SEG);
+    if (k >= TR.length) {
+      // 全部そろった状態でしばらく見せる
+      dot.style.display = 'none'; ph.style.display = 'none';
+      TR.forEach(function(_, i){ setLit(i, true); });
+    } else {
+      if (k === 0 && t < 60) TR.forEach(function(_, i){ setLit(i, false); });
+      var tr = TR[k], p = (t - k * SEG) / SEG;
+      if (p < 0.4) {
+        // 電子が上の段から n=2 へ飛び降りる
+        var q = p / 0.4;
+        dot.style.display = ''; ph.style.display = 'none';
+        dot.setAttribute('cx', tr.x);
+        dot.setAttribute('cy', (tr.y0 + (Y2 - tr.y0) * q).toFixed(1));
+      } else if (p < 0.85) {
+        // 段差ぶんの光が、スペクトルの位置へ飛んでいく
+        var q2 = (p - 0.4) / 0.45;
+        dot.setAttribute('cy', Y2);
+        ph.style.display = '';
+        ph.setAttribute('fill', tr.color);
+        ph.setAttribute('cx', (tr.x + (tr.tx - tr.x) * q2).toFixed(1));
+        ph.setAttribute('cy', Y2);
+        if (q2 > 0.97) setLit(k, true);
+      } else {
+        ph.style.display = 'none';
+        setLit(k, true);
+      }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !running) { running = true; t0 = null; raf = requestAnimationFrame(frame); }
+      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+    }, {threshold: 0.15}).observe(svg);
+  } else { running = true; raf = requestAnimationFrame(frame); }
+})();
+</script>
 
 <script>
 (function(){

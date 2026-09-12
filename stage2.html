@@ -37,13 +37,10 @@
   .sq-svg .circle{fill:none;stroke:var(--line);stroke-width:1.2}
   .sq-svg .vecA{stroke:var(--gold-dark);stroke-width:2.4}
   .sq-svg .vecAh{fill:var(--gold-dark)}
-  .sq-svg .vecB{stroke:#2f6fa6;stroke-width:2.4}
-  .sq-svg .vecBh{fill:#2f6fa6}
   .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
   .sq-svg .ra{fill:none;stroke:var(--muted);stroke-width:1}
   .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
   .sq-svg .handdot{fill:var(--gold-dark)}
-  .sq-svg .imwave{fill:none;stroke:#b5504a;stroke-width:1.6;stroke-dasharray:5 4}
 </style>
 </head>
 <body>
@@ -51,7 +48,7 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
-      <div class="brand-sub">STAGE 2 ― 回る矢印 e^iθ ―</div>
+      <div class="brand-sub">STAGE 2 ― 回る矢印 e<sup>iθ</sup> ―</div>
     </div>
     <div class="head-progress-wrap">
       <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
@@ -266,7 +263,7 @@
           <button class="choice-btn">矢印を上下にひっくり返す</button>
           <button class="choice-btn">矢印を反時計回りに90°回す</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 1×i＝i（真横→真上）、i×i＝−1（真上→逆の真横）と、i を掛けるたびに90°回る。4回で i⁴＝1、ちょうど一周。この「i＝90°回転」が、e^iθ が円を描く理由の心臓部だった。</div>
+        <div class="quiz-explain" hidden>正解！ 1×i＝i（真横→真上）、i×i＝−1（真上→逆の真横）と、i を掛けるたびに90°回る。4回で i⁴＝1、ちょうど一周。この「i＝90°回転」が、e<sup>iθ</sup> が円を描く理由の心臓部だった。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
@@ -276,7 +273,7 @@
           <button class="choice-btn">θ が増えるほど大きくなる</button>
           <button class="choice-btn">sinθ と同じように 1 と −1 の間で振動する</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ e^iθ は単位円の上を回る矢印だから、長さはいつも1（|e^iθ|²＝cos²θ＋sin²θ＝1）。回転は向きを変えるだけで長さを変えない。だから ψ＝Ae^i(kx−ωt) の大きさは常に A で、「波が周期的に消える」問題が解決した。</div>
+        <div class="quiz-explain" hidden>正解！ e<sup>iθ</sup> は単位円の上を回る矢印だから、長さはいつも1（|e<sup>iθ</sup>|²＝cos²θ＋sin²θ＝1）。回転は向きを変えるだけで長さを変えない。だから ψ＝Ae<sup>i(kx−ωt)</sup> の大きさは常に A で、「波が周期的に消える」問題が解決した。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
@@ -286,7 +283,7 @@
           <button class="choice-btn">大きさ |ψ| が一定に保たれる／微分しても形が崩れない</button>
           <button class="choice-btn">波の速さが上がる／振幅が大きくなる</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ ①回る矢印の長さは一定だから、波の強さが場所や時間で消えたり現れたりしない。②e^iθ は「変化の速さ＝i×いまの値」なので、微分しても i が前に出るだけで自分自身のまま。この②が、次の次のステージで方程式を組み上げる生命線になる。</div>
+        <div class="quiz-explain" hidden>正解！ ①回る矢印の長さは一定だから、波の強さが場所や時間で消えたり現れたりしない。②e<sup>iθ</sup> は「変化の速さ＝i×いまの値」なので、微分しても i が前に出るだけで自分自身のまま。この②が、次の次のステージで方程式を組み上げる生命線になる。</div>
       </div>
 
       <div class="stage-nav">
