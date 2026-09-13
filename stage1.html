@@ -55,6 +55,12 @@
   .sq-svg .mkQ{fill:#2f6fa6}
   .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
   .sq-svg .lamhead{fill:var(--gold-dark)}
+  .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .sq-svg .bandS{fill:rgba(197,154,58,.16);stroke:var(--gold-dark);stroke-width:1}
+  .sq-svg .bandT{fill:rgba(47,111,166,.12);stroke:#2f6fa6;stroke-width:1}
+  .sq-svg .mkNow{fill:#b5504a}
+  .sq-svg .mkS{fill:var(--gold-dark)}
+  .sq-svg .mkT{fill:#2f6fa6}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -324,6 +330,56 @@
           </div>
           <div class="dialog-bubble">消えてはいないよ。k と ω の中に折りたたまれたんだ。v＝λν＝(2π/k)(ω/2π)＝<strong>ω/k</strong>。いつでも取り出せる。……さあ、これで「波を数式で書く」道具はそろった。y＝A sin(kx−ωt)。この一本が、海の波も、音も、ギターの弦も、光さえも記述する万能の型だ。次はいよいよ、これを電子の波 ψ につないでいく。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="kw-svg" viewBox="0 0 340 262" width="100%" role="img" aria-label="y＝A sin(kx−ωt) の図。上段は空間の写真で、1メートル進むと位相がkだけ進むことを示す。下段は1か所を見張った記録で、1秒たつと位相がωだけ進むことを示す。波数kと角振動数ω、時刻tをスライダーで変えられる">
+          <text class="strong" x="14" y="16">① 空間の写真 ― 1 m 進むと、位相は k だけ進む</text>
+          <rect class="bandS" id="kw-bandS" y="40" height="68"></rect>
+          <line class="zero" x1="34" y1="72" x2="306" y2="72"></line>
+          <path class="wave" id="kw-wave"></path>
+          <circle class="mkNow" id="kw-p1" r="4.5"></circle>
+          <circle class="mkS" id="kw-q1" r="4.5"></circle>
+          <line class="axis" x1="34" y1="108" x2="306" y2="108"></line>
+          <g id="kw-ticksS"></g>
+          <text class="strong" x="14" y="150">② その場の記録 ― 1 秒たつと、位相は ω だけ進む</text>
+          <rect class="bandT" id="kw-bandT" y="174" height="64"></rect>
+          <line class="zero" x1="34" y1="206" x2="306" y2="206"></line>
+          <path class="wave2" id="kw-curve"></path>
+          <circle class="mkNow" id="kw-p2" r="4.5"></circle>
+          <circle class="mkT" id="kw-q2" r="4.5"></circle>
+          <line class="axis" x1="34" y1="238" x2="306" y2="238"></line>
+          <g id="kw-ticksT"></g>
+        </svg>
+        <div class="sim-ctrl">
+          <label for="kw-k">波数 k</label>
+          <input type="range" id="kw-k" min="0.5" max="5" step="0.01" value="2.09" aria-label="波数 k（ラジアン毎メートル）">
+          <span class="val" id="kw-kv">2.09</span>
+          <label for="kw-w">角振動数 ω</label>
+          <input type="range" id="kw-w" min="0.3" max="8" step="0.01" value="3.14" aria-label="角振動数 ω（ラジアン毎秒）">
+          <span class="val" id="kw-wv">3.14</span>
+          <label for="kw-t">時刻 t</label>
+          <input type="range" id="kw-t" min="0" max="2" step="0.02" value="0" aria-label="時刻 t（秒）">
+          <span class="val" id="kw-tv">0.00 s</span>
+        </div>
+        <div class="readout">
+          <span style="color:#a6742a">空間：k ＝ <b id="kw-ro-k">2.09</b> rad/m</span>
+          <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="kw-ro-lam">3.01</b> m</span>
+          <span style="color:#a6742a">1 m で位相 ＋<b id="kw-ro-pk">2.09</b> rad</span>
+        </div>
+        <div class="readout">
+          <span style="color:#2f6fa6">時間：ω ＝ <b id="kw-ro-w">3.14</b> rad/s</span>
+          <span style="color:#2f6fa6">ν ＝ ω/2π ＝ <b id="kw-ro-nu">0.50</b> Hz</span>
+          <span style="color:#2f6fa6">T ＝ 1/ν ＝ <b id="kw-ro-T">2.00</b> 秒</span>
+          <span style="color:#2f6fa6">1 秒で位相 ＋<b id="kw-ro-pw">3.14</b> rad</span>
+        </div>
+        <div class="readout">
+          <span>波の速さ v ＝ ω/k ＝ <b id="kw-ro-v">1.50</b> m/s</span>
+        </div>
+        <div class="diagram-caption">同じ波 y＝A sin(kx−ωt) を、2つの見方で並べたもの。<strong>①</strong> は時間を止めた写真で、横軸は場所。金の帯は<strong>1 m ぶんの区間</strong>で、赤い点から金の点へ進む間に位相が <strong>k</strong> だけ増える――<strong>k を大きくすると波が細かくなる</strong>（λ＝2π/k が縮む）。<strong>②</strong> は場所を <strong>x＝1 m</strong> に固定して、そこの高さを時間の流れに沿って記録したもの。青の帯は<strong>1 秒ぶん</strong>で、その間に位相が <strong>ω</strong> だけ増える――<strong>ω を大きくすると速く上下する</strong>（T＝2π/ω が縮む）。<strong>赤い点は①と②で同じ点</strong>（時刻 t の x＝1 m）なので、2つのグラフで高さが一致する。t を動かすと、①の波形は右へ流れ、②の赤い点は記録の上を右へ進む</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -487,6 +543,102 @@
   }
 
   [iA, iL, iX].forEach(function(el){ el.addEventListener('input', draw); });
+  draw();
+})();
+</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('kw-svg');
+  if (!svg) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  // ①空間（0〜6 m）と②時間（0〜3 秒）で、同じ描画領域の幅を使う
+  var X0 = 34, X1 = 306, XM = 6, TM = 3, AMP = 26;
+  var PPM = (X1 - X0) / XM, PPS = (X1 - X0) / TM;
+  var ZY1 = 72, ZY2 = 206, AXIS1 = 108, AXIS2 = 238;
+  var XFIX = 1; // ②で見張る場所（m）。①の赤い点と同じ地点
+  function $(id){ return document.getElementById(id); }
+  var wave = $('kw-wave'), curve = $('kw-curve');
+  var bandS = $('kw-bandS'), bandT = $('kw-bandT');
+  var p1 = $('kw-p1'), q1 = $('kw-q1'), p2 = $('kw-p2'), q2 = $('kw-q2');
+  var iK = $('kw-k'), iW = $('kw-w'), iT = $('kw-t');
+
+  function mx(m){ return X0 + m * PPM; }
+  function tx(s){ return X0 + s * PPS; }
+
+  function makeTicks(gid, count, unit, toPx){
+    var g = $(gid);
+    for (var i = 0; i <= count; i++) {
+      var px = toPx(i);
+      var tk = document.createElementNS(NS, 'line');
+      tk.setAttribute('class', 'tick');
+      tk.setAttribute('x1', px); tk.setAttribute('x2', px);
+      tk.setAttribute('y1', gid === 'kw-ticksS' ? AXIS1 : AXIS2);
+      tk.setAttribute('y2', (gid === 'kw-ticksS' ? AXIS1 : AXIS2) + 5);
+      g.appendChild(tk);
+      var tl = document.createElementNS(NS, 'text');
+      tl.setAttribute('class', 'label');
+      tl.setAttribute('x', px);
+      tl.setAttribute('y', (gid === 'kw-ticksS' ? AXIS1 : AXIS2) + 18);
+      tl.setAttribute('text-anchor', i === count ? 'end' : 'middle');
+      tl.textContent = i === count ? (i + ' ' + unit) : i;
+      g.appendChild(tl);
+    }
+  }
+  makeTicks('kw-ticksS', XM, 'm', mx);
+  makeTicks('kw-ticksT', TM, '秒', tx);
+
+  function draw(){
+    var k = parseFloat(iK.value), w = parseFloat(iW.value), t = parseFloat(iT.value);
+
+    // ① 時間を止めた写真：y＝A sin(kx−ωt)
+    var d = '', first = true;
+    for (var px = X0; px <= X1 + 0.001; px += 2) {
+      var m = (px - X0) / PPM;
+      d += (first ? 'M' : 'L') + px.toFixed(1) + ' ' + (ZY1 - AMP * Math.sin(k * m - w * t)).toFixed(1);
+      first = false;
+    }
+    wave.setAttribute('d', d);
+
+    // ② x＝XFIX に居座って高さを記録：h(t')＝A sin(k·XFIX−ωt')
+    var d2 = '', f2 = true;
+    for (var px2 = X0; px2 <= X1 + 0.001; px2 += 2) {
+      var s = (px2 - X0) / PPS;
+      d2 += (f2 ? 'M' : 'L') + px2.toFixed(1) + ' ' + (ZY2 - AMP * Math.sin(k * XFIX - w * s)).toFixed(1);
+      f2 = false;
+    }
+    curve.setAttribute('d', d2);
+
+    var xs0 = mx(XFIX), xs1 = mx(XFIX + 1);
+    bandS.setAttribute('x', xs0.toFixed(1));
+    bandS.setAttribute('width', (xs1 - xs0).toFixed(1));
+    var xt0 = tx(t), xt1 = tx(t + 1);
+    bandT.setAttribute('x', xt0.toFixed(1));
+    bandT.setAttribute('width', (xt1 - xt0).toFixed(1));
+
+    var yNow = ZY1 - AMP * Math.sin(k * XFIX - w * t);
+    p1.setAttribute('cx', xs0.toFixed(1)); p1.setAttribute('cy', yNow.toFixed(1));
+    q1.setAttribute('cx', xs1.toFixed(1));
+    q1.setAttribute('cy', (ZY1 - AMP * Math.sin(k * (XFIX + 1) - w * t)).toFixed(1));
+    p2.setAttribute('cx', xt0.toFixed(1));
+    p2.setAttribute('cy', (ZY2 - AMP * Math.sin(k * XFIX - w * t)).toFixed(1));
+    q2.setAttribute('cx', xt1.toFixed(1));
+    q2.setAttribute('cy', (ZY2 - AMP * Math.sin(k * XFIX - w * (t + 1))).toFixed(1));
+
+    $('kw-kv').textContent = k.toFixed(2);
+    $('kw-wv').textContent = w.toFixed(2);
+    $('kw-tv').textContent = t.toFixed(2) + ' s';
+    $('kw-ro-k').textContent = k.toFixed(2);
+    $('kw-ro-lam').textContent = (2 * Math.PI / k).toFixed(2);
+    $('kw-ro-pk').textContent = k.toFixed(2);
+    $('kw-ro-w').textContent = w.toFixed(2);
+    $('kw-ro-nu').textContent = (w / (2 * Math.PI)).toFixed(2);
+    $('kw-ro-T').textContent = (2 * Math.PI / w).toFixed(2);
+    $('kw-ro-pw').textContent = w.toFixed(2);
+    $('kw-ro-v').textContent = (w / k).toFixed(2);
+  }
+
+  [iK, iW, iT].forEach(function(el){ el.addEventListener('input', draw); });
   draw();
 })();
 </script>
