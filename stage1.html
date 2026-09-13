@@ -209,14 +209,14 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="snap-svg" viewBox="0 0 340 220" width="100%" role="img" aria-label="止まった波 y＝A sin(2πx/λ) のグラフ。波長λ・振幅A・場所xを3つのスライダーで変えられる。金の点が場所x、青の点が波長1個ぶん進んだx＋λで、どこへ動かしても2点の高さは必ず一致する">
+        <svg class="sq-svg" id="snap-svg" viewBox="0 0 340 266" width="100%" role="img" aria-label="止まった波 y＝A sin(2πx/λ) のグラフ。波長λ・振幅A・場所xを3つのスライダーで変えられる。金の点が場所x、青の点が波長1個ぶん進んだx＋λで、どこへ動かしても2点の高さは必ず一致する">
           <text class="strong" x="14" y="16">動かしてみよう： y ＝ A sin(2πx／λ)</text>
           <g id="sn-grid"></g>
-          <line class="zero" x1="30" y1="104" x2="306" y2="104"></line>
-          <line class="env" id="sn-envp" x1="30" y1="62" x2="306" y2="62"></line>
-          <line class="env" id="sn-envm" x1="30" y1="146" x2="306" y2="146"></line>
-          <text class="lbB" id="sn-lbp" x="310" y="66">＋A</text>
-          <text class="lbB" id="sn-lbm" x="310" y="150">−A</text>
+          <line class="zero" x1="30" y1="120" x2="306" y2="120"></line>
+          <line class="env" id="sn-envp" x1="30" y1="82" x2="306" y2="82"></line>
+          <line class="env" id="sn-envm" x1="30" y1="158" x2="306" y2="158"></line>
+          <text class="lbB" id="sn-lbp" x="310" y="86">＋A</text>
+          <text class="lbB" id="sn-lbm" x="310" y="162">−A</text>
           <path class="wave" id="sn-wave"></path>
           <line class="drop" id="sn-dp"></line>
           <line class="drop" id="sn-dq"></line>
@@ -224,20 +224,20 @@
           <text class="lbO" id="sn-conntxt" text-anchor="middle">同じ高さ</text>
           <circle class="mkP" id="sn-p" r="4.5"></circle>
           <circle class="mkQ" id="sn-q" r="4.5"></circle>
-          <line class="lamarrow" id="sn-lam" y1="172" y2="172"></line>
+          <line class="lamarrow" id="sn-lam" y1="214" y2="214"></line>
           <polygon class="lamhead" id="sn-lh1"></polygon>
           <polygon class="lamhead" id="sn-lh2"></polygon>
-          <text class="strong" id="sn-lamtxt" y="167" text-anchor="middle">λ</text>
-          <line class="axis" x1="30" y1="190" x2="306" y2="190"></line>
+          <text class="strong" id="sn-lamtxt" y="209" text-anchor="middle">λ</text>
+          <line class="axis" x1="30" y1="232" x2="306" y2="232"></line>
           <g id="sn-ticks"></g>
-          <text class="label" x="14" y="216">場所 x〔m〕</text>
+          <text class="label" x="14" y="258">場所 x〔m〕</text>
         </svg>
         <div class="sim-ctrl">
           <label for="sn-l">波長 λ</label>
-          <input type="range" id="sn-l" min="1.5" max="6" step="0.1" value="3" aria-label="波長 λ（メートル）">
+          <input type="range" id="sn-l" min="0.5" max="10" step="0.1" value="3" aria-label="波長 λ（メートル）">
           <span class="val" id="sn-lv">3.0 m</span>
           <label for="sn-a">振幅 A</label>
-          <input type="range" id="sn-a" min="0.2" max="1.2" step="0.05" value="1" aria-label="振幅 A（メートル）">
+          <input type="range" id="sn-a" min="0.1" max="2" step="0.05" value="1" aria-label="振幅 A（メートル）">
           <span class="val" id="sn-av">1.00 m</span>
           <label for="sn-x">場所 x</label>
           <input type="range" id="sn-x" min="0" max="9" step="0.1" value="1" aria-label="観測する場所 x（メートル）">
@@ -253,7 +253,7 @@
           <span style="color:#2f6fa6">高さ y(x＋λ) ＝ <b id="sn-y2">0.87</b> m</span>
           <span style="color:#b5504a">← 必ず一致</span>
         </div>
-        <div class="diagram-caption">3つのスライダーを動かせる。金の点が場所 <strong>x</strong>、青の点がそこから波長1個ぶん進んだ <strong>x＋λ</strong>。λ を変えれば波の細かさが、A を変えれば高さが変わるが、<strong>x をどこへ動かしても2つの点の高さは必ず一致する</strong>。数値欄を見ると、sin の中身（位相）はいつもちょうど <strong>2π＝6.28…</strong> だけ増えている――これが「λ ごとに同じ景色が戻ってくる」ことの正体。薄い縦線は λ ごとの区切りで、その1区間が波1個ぶんの「タイル」にあたる</div>
+        <div class="diagram-caption">3つのスライダーを動かせる。金の点が場所 <strong>x</strong>、青の点がそこから波長1個ぶん進んだ <strong>x＋λ</strong>。λ を変えれば波の細かさが、A を変えれば高さが変わるが、<strong>x をどこへ動かしても2つの点の高さは必ず一致する</strong>。数値欄を見ると、sin の中身（位相）はいつもちょうど <strong>2π＝6.28…</strong> だけ増えている――これが「λ ごとに同じ景色が戻ってくる」ことの正体。薄い縦線は λ ごとの区切りで、その1区間が波1個ぶんの「タイル」にあたる（波長を短くしすぎると線が混み合うので、その場合は省かれる）</div>
       </div>
 
       <div class="dialogue-scene">
@@ -353,10 +353,10 @@
         </svg>
         <div class="sim-ctrl">
           <label for="kw-k">波数 k</label>
-          <input type="range" id="kw-k" min="0.5" max="5" step="0.01" value="2.09" aria-label="波数 k（ラジアン毎メートル）">
+          <input type="range" id="kw-k" min="0.2" max="12" step="0.02" value="2.09" aria-label="波数 k（ラジアン毎メートル）">
           <span class="val" id="kw-kv">2.09</span>
           <label for="kw-w">角振動数 ω</label>
-          <input type="range" id="kw-w" min="0.3" max="8" step="0.01" value="3.14" aria-label="角振動数 ω（ラジアン毎秒）">
+          <input type="range" id="kw-w" min="0.1" max="20" step="0.05" value="3.14" aria-label="角振動数 ω（ラジアン毎秒）">
           <span class="val" id="kw-wv">3.14</span>
           <label for="kw-t">時刻 t</label>
           <input type="range" id="kw-t" min="0" max="2" step="0.02" value="0" aria-label="時刻 t（秒）">
@@ -451,7 +451,7 @@
   var svg = document.getElementById('snap-svg');
   if (!svg) return;
   var NS = 'http://www.w3.org/2000/svg';
-  var PX0 = 30, PX1 = 306, ZY = 104, XM = 12, AS = 42, PPM = (PX1 - PX0) / XM;
+  var PX0 = 30, PX1 = 306, ZY = 120, XM = 12, AS = 38, PPM = (PX1 - PX0) / XM;
   function $(id){ return document.getElementById(id); }
   var wave = $('sn-wave'), grid = $('sn-grid'), ticks = $('sn-ticks');
   var envp = $('sn-envp'), envm = $('sn-envm'), lbp = $('sn-lbp'), lbm = $('sn-lbm');
@@ -471,12 +471,12 @@
     var tx = mx(m);
     var tk = document.createElementNS(NS, 'line');
     tk.setAttribute('class', 'tick');
-    tk.setAttribute('x1', tx); tk.setAttribute('y1', 190);
-    tk.setAttribute('x2', tx); tk.setAttribute('y2', 195);
+    tk.setAttribute('x1', tx); tk.setAttribute('y1', 232);
+    tk.setAttribute('x2', tx); tk.setAttribute('y2', 237);
     ticks.appendChild(tk);
     var tl = document.createElementNS(NS, 'text');
     tl.setAttribute('class', 'label');
-    tl.setAttribute('x', tx); tl.setAttribute('y', 202);
+    tl.setAttribute('x', tx); tl.setAttribute('y', 244);
     tl.setAttribute('text-anchor', 'middle');
     tl.textContent = m;
     ticks.appendChild(tl);
@@ -491,7 +491,7 @@
     var X = parseFloat(iX.value);
 
     var d = '', first = true;
-    for (var px = PX0; px <= PX1 + 0.001; px += 2) {
+    for (var px = PX0; px <= PX1 + 0.001; px += 0.5) {
       var mm = (px - PX0) / PPM;
       d += (first ? 'M' : 'L') + px.toFixed(1) + ' ' + my(A * Math.sin(2 * Math.PI * mm / L)).toFixed(1);
       first = false;
@@ -502,14 +502,16 @@
     envm.setAttribute('y1', my(-A)); envm.setAttribute('y2', my(-A));
     lbp.setAttribute('y', (my(A) + 4).toFixed(1));
     lbm.setAttribute('y', (my(-A) + 4).toFixed(1));
+    var lbHide = (A * AS) < 11 ? 'none' : '';
+    lbp.style.display = lbHide; lbm.style.display = lbHide;
 
     while (grid.firstChild) grid.removeChild(grid.firstChild);
-    for (var n = 0; n * L <= XM + 1e-9; n++) {
+    for (var n = 0; L * PPM >= 14 && n * L <= XM + 1e-9; n++) {
       var gx = mx(n * L);
       var g = document.createElementNS(NS, 'line');
       g.setAttribute('class', 'grid');
-      g.setAttribute('x1', gx.toFixed(1)); g.setAttribute('y1', 46);
-      g.setAttribute('x2', gx.toFixed(1)); g.setAttribute('y2', 162);
+      g.setAttribute('x1', gx.toFixed(1)); g.setAttribute('y1', 40);
+      g.setAttribute('x2', gx.toFixed(1)); g.setAttribute('y2', 200);
       grid.appendChild(g);
     }
 
@@ -522,14 +524,16 @@
     conn.setAttribute('x1', pxP.toFixed(1)); conn.setAttribute('y1', pyy.toFixed(1));
     conn.setAttribute('x2', pxQ.toFixed(1)); conn.setAttribute('y2', pyy.toFixed(1));
     connT.setAttribute('x', ((pxP + pxQ) / 2).toFixed(1));
-    connT.setAttribute('y', (pyy - 8).toFixed(1));
+    connT.setAttribute('y', Math.max(pyy - 8, 34).toFixed(1));
     dp.setAttribute('x1', pxP.toFixed(1)); dp.setAttribute('y1', pyy.toFixed(1));
-    dp.setAttribute('x2', pxP.toFixed(1)); dp.setAttribute('y2', 176);
+    dp.setAttribute('x2', pxP.toFixed(1)); dp.setAttribute('y2', 218);
     dq.setAttribute('x1', pxQ.toFixed(1)); dq.setAttribute('y1', pyy.toFixed(1));
-    dq.setAttribute('x2', pxQ.toFixed(1)); dq.setAttribute('y2', 176);
+    dq.setAttribute('x2', pxQ.toFixed(1)); dq.setAttribute('y2', 218);
     lam.setAttribute('x1', pxP.toFixed(1)); lam.setAttribute('x2', pxQ.toFixed(1));
-    lh1.setAttribute('points', pxP.toFixed(1) + ',172 ' + (pxP + 7).toFixed(1) + ',169 ' + (pxP + 7).toFixed(1) + ',175');
-    lh2.setAttribute('points', pxQ.toFixed(1) + ',172 ' + (pxQ - 7).toFixed(1) + ',169 ' + (pxQ - 7).toFixed(1) + ',175');
+    lh1.setAttribute('points', pxP.toFixed(1) + ',214 ' + (pxP + 7).toFixed(1) + ',211 ' + (pxP + 7).toFixed(1) + ',217');
+    lh2.setAttribute('points', pxQ.toFixed(1) + ',214 ' + (pxQ - 7).toFixed(1) + ',211 ' + (pxQ - 7).toFixed(1) + ',217');
+    var narrow = (pxQ - pxP) < 20 ? 'none' : '';
+    lh1.style.display = narrow; lh2.style.display = narrow;
     lamT.setAttribute('x', ((pxP + pxQ) / 2).toFixed(1));
 
     vA.textContent = A.toFixed(2) + ' m';
@@ -593,7 +597,7 @@
 
     // ① 時間を止めた写真：y＝A sin(kx−ωt)
     var d = '', first = true;
-    for (var px = X0; px <= X1 + 0.001; px += 2) {
+    for (var px = X0; px <= X1 + 0.001; px += 0.5) {
       var m = (px - X0) / PPM;
       d += (first ? 'M' : 'L') + px.toFixed(1) + ' ' + (ZY1 - AMP * Math.sin(k * m - w * t)).toFixed(1);
       first = false;
@@ -602,7 +606,7 @@
 
     // ② x＝XFIX に居座って高さを記録：h(t')＝A sin(k·XFIX−ωt')
     var d2 = '', f2 = true;
-    for (var px2 = X0; px2 <= X1 + 0.001; px2 += 2) {
+    for (var px2 = X0; px2 <= X1 + 0.001; px2 += 0.5) {
       var s = (px2 - X0) / PPS;
       d2 += (f2 ? 'M' : 'L') + px2.toFixed(1) + ' ' + (ZY2 - AMP * Math.sin(k * XFIX - w * s)).toFixed(1);
       f2 = false;
