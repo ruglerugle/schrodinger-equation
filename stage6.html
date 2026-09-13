@@ -28,6 +28,9 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="design-system.css">
 <style>
+  /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
+     （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
+  .sq-svg *{vector-effect:non-scaling-stroke}
   .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
   .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
   .sq-svg .wave3{fill:none;stroke:#b5504a;stroke-width:2}
