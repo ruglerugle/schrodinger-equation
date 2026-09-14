@@ -147,11 +147,11 @@
         </div>
         <div class="sim-ctrl">
           <label for="p3-x">場所 x₀</label>
-          <input type="range" id="p3-x" min="0" max="8" step="0.1" value="4" aria-label="断面を取る場所 x">
-          <span class="val" id="p3-xv">4.0</span>
+          <input type="range" id="p3-x" min="0" max="8" step="0.02" value="4" aria-label="断面を取る場所 x">
+          <span class="val" id="p3-xv">4.00</span>
           <label for="p3-t">時刻 t₀</label>
-          <input type="range" id="p3-t" min="0" max="8" step="0.1" value="2" aria-label="断面を取る時刻 t">
-          <span class="val" id="p3-tv">2.0</span>
+          <input type="range" id="p3-t" min="0" max="8" step="0.02" value="2" aria-label="断面を取る時刻 t">
+          <span class="val" id="p3-tv">2.00</span>
         </div>
         <div class="readout">
           <span style="color:#a6742a">━ t を凍結した断面 → ∂ψ/∂x ＝ <b id="p3-dx">+1.90</b></span>
@@ -438,8 +438,8 @@
     line([pw(x0, t0, 0), cr], C.red, 1, [3, 3]);
     dotAt(cr, C.red);
 
-    vx.textContent = x0.toFixed(1);
-    vt.textContent = t0.toFixed(1);
+    vx.textContent = x0.toFixed(2);
+    vt.textContent = t0.toFixed(2);
     rdx.textContent = (gx >= 0 ? '＋' : '−') + Math.abs(gx).toFixed(2);
     rdt.textContent = (gt >= 0 ? '＋' : '−') + Math.abs(gt).toFixed(2);
   }
