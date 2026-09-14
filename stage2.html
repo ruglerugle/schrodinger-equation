@@ -139,7 +139,7 @@
           <line class="tie" id="e-tx" x1="182" y1="115" x2="182" y2="115"></line>
           <line class="tie" id="e-ty" x1="182" y1="115" x2="120" y2="115"></line>
           <text class="lbA" id="e-lb" x="190" y="110">e<tspan baseline-shift="super" font-size="8">iθ</tspan></text>
-          <text class="lbB" id="e-cos" x="150" y="130">cosθ</text>
+          <text class="lbB" id="e-cos" x="150" y="141">cosθ</text>
           <text class="lbB" id="e-sin" x="128" y="80">sinθ</text>
           <text class="label" x="186" y="132">1</text>
           <text class="label" x="112" y="46" text-anchor="end">i</text>
@@ -314,8 +314,6 @@
     lb.setAttribute('x', (CX + (R + 12) * Math.cos(th)).toFixed(1));
     lb.setAttribute('y', (CY - (R + 12) * Math.sin(th) + 4).toFixed(1));
     lbc.setAttribute('x', (CX + R * Math.cos(th) / 2 - 16).toFixed(1));
-    lbc.setAttribute('y', (py + (py <= CY ? -6 : 15)).toFixed(1));
-    lbs.setAttribute('x', (px + (px >= CX ? 7 : -36)).toFixed(1));
     lbs.setAttribute('y', (CY - R * Math.sin(th) / 2 + 4).toFixed(1));
   }
   draw(Math.PI / 5);
