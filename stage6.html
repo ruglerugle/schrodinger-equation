@@ -45,6 +45,13 @@
   .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
   .sq-svg .arrowhead{fill:var(--muted)}
   .sq-svg .ng{stroke:#c8433f;stroke-width:2;stroke-dasharray:6 4;fill:none}
+  .calc-head{font-size:12.5px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:10px}
+  .cv-wrap{width:100%}
+  #wellc{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -98,34 +105,11 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="井戸型ポテンシャルの地形図。横軸は場所x、縦軸はVの高さ。0からLの箱の中はV＝0の平らな床、両端は無限に高い崖。壁の外に波がはみ出すと右辺のVψが無限大になり、有限の左辺と等しくなれないので、外ではψ＝0になる">
-          <text class="strong" x="14" y="16">井戸型ポテンシャル：箱の中は平ら、両端は無限の崖</text>
-          <rect x="20" y="28" width="80" height="122" fill="rgba(200,67,63,.08)"></rect>
-          <rect x="240" y="28" width="80" height="122" fill="rgba(200,67,63,.08)"></rect>
-          <line class="axis" x1="20" y1="150" x2="320" y2="150"></line>
-          <line class="wall" x1="100" y1="150" x2="100" y2="34"></line>
-          <line class="wall" x1="240" y1="150" x2="240" y2="34"></line>
-          <polygon class="arrowhead" points="100,26 95,36 105,36"></polygon>
-          <polygon class="arrowhead" points="240,26 235,36 245,36"></polygon>
-          <line class="axis" x1="100" y1="150" x2="240" y2="150" stroke-width="3"></line>
-          <text class="label" x="100" y="166" text-anchor="middle">0</text>
-          <text class="label" x="240" y="166" text-anchor="middle">L</text>
-          <text class="label" x="170" y="166" text-anchor="middle">V＝0（平らな床）</text>
-          <text class="strong" x="60" y="46" text-anchor="middle">V＝∞</text>
-          <text class="strong" x="280" y="46" text-anchor="middle">V＝∞</text>
-          <text class="label" x="60" y="62" text-anchor="middle">入れない壁</text>
-          <text class="label" x="280" y="62" text-anchor="middle">入れない壁</text>
-          <path class="wave" d="M100 150 C120 150 130 84 170 84 C210 84 220 150 240 150"></path>
-          <path d="M240 150 C248 150 252 122 262 122 C272 122 276 150 284 150" fill="none" stroke="#c8433f" stroke-width="2" stroke-dasharray="5 4"></path>
-          <line x1="254" y1="114" x2="270" y2="130" stroke="#c8433f" stroke-width="2.2"></line>
-          <line x1="270" y1="114" x2="254" y2="130" stroke="#c8433f" stroke-width="2.2"></line>
-          <text class="lbA" x="170" y="76" text-anchor="middle">箱の中：波はいてよい</text>
-          <text class="lbR" x="284" y="100" text-anchor="middle">はみ出すと</text>
-          <text class="lbR" x="284" y="114" text-anchor="middle">Vψ＝∞</text>
-          <text class="label" x="14" y="182">壁の外で ψ≠0 なら、右辺 Vψ は無限大、左辺 Eψ は有限</text>
-          <text class="label" x="14" y="196">→ 等式が成り立たない → 外では ψ＝0</text>
-        </svg>
-        <div class="diagram-caption">V の地形図。0 から L の箱の中は V＝0 の平らな床、両端は V＝∞ の崖（いくらエネルギーをぶつけても入れない壁の理想化）。赤の点線のように波が壁の外へはみ出すと、方程式の右辺 Vψ が「無限大×0でない数」で無限大になり、有限の左辺 Eψ と等しくなれない。だから外では ψ＝0 に押さえつけられる（金色の線は箱の中に収まった波の一例。この形が本当に許される形かどうかは、このあと確かめていく）</div>
+        <div class="calc-head">井戸型ポテンシャル：これは「箱」ではなく ψ のグラフ</div>
+        <div class="cv-wrap"><canvas id="wellc" role="img" aria-label="幅Lの箱に閉じ込められた電子のψ(x,t)の3Dグラフ。横が場所x、奥行きが時刻t、高さがψの値。x＝0とx＝Lに無限に高い壁の面が立ち、壁の外ではψ＝0で平ら。箱の中では波が時間とともに振動し、いま時刻の断面に針の列が立って回る。ドラッグで視点を回せる"></canvas></div>
+        <button class="sim-play" id="well-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">これは電子が入った箱の絵ではなく、<strong>ψ のグラフ</strong>。横が場所 x、奥行きが時刻 t、高さが ψ の値（実部）。x＝0 と x＝L に立つ2枚の面が V＝∞ の壁で、<strong>壁の外では ψ＝0 の平らな面</strong>になっている（はみ出すと右辺の Vψ が無限大になり、有限の左辺 Eψ と等しくなれないから）。箱の中では波が時間とともに揺れる。青い断面が「いま」の形で、そこに立つ針（実部と虚部）は回るだけで長さを変えない――この形が本当に方程式に許される形かどうかは、このあと確かめていく</div>
       </div>
 
       <div class="dialogue-scene">
@@ -392,6 +376,141 @@
       else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
     }, {threshold: 0.15}).observe(svg);
   } else { running = true; loop(); }
+})();
+</script>
+<script>
+/* 箱の中の電子：ψ(x,t) の3Dグラフ。壁は V＝∞ の面、外は ψ＝0 の平面、中は時間とともに揺れる波 */
+(function(){
+  var cv = document.getElementById('wellc');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('well-play');
+  var L = 1, XA = -0.5, XB = 1.5, XS = 10, TDEPTH = 9, HZ = 3.2, TT = 2, OM = 2 * Math.PI;
+  var yaw = 0.45, pitch = -1.0, W = 0, H = 0, sc = 1, cx = 0, cy = 0, u = 0;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12',
+            meshX: 'rgba(166,116,42,.32)', meshT: 'rgba(47,111,166,.32)', meshOut: 'rgba(200,67,63,.28)',
+            wall: 'rgba(200,67,63,.13)', wallLine: 'rgba(200,67,63,.7)' };
+  var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  /* n＝1 の定在波（この形が許されるかは本文でこのあと確かめる）。[実部, 虚部] */
+  function psi(x, t) {
+    if (x <= 0 || x >= L) return [0, 0];
+    var a = Math.sin(Math.PI * x / L);
+    return [a * Math.cos(OM * t), -a * Math.sin(OM * t)];
+  }
+  function proj(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    var Y2 = Y * cp - Z1 * sp;
+    return [cx + sc * X1, cy - sc * Y2];
+  }
+  function P(x, t, h) { return proj((x - 0.5) * XS, h, t / TT * TDEPTH - TDEPTH / 2); }
+  function line(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function cutT(t) { var a = [], j; for (j = 0; j <= 80; j++) { var x = XA + (XB - XA) * j / 80; a.push(P(x, t, HZ * psi(x, t)[0])); } return a; }
+  function cutX(x) { var a = [], j; for (j = 0; j <= 40; j++) { var t = TT * j / 40; a.push(P(x, t, HZ * psi(x, t)[0])); } return a; }
+  function arrow(p1, p2, label, dxl, dyl) {
+    line([p1, p2], C.muted, 1.5);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    ctx.fillStyle = C.muted; ctx.beginPath();
+    ctx.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
+    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
+    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
+    ctx.closePath(); ctx.fill();
+    ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
+  }
+  function wall(x) {
+    var a = P(x, 0, 0), b = P(x, TT, 0), c = P(x, TT, HZ * 1.45), d = P(x, 0, HZ * 1.45);
+    ctx.fillStyle = C.wall; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.lineTo(c[0], c[1]); ctx.lineTo(d[0], d[1]); ctx.closePath(); ctx.fill();
+    line([a, b, c, d, a], C.wallLine, 1);
+    var top = P(x, TT / 2, HZ * 1.45);
+    ctx.fillStyle = C.red; ctx.font = F; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('V＝∞', top[0], top[1] - 3);
+  }
+  function draw() {
+    var tc = u * TT, i, x, t;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('横：場所 x　奥：時刻 t　高さ：ψ の値', 14, 12);
+    var o = proj((XA - 0.5) * XS, 0, -TDEPTH / 2);
+    /* 床の枠 */
+    line([o, proj((XB - 0.5) * XS, 0, -TDEPTH / 2), proj((XB - 0.5) * XS, 0, TDEPTH / 2), proj((XA - 0.5) * XS, 0, TDEPTH / 2), o], '#ddd0ad', 1);
+    /* 奥の壁を先に描く（手前の面が上に重なるように） */
+    wall(L);
+    /* 曲面：外は ψ＝0 の平面（赤みの薄い格子）、中は波 */
+    for (i = 0; i <= 24; i++) {
+      t = TT * i / 24;
+      var pts = cutT(t);
+      line(pts.slice(0, 21), C.meshOut, 0.8); line(pts.slice(20, 61), C.meshX, 0.8); line(pts.slice(60), C.meshOut, 0.8);
+    }
+    for (i = 0; i <= 40; i++) { x = XA + (XB - XA) * i / 40; line(cutX(x), (x <= 0 || x >= L) ? C.meshOut : C.meshT, 0.8); }
+    /* いまの断面と針 */
+    line(cutT(tc), C.blue, 2.4);
+    var zz = tc / TT * TDEPTH - TDEPTH / 2, DIM = 2.6;
+    for (x = 0.05; x < L; x += 0.05) {
+      var v = psi(x, tc), base = proj((x - 0.5) * XS, 0, zz), tip = proj((x - 0.5) * XS, HZ * v[0], zz - DIM * v[1]);
+      line([base, tip], C.blue, 1.6);
+      ctx.fillStyle = C.blue; ctx.beginPath(); ctx.arc(tip[0], tip[1], 2, 0, 7); ctx.fill();
+    }
+    wall(0);
+    /* 軸 */
+    arrow(o, proj((XB - 0.5) * XS + 1.5, 0, -TDEPTH / 2), 'x（場所）', -56, 16);
+    arrow(o, proj((XA - 0.5) * XS, 0, TDEPTH / 2 + 0.8), 't（時刻）', 8, 6);
+    arrow(o, proj((XA - 0.5) * XS, HZ * 1.3, -TDEPTH / 2), 'ψ', 8, 2);
+    /* 目盛りと注記 */
+    ctx.font = F; ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    var p0 = P(0, 0, 0), pL = P(L, 0, 0);
+    ctx.fillText('0', p0[0], p0[1] + 6); ctx.fillText('L', pL[0], pL[1] + 6);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = C.red; ctx.fillText('壁の外：ψ＝0 の平面（赤い格子）', 14, H - 40);
+    ctx.fillStyle = C.blue; ctx.fillText('青：いま（t＝' + tc.toFixed(2) + '）の断面と、その針の列（回るだけで長さは変わらない）', 14, H - 26);
+    ctx.fillStyle = C.muted; ctx.fillText('箱の中：波は揺れる。壁の面（V＝∞）を越えては存在できない', 14, H - 12);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.max(w * 0.72, 300)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 30; cx = w / 2 + 6; cy = h / 2 - 4;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    u = (u + dt / 6) % 1;
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'grabbing'; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; cv.style.cursor = 'grab'; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
+  } else { play(); }
 })();
 </script>
 </body>
