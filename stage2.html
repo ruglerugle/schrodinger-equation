@@ -46,6 +46,9 @@
   .sq-svg .ra{fill:none;stroke:var(--muted);stroke-width:1}
   .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
   .sq-svg .handdot{fill:var(--gold-dark)}
+  .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
+  .sq-svg .shadowdot{fill:#2f6fa6}
+  .sq-svg .tieH{stroke:#2f6fa6;stroke-width:1;stroke-dasharray:3 3;opacity:.5}
   .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
   .sq-svg .lamhead{fill:var(--gold-dark)}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
@@ -212,20 +215,21 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="hands-svg" viewBox="0 0 340 252" width="100%" role="img" aria-label="数直線の各地点に立つ小さな矢印の列。場所とともに向きがねじれ、時間とともに全部がいっせいに回る。下段はその虚部を結んだサインカーブで、矢印が回ると波が右に走る。波数k・角振動数ω・振幅A・時刻tをスライダーで変えられる">
-          <text class="strong" x="14" y="16">ψ＝Ae<tspan baseline-shift="super" font-size="9">i(kx−ωt)</tspan>：各地点に立つ「回る針」の列</text>
-          <line class="axis" x1="14" y1="70" x2="326" y2="70"></line>
+        <svg class="sq-svg" id="hands-svg" viewBox="0 0 340 206" width="100%" role="img" aria-label="数直線の各地点に立つ小さな矢印の列と、その縦成分を結んだサインカーブを重ねた図。矢印は場所とともに向きがねじれ、時間とともに全部がいっせいに回る。各矢印の先から水平の点線が伸び、同じ高さのところでサインカーブと出会う。波数k・角振動数ω・振幅A・時刻tをスライダーで変えられる">
+          <text class="strong" x="14" y="16">ψ＝Ae<tspan baseline-shift="super" font-size="9">i(kx−ωt)</tspan>：回る針の列と、その影（sin）は同じ1枚の絵</text>
+          <text class="lbA" x="14" y="34">━ 針（本体）＝ψ</text>
+          <text class="lbB" x="132" y="34">━ 影（虚部）＝A sin(kx−ωt)</text>
+          <line class="axis" x1="14" y1="104" x2="326" y2="104"></line>
+          <path class="wave2" id="h-wave"></path>
           <g id="h-hands"></g>
-          <text class="label" x="14" y="112">↑ 各 x 地点の針（角度 kx−ωt）。右へ行くほど kx ぶん回っている</text>
-          <line class="axis" x1="14" y1="170" x2="326" y2="170"></line>
-          <path class="wave" id="h-wave"></path>
           <g id="h-lamg">
-            <line class="lamarrow" id="h-lam" y1="224" y2="224"></line>
+            <line class="lamarrow" id="h-lam" y1="166" y2="166"></line>
             <polygon class="lamhead" id="h-lh1"></polygon>
             <polygon class="lamhead" id="h-lh2"></polygon>
-            <text class="strong" id="h-lamtxt" y="219" text-anchor="middle">λ＝2π/k</text>
+            <text class="strong" id="h-lamtxt" y="161" text-anchor="middle">λ＝2π/k</text>
           </g>
-          <text class="label" x="14" y="246">↑ 針の縦成分（虚部）だけを結ぶと sin の波。針が回ると波が走る</text>
+          <text class="label" x="14" y="186">各地点の針の<tspan class="lbB">高さ（縦成分）</tspan>を拾って結んだものが、青い sin の波。</text>
+          <text class="label" x="14" y="200">点線は「針の先」と「同じ高さの波の点」を結んでいる</text>
         </svg>
         <div class="sim-ctrl">
           <label for="h-k">波数 k</label>
@@ -246,7 +250,7 @@
           <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="h-ro-lam">4.00</b> m（1波長の長さ）</span>
           <span style="color:#2f6fa6">T ＝ 2π/ω ＝ <b id="h-ro-t">6.28</b> s（針が1回転する時間）</span>
         </div>
-        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の縦成分（虚部）だけを影として取り出すと、見慣れた sin の走る波になる。<strong>本体は針、sin は影</strong>。<strong>k</strong> を上げるとねじれが細かくなり（＝波長が短くなり）、<strong>ω</strong> を上げると針が速く回る（＝波が速く走る）。<strong>A</strong> は針の長さ。時間を止めて <strong>t</strong> を手で動かすと、1周期ぶんをコマ送りできる</div>
+        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の先の<strong>高さ</strong>だけを拾って結んだのが青い sin の波――<strong>本体は針、sin は影</strong>。針は回り続けて長さが変わらないのに、影は 0 を通る。<strong>k</strong> を上げるとねじれが細かくなり（＝波長が短くなり）、<strong>ω</strong> を上げると針が速く回る（＝波が速く走る）。<strong>A</strong> は針の長さ。時間を止めて <strong>t</strong> を手で動かすと、1周期ぶんをコマ送りできる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -388,19 +392,26 @@
       va = document.getElementById('h-av'), vt = document.getElementById('h-tv');
   var roLam = document.getElementById('h-ro-lam'), roT = document.getElementById('h-ro-t');
   var btn = document.getElementById('h-play');
-  var X0 = 30, X1 = 316, XM = 8, PX = (X1 - X0) / XM, N = 13, AXIS1 = 70, AXIS2 = 170;
+  var X0 = 30, X1 = 316, XM = 8, PX = (X1 - X0) / XM, N = 11, AXIS = 104;
   var NS = 'http://www.w3.org/2000/svg';
-  var hands = [], dots = [], i;
+  var hands = [], dots = [], ties = [], shadows = [], i;
   for (i = 0; i < N; i++) {
     var x = X0 + (X1 - X0) * i / (N - 1);
+    var ti = document.createElementNS(NS, 'line');
+    ti.setAttribute('class', 'tieH');
+    g.appendChild(ti);
     var ln = document.createElementNS(NS, 'line');
     ln.setAttribute('class', 'hand');
-    ln.setAttribute('x1', x); ln.setAttribute('y1', AXIS1);
+    ln.setAttribute('x1', x); ln.setAttribute('y1', AXIS);
     g.appendChild(ln);
+    var sd = document.createElementNS(NS, 'circle');
+    sd.setAttribute('class', 'shadowdot'); sd.setAttribute('r', '2.2');
+    sd.setAttribute('cx', x);
+    g.appendChild(sd);
     var dt = document.createElementNS(NS, 'circle');
     dt.setAttribute('class', 'handdot'); dt.setAttribute('r', '2.6');
     g.appendChild(dt);
-    hands.push(ln); dots.push(dt);
+    hands.push(ln); dots.push(dt); ties.push(ti); shadows.push(sd);
   }
 
   var t = 0;
@@ -410,17 +421,20 @@
   function period() { return w() > 0.02 ? 2 * Math.PI / w() : 6.28; }
 
   function draw() {
-    var kk = k(), ww = w(), aa = amp(), HR = 17 * aa, AMP = 26 * aa;
+    var kk = k(), ww = w(), aa = amp(), HR = 24 * aa;
     for (var i = 0; i < N; i++) {
       var xm = XM * i / (N - 1), x = X0 + xm * PX;
       var th = kk * xm - ww * t;
-      var px = x + HR * Math.cos(th), py = AXIS1 - HR * Math.sin(th);
+      var px = x + HR * Math.cos(th), py = AXIS - HR * Math.sin(th);
       hands[i].setAttribute('x2', px.toFixed(1)); hands[i].setAttribute('y2', py.toFixed(1));
       dots[i].setAttribute('cx', px.toFixed(1)); dots[i].setAttribute('cy', py.toFixed(1));
+      shadows[i].setAttribute('cy', py.toFixed(1));
+      ties[i].setAttribute('x1', x); ties[i].setAttribute('y1', py.toFixed(1));
+      ties[i].setAttribute('x2', px.toFixed(1)); ties[i].setAttribute('y2', py.toFixed(1));
     }
     var d = '', first = true;
-    for (var xp = X0 - 16; xp <= X1 + 16; xp += 3) {
-      var y = AXIS2 - AMP * Math.sin(kk * (xp - X0) / PX - ww * t);
+    for (var xp = X0 - 14; xp <= X1 + 14; xp += 3) {
+      var y = AXIS - HR * Math.sin(kk * (xp - X0) / PX - ww * t);
       d += (first ? 'M' : 'L') + xp.toFixed(1) + ' ' + y.toFixed(1);
       first = false;
     }
@@ -433,8 +447,8 @@
       lamg.removeAttribute('display');
       var xe = X0 + lamPx;
       lamln.setAttribute('x1', X0); lamln.setAttribute('x2', xe.toFixed(1));
-      lh1.setAttribute('points', X0 + ',224 ' + (X0 + 7) + ',220.5 ' + (X0 + 7) + ',227.5');
-      lh2.setAttribute('points', xe.toFixed(1) + ',224 ' + (xe - 7).toFixed(1) + ',220.5 ' + (xe - 7).toFixed(1) + ',227.5');
+      lh1.setAttribute('points', X0 + ',166 ' + (X0 + 7) + ',162.5 ' + (X0 + 7) + ',169.5');
+      lh2.setAttribute('points', xe.toFixed(1) + ',166 ' + (xe - 7).toFixed(1) + ',162.5 ' + (xe - 7).toFixed(1) + ',169.5');
       lamtxt.setAttribute('x', ((X0 + xe) / 2).toFixed(1));
     }
 
