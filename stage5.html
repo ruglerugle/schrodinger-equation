@@ -660,10 +660,10 @@
     c3.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
   function size3() {
-    var w = cv3.clientWidth || 320, h = Math.round(Math.max(w * 0.72, 300)), d = window.devicePixelRatio || 1;
+    var w = cv3.clientWidth || 320, h = Math.round(Math.max(w * 0.7, 290)), d = window.devicePixelRatio || 1;
     cv3.width = Math.round(w * d); cv3.height = Math.round(h * d); cv3.style.height = h + 'px';
     c3.setTransform(d, 0, 0, d, 0, 0);
-    W3 = w; H3 = h; sc = w / 46; cx = w / 2; cy = h / 2 - 14;
+    W3 = w; H3 = h; sc = w / 40; cx = w / 2 + 6; cy = h / 2 - 8;
   }
   function draw3() {
     var k0 = +sk.value, s = Math.min(1, u * 1.15) * TS;     /* 曲面を描く深さ（t＝0 → TS） */
@@ -694,8 +694,8 @@
     hands(0, C.gold);
     if (s > 0.02) hands(s, C.blue);
     /* 軸 */
-    arrow(o, proj(XW / 2 + 3, 0, -TDEPTH / 2), 'x（場所）', -52, 18);
-    arrow(o, proj(-XW / 2, 0, TDEPTH / 2 + 1.5), 't（時刻）', 8, -6);
+    arrow(o, proj(XW / 2 + 1.5, 0, -TDEPTH / 2), 'x（場所）', -56, 16);
+    arrow(o, proj(-XW / 2, 0, TDEPTH / 2 + 0.8), 't（時刻）', 8, 6);
     arrow(o, proj(-XW / 2, HZ * 1.3, -TDEPTH / 2), 'ψ', 8, 2);
     /* 凡例（視点を回しても重ならないよう、位置は固定） */
     c3.font = F; c3.textAlign = 'left';
