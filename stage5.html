@@ -43,7 +43,11 @@
   .calc-steps li{padding:8px 10px;border-radius:8px;border:1px solid transparent;opacity:.22;
     transition:opacity .18s,background .18s,border-color .18s}
   .calc-steps li.on{opacity:1;background:var(--paper2);border-color:var(--line)}
-  .calc-steps li.cur{border-color:var(--gold-dark);box-shadow:0 0 0 2px rgba(217,164,65,.22)}
+  .calc-steps li.cur{border-color:var(--gold-dark);box-shadow:0 0 0 2px rgba(217,164,65,.22);cursor:pointer}
+  .calc-steps li.next{opacity:.38;cursor:pointer;position:relative;border-color:var(--line);border-style:dashed;padding-bottom:26px}
+  .calc-steps li.next::after{content:"▲ タップで表示";position:absolute;right:8px;bottom:5px;font-size:10.5px;font-weight:800;
+    color:var(--gold-dark);background:var(--paper2);border:1px solid var(--line);border-radius:999px;padding:1px 8px;opacity:1}
+  .calc-steps li.next .eq,.calc-steps li.next .why{opacity:.6}
   .calc-steps .eq{display:block;text-align:center;font-size:14px;font-weight:900;color:var(--ink);line-height:1.9}
   .calc-steps .eq.gold{color:var(--gold-dark)}
   .calc-steps .eq.blue{color:#2f6fa6}
@@ -426,6 +430,7 @@
       for (var i = 0; i < items.length; i++) {
         items[i].classList.toggle('on', i < n);
         items[i].classList.remove('cur');
+        items[i].classList.toggle('next', i === n);
       }
       items[n - 1].classList.add('cur');
       prev.disabled = (n === 1);
@@ -433,6 +438,13 @@
       cnt.textContent = n + ' / ' + items.length;
     }
     next.addEventListener('click', function(){ if (n < items.length) { n++; render(); } });
+    /* まだ表示していないボックスをタップ → そこまで表示。いま光っているボックスをタップ → 1手進む */
+    Array.prototype.forEach.call(items, function(li, i){
+      li.addEventListener('click', function(){
+        if (i >= n) { n = i + 1; render(); }
+        else if (i === n - 1 && n < items.length) { n++; render(); }
+      });
+    });
     prev.addEventListener('click', function(){ if (n > 1) { n--; render(); } });
     reset.addEventListener('click', function(){ n = 1; render(); });
     render();
