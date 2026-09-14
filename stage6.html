@@ -467,8 +467,8 @@
     ctx.fillText('0', p0[0], p0[1] + 6); ctx.fillText('L', pL[0], pL[1] + 6);
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillStyle = C.red; ctx.fillText('壁の外：ψ＝0 の平面（赤い格子）', 14, H - 40);
-    ctx.fillStyle = C.blue; ctx.fillText('青：いま（t＝' + tc.toFixed(2) + '）の断面と、その針の列（回るだけで長さは変わらない）', 14, H - 26);
-    ctx.fillStyle = C.muted; ctx.fillText('箱の中：波は揺れる。壁の面（V＝∞）を越えては存在できない', 14, H - 12);
+    ctx.fillStyle = C.blue; ctx.fillText('青：いまの断面と針の列（回るだけで長さは変わらない）', 14, H - 26);
+    ctx.fillStyle = C.muted; ctx.fillText('箱の中の波は揺れるが、壁の面（V＝∞）は越えられない', 14, H - 12);
   }
   function resize() {
     var w = cv.clientWidth || 320, h = Math.round(Math.max(w * 0.72, 300)), d = window.devicePixelRatio || 1;
