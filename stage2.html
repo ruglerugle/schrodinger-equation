@@ -46,6 +46,18 @@
   .sq-svg .ra{fill:none;stroke:var(--muted);stroke-width:1}
   .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
   .sq-svg .handdot{fill:var(--gold-dark)}
+  .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
+  .sq-svg .lamhead{fill:var(--gold-dark)}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:58px;text-align:right}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
 </style>
 </head>
 <body>
@@ -200,16 +212,41 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="hands-svg" viewBox="0 0 340 220" width="100%" role="img" aria-label="数直線の各地点に立つ小さな矢印の列。場所とともに向きがねじれ、時間とともに全部がいっせいに回る。下段はその虚部を結んだサインカーブで、矢印が回ると波が右に走る">
+        <svg class="sq-svg" id="hands-svg" viewBox="0 0 340 244" width="100%" role="img" aria-label="数直線の各地点に立つ小さな矢印の列。場所とともに向きがねじれ、時間とともに全部がいっせいに回る。下段はその虚部を結んだサインカーブで、矢印が回ると波が右に走る。波数k・角振動数ω・振幅A・時刻tをスライダーで変えられる">
           <text class="strong" x="14" y="16">ψ＝Ae<tspan baseline-shift="super" font-size="9">i(kx−ωt)</tspan>：各地点に立つ「回る針」の列</text>
           <line class="axis" x1="14" y1="70" x2="326" y2="70"></line>
           <g id="h-hands"></g>
           <text class="label" x="14" y="112">↑ 各 x 地点の針（角度 kx−ωt）。右へ行くほど kx ぶん回っている</text>
           <line class="axis" x1="14" y1="170" x2="326" y2="170"></line>
           <path class="wave" id="h-wave"></path>
-          <text class="label" x="14" y="214">↑ 針の縦成分（虚部）だけを結ぶと sin の波。針が回ると波が走る</text>
+          <g id="h-lamg">
+            <line class="lamarrow" id="h-lam" y1="224" y2="224"></line>
+            <polygon class="lamhead" id="h-lh1"></polygon>
+            <polygon class="lamhead" id="h-lh2"></polygon>
+            <text class="strong" id="h-lamtxt" y="219" text-anchor="middle">λ＝2π/k</text>
+          </g>
+          <text class="label" x="14" y="238">↑ 針の縦成分（虚部）だけを結ぶと sin の波。針が回ると波が走る</text>
         </svg>
-        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の縦成分（虚部）だけを影として取り出すと、見慣れた sin の走る波になる。<strong>本体は針、sin は影</strong></div>
+        <div class="sim-ctrl">
+          <label for="h-k">波数 k</label>
+          <input type="range" id="h-k" min="0.3" max="2.4" step="0.01" value="1.57" aria-label="波数 k（ラジアン毎メートル）">
+          <span class="val" id="h-kv">1.57</span>
+          <label for="h-w">角振動数 ω</label>
+          <input type="range" id="h-w" min="0" max="3" step="0.01" value="1" aria-label="角振動数 ω（ラジアン毎秒）">
+          <span class="val" id="h-wv">1.00</span>
+          <label for="h-a">振幅 A</label>
+          <input type="range" id="h-a" min="0.4" max="1.3" step="0.01" value="1" aria-label="振幅 A">
+          <span class="val" id="h-av">1.00</span>
+          <label for="h-t">時刻 t</label>
+          <input type="range" id="h-t" min="0" max="6.28" step="0.01" value="0" aria-label="時刻 t（秒）">
+          <span class="val" id="h-tv">0.00 s</span>
+        </div>
+        <button class="sim-play" id="h-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout">
+          <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="h-ro-lam">4.00</b> m（1波長の長さ）</span>
+          <span style="color:#2f6fa6">T ＝ 2π/ω ＝ <b id="h-ro-t">6.28</b> s（針が1回転する時間）</span>
+        </div>
+        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の縦成分（虚部）だけを影として取り出すと、見慣れた sin の走る波になる。<strong>本体は針、sin は影</strong>。<strong>k</strong> を上げるとねじれが細かくなり（＝波長が短くなり）、<strong>ω</strong> を上げると針が速く回る（＝波が速く走る）。<strong>A</strong> は針の長さ。時間を止めて <strong>t</strong> を手で動かすと、1周期ぶんをコマ送りできる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -342,7 +379,16 @@
   var svg = document.getElementById('hands-svg');
   if (!svg) return;
   var g = document.getElementById('h-hands'), wave = document.getElementById('h-wave');
-  var X0 = 30, X1 = 316, N = 13, AXIS1 = 70, AXIS2 = 170, HR = 24, AMP = 34, LAM = 143;
+  var lamg = document.getElementById('h-lamg'), lamln = document.getElementById('h-lam'),
+      lh1 = document.getElementById('h-lh1'), lh2 = document.getElementById('h-lh2'),
+      lamtxt = document.getElementById('h-lamtxt');
+  var sk = document.getElementById('h-k'), sw = document.getElementById('h-w'),
+      sa = document.getElementById('h-a'), stt = document.getElementById('h-t');
+  var vk = document.getElementById('h-kv'), vw = document.getElementById('h-wv'),
+      va = document.getElementById('h-av'), vt = document.getElementById('h-tv');
+  var roLam = document.getElementById('h-ro-lam'), roT = document.getElementById('h-ro-t');
+  var btn = document.getElementById('h-play');
+  var X0 = 30, X1 = 316, XM = 8, PX = (X1 - X0) / XM, N = 13, AXIS1 = 70, AXIS2 = 170;
   var NS = 'http://www.w3.org/2000/svg';
   var hands = [], dots = [], i;
   for (i = 0; i < N; i++) {
@@ -357,40 +403,105 @@
     hands.push(ln); dots.push(dt);
   }
 
-  function draw(t) {
+  var t = 0;
+  function k() { return +sk.value; }
+  function w() { return +sw.value; }
+  function amp() { return +sa.value; }
+  function period() { return w() > 0.02 ? 2 * Math.PI / w() : 6.28; }
+
+  function draw() {
+    var kk = k(), ww = w(), aa = amp(), HR = 17 * aa, AMP = 26 * aa;
     for (var i = 0; i < N; i++) {
-      var x = X0 + (X1 - X0) * i / (N - 1);
-      var th = 2 * Math.PI * (x - t) / LAM;
+      var xm = XM * i / (N - 1), x = X0 + xm * PX;
+      var th = kk * xm - ww * t;
       var px = x + HR * Math.cos(th), py = AXIS1 - HR * Math.sin(th);
       hands[i].setAttribute('x2', px.toFixed(1)); hands[i].setAttribute('y2', py.toFixed(1));
       dots[i].setAttribute('cx', px.toFixed(1)); dots[i].setAttribute('cy', py.toFixed(1));
     }
     var d = '', first = true;
-    for (var x2 = X0 - 16; x2 <= X1 + 16; x2 += 3) {
-      var y = AXIS2 - AMP * Math.sin(2 * Math.PI * (x2 - t) / LAM);
-      d += (first ? 'M' : 'L') + x2.toFixed(1) + ' ' + y.toFixed(1);
+    for (var xp = X0 - 16; xp <= X1 + 16; xp += 3) {
+      var y = AXIS2 - AMP * Math.sin(kk * (xp - X0) / PX - ww * t);
+      d += (first ? 'M' : 'L') + xp.toFixed(1) + ' ' + y.toFixed(1);
       first = false;
     }
     wave.setAttribute('d', d);
-  }
-  draw(0);
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var lamPx = 2 * Math.PI / kk * PX;
+    if (lamPx > X1 - X0) {
+      lamg.setAttribute('display', 'none');
+    } else {
+      lamg.removeAttribute('display');
+      var xe = X0 + lamPx;
+      lamln.setAttribute('x1', X0); lamln.setAttribute('x2', xe.toFixed(1));
+      lh1.setAttribute('points', X0 + ',224 ' + (X0 + 7) + ',220.5 ' + (X0 + 7) + ',227.5');
+      lh2.setAttribute('points', xe.toFixed(1) + ',224 ' + (xe - 7).toFixed(1) + ',220.5 ' + (xe - 7).toFixed(1) + ',227.5');
+      lamtxt.setAttribute('x', ((X0 + xe) / 2).toFixed(1));
+    }
 
-  var t = 0, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.8;
-    if (t > LAM) t -= LAM;
-    draw(t);
-    raf = requestAnimationFrame(loop);
+    vk.textContent = kk.toFixed(2);
+    vw.textContent = ww.toFixed(2);
+    va.textContent = aa.toFixed(2);
+    vt.textContent = t.toFixed(2) + ' s';
+    roLam.textContent = (2 * Math.PI / kk).toFixed(2);
+    roT.textContent = ww > 0.02 ? period().toFixed(2) : '∞';
   }
+
+  function syncTimeRange() {
+    var T = period();
+    stt.max = T.toFixed(2);
+    if (t > T) { t = t % T; }
+    stt.value = t.toFixed(2);
+  }
+
+  var playing = false, userPaused = false, visible = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0;
+    last = now;
+    var T = period();
+    t += dt;
+    if (t >= T) t -= T;
+    stt.value = t.toFixed(2);
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  function play() {
+    if (playing) return;
+    playing = true; last = 0;
+    btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true');
+    raf = requestAnimationFrame(frame);
+  }
+  function pause() {
+    playing = false;
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false');
+  }
+
+  btn.addEventListener('click', function(){
+    if (playing) { userPaused = true; pause(); }
+    else { userPaused = false; play(); }
+  });
+  sk.addEventListener('input', draw);
+  sa.addEventListener('input', draw);
+  sw.addEventListener('input', function(){ syncTimeRange(); draw(); });
+  stt.addEventListener('input', function(){
+    userPaused = true; pause();
+    t = +stt.value; draw();
+  });
+
+  syncTimeRange();
+  draw();
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { userPaused = true; pause(); return; }
+
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
+      visible = es[0].isIntersecting;
+      if (visible && !userPaused) play();
+      else if (!visible) pause();
     }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
+  } else { visible = true; play(); }
 })();
 </script>
 </body>
