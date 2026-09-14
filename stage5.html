@@ -306,13 +306,13 @@
         </div>
         <div class="cv-wrap" style="margin-top:14px"><canvas id="ord3d" role="img" aria-label="ψ(x,t) の曲面の3Dグラフ。手前の金色の曲線が t＝0 の形で、時間が進むにつれて曲面が奥へ描き足されていく。t＝0 の形のねじれを変えると、決まる未来（曲面全体）が変わる。ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
-          <label for="ord-k">シュレディンガー：t＝0 の形のねじれ k₀</label>
-          <input type="range" id="ord-k" min="-2.5" max="2.5" step="0.5" value="1.5" aria-label="t＝0 における波のねじれ（運動量）">
+          <label for="ord-k">シュレディンガー：t＝0 の形を選ぶ（針の巻き方 k₀）</label>
+          <input type="range" id="ord-k" min="-2.5" max="2.5" step="0.5" value="1.5" aria-label="t＝0 の形を選ぶ（針の列の巻き方）">
           <span class="val" id="ord-kv">＋1.5</span>
         </div>
         <button class="sim-play" id="ord-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span class="sub">🖱️ 下の図はドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption"><strong>上（ニュートン）</strong>：F＝ma は「加速度＝速度の変化率」を決める式なので、<strong>いまの位置</strong>を渡されても<strong>いまの速度</strong>は教えてくれない。同じ場所から投げても初速が違えば軌道が分かれる――位置と速度の<strong>2つ</strong>をそろえて初めて未来が決まる。<strong>下（シュレディンガー）</strong>：床の2方向が場所 x と時刻 t、高さが ψ の値。手前の<strong>金色の断面が t＝0 の形</strong>で、渡すのはこの1本だけ。方程式は「ψ の変化率＝いまの ψ から計算できるもの」の形なので、この1本から次の瞬間の断面が決まり、それを繰り返して<strong>曲面全体（＝未来）が奥へ描き足されていく</strong>。「速さ」を別に渡さなくてよいのは、それが<strong>金色の断面のねじれ</strong>（位相の進み方＝運動量）としてすでに描き込まれているから。ねじれ k₀ を変えると同じ場所にある同じ塊が、逆向きに進む曲面になる</div>
+        <div class="diagram-caption"><strong>上（ニュートン）</strong>：F＝ma は「加速度＝速度の変化率」を決める式なので、<strong>いまの位置</strong>を渡されても<strong>いまの速度</strong>は教えてくれない。同じ場所から投げても初速が違えば軌道が分かれる――位置と速度の<strong>2つ</strong>をそろえて初めて未来が決まる。<strong>下（シュレディンガー）</strong>：床の2方向が場所 x と時刻 t、高さが ψ の値（実部）。手前の<strong>金色の針の列が t＝0 の ψ</strong> で、渡すのはこれだけ。ψ は複素数なので、t＝0 の断面だけは高さ（実部）と手前への突き出し（虚部）を持つ<strong>針の列</strong>で描いている――ステージ2のらせん階段そのもの。方程式は「ψ の変化率＝いまの ψ から計算できるもの」の形なので、この針の列から次の瞬間が決まり、それを繰り返して<strong>曲面全体（＝未来）が奥へ描き足されていく</strong>。<strong>k₀ は別の入力ではない</strong>。針の列の<strong>巻き方</strong>（らせんの向きと細かさ）が k₀ であり、それは t＝0 の形の一部。もし高さ（実部）だけを描いたら ＋k₀ と −k₀ は同じ絵になってしまい、「同じ形なのに未来が違う」ように見える――だから針で描く必要がある。スライダーは「t＝0 の形をどれにするか」を選んでいるだけで、選んだ形が違えば塊の進む向きが変わる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -591,13 +591,14 @@
   /* ---------- 下：ψ(x,t) の曲面 ---------- */
   var XW = 30, SIG = 2.5, HZ = 2.6, TDEPTH = 12;     /* x の範囲、塊の幅、高さの倍率、t 方向の奥行き（描画単位） */
   var yaw = 0.42, pitch = -1.0, W3 = 0, H3 = 0, sc = 1, cx = 0, cy = 0;
-  /* 自由に進むガウス型の塊（ℏ＝m＝1）。実部を返す */
-  function rePsi(x, t, k0) {
+  /* 自由に進むガウス型の塊（ℏ＝m＝1）。複素数の値 [実部, 虚部] を返す */
+  function psi(x, t, k0) {
     var tau = t / (2 * SIG * SIG), uu = x - k0 * t, d = 1 + tau * tau;
-    var re = -uu * uu / (4 * SIG * SIG * d);
-    var im = uu * uu * tau / (4 * SIG * SIG * d) + k0 * x - k0 * k0 * t / 2 - 0.5 * Math.atan(tau);
-    return Math.pow(d, -0.25) * Math.exp(re) * Math.cos(im);
+    var mag = Math.pow(d, -0.25) * Math.exp(-uu * uu / (4 * SIG * SIG * d));
+    var ph = uu * uu * tau / (4 * SIG * SIG * d) + k0 * x - k0 * k0 * t / 2 - 0.5 * Math.atan(tau);
+    return [mag * Math.cos(ph), mag * Math.sin(ph)];
   }
+  function rePsi(x, t, k0) { return psi(x, t, k0)[0]; }
   function proj(x, y, z) {
     var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
     var X1 = x * cw + z * sw, Z1 = -x * sw + z * cw;
@@ -643,18 +644,26 @@
     for (i = 0; i <= 24; i++) line3(cutX(-XW / 2 + XW * i / 24, k0, s), C.meshT, 0.8);
     /* いま描いている縁（t＝s）と、渡された t＝0 の断面 */
     if (s > 0.02) line3(cutT(s, k0), C.blue, 2);
-    line3(cutT(0, k0), C.gold, 3);
+    line3(cutT(0, k0), C.gold, 1.2);
+    /* t＝0 の断面は複素数なので「針の列」で描く。高さ＝実部、手前への突き出し＝虚部。
+       針の巻き方（らせんの向き）が運動量。実部だけだと ±k₀ が同じ絵になってしまう */
+    var z0 = -TDEPTH / 2, DIM = 3.0, xx;
+    for (xx = -XW / 2; xx <= XW / 2 + 0.01; xx += 0.6) {
+      var v = psi(xx, 0, k0), base = proj(xx, 0, z0), tip = proj(xx, HZ * v[0], z0 - DIM * v[1]);
+      line3([base, tip], C.gold, 1.9);
+      c3.fillStyle = C.gold; c3.beginPath(); c3.arc(tip[0], tip[1], 2.2, 0, 7); c3.fill();
+    }
     /* 軸 */
     arrow(o, proj(XW / 2 + 3, 0, -TDEPTH / 2), 'x（場所）', -52, 18);
     arrow(o, proj(-XW / 2, 0, TDEPTH / 2 + 1.5), 't（時刻）', 8, -6);
     arrow(o, proj(-XW / 2, HZ * 1.3, -TDEPTH / 2), 'ψ', 8, 2);
     /* 凡例（視点を回しても重ならないよう、位置は固定） */
     c3.font = F; c3.textAlign = 'left';
-    c3.fillStyle = C.gold; c3.fillText('━ 金：t＝0 の形（渡すのはこれだけ）', 14, H3 - 26);
+    c3.fillStyle = C.gold; c3.fillText('金の針：t＝0 の ψ（複素数の針の列。巻き方が運動量）― 渡すのはこれだけ', 14, H3 - 26);
     c3.fillStyle = C.blue; c3.fillText('━ 青：t＝' + s.toFixed(1) + ' まで決まった未来の縁', 14, H3 - 12);
     c3.fillStyle = C.muted; c3.textAlign = 'right';
     var dir = k0 > 0 ? '右へ進む' : (k0 < 0 ? '左へ進む' : 'その場で広がる');
-    c3.fillText('ねじれ k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → 塊は' + dir, W3 - 14, H3 - 12);
+    c3.fillText('針の巻き方 k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → 塊は' + dir, W3 - 14, H3 - 12);
   }
 
   function drawAll() {
