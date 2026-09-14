@@ -127,7 +127,7 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="euler-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="複素数平面の単位円上を回る矢印e^iθ。横の位置がcosθ、縦の位置がsinθ。iを掛けるたびに90°回転し、1→i→−1→−iと巡る">
+        <svg class="sq-svg" id="euler-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="複素数平面の単位円上を反時計回りに回る矢印e^iθ。横の位置がcosθ、縦の位置がsinθ。iを掛けるたびに90°回転し、1→i→−1→−iと巡る">
           <text class="strong" x="14" y="16">e<tspan baseline-shift="super" font-size="9">iθ</tspan> ＝ 単位円上を回る、長さ1の矢印</text>
           <line class="axis" x1="20" y1="115" x2="220" y2="115"></line>
           <line class="axis" x1="120" y1="30" x2="120" y2="200"></line>
@@ -148,9 +148,10 @@
           <text class="strong" x="240" y="70">i を掛ける＝90°回転</text>
           <text class="label" x="228" y="92">1 → i → −1 → −i → 1</text>
           <text class="label" x="240" y="112">（4回で一周）</text>
-          <text class="strong" x="240" y="150">θが増える向き</text>
-          <path class="ra" d="M258 176 A 22 22 0 1 1 280 160"></path>
-          <polygon class="arrowhead" points="282,156 274,160 281,167"></polygon>
+          <text class="strong" x="232" y="148">矢印が回る向き</text>
+          <text class="label" x="232" y="165">（θが増える）</text>
+          <path class="ra" d="M283.8 173.1 A 18 18 0 1 0 296.2 173.1"></path>
+          <polygon class="arrowhead" points="290.6,171.0 299.8,169.1 296.4,178.5"></polygon>
         </svg>
         <div class="diagram-caption">オイラーの公式の絵解き。e<sup>iθ</sup> は複素数平面（横軸＝実部、縦軸＝虚部）の<strong>単位円上を反時計回りに回る長さ1の矢印</strong>で、横の位置が cosθ、縦の位置が sinθ。「変化の速さ＝i×いまの値」＝いつも進行方向と直角、だから円を描く。ひもの先で振り回した石と同じ理屈</div>
       </div>
@@ -313,6 +314,8 @@
     lb.setAttribute('x', (CX + (R + 12) * Math.cos(th)).toFixed(1));
     lb.setAttribute('y', (CY - (R + 12) * Math.sin(th) + 4).toFixed(1));
     lbc.setAttribute('x', (CX + R * Math.cos(th) / 2 - 16).toFixed(1));
+    lbc.setAttribute('y', (py + (py <= CY ? -6 : 15)).toFixed(1));
+    lbs.setAttribute('x', (px + (px >= CX ? 7 : -36)).toFixed(1));
     lbs.setAttribute('y', (CY - R * Math.sin(th) / 2 + 4).toFixed(1));
   }
   draw(Math.PI / 5);
