@@ -184,34 +184,6 @@
           </div>
           <div class="dialog-bubble">では、この矢印で<strong>波</strong>を作ろう。前回の波 y＝A sin(kx−ωt) の心臓部は、位相 kx−ωt だった。この位相を、sin の中身ではなく<strong>矢印の角度</strong>として使うんだ。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針（矢印）が1本ずつ立っている</strong>。x の地点の針の角度が kx−ωt だ。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
         </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">針の縦成分（虚部）だけを取り出せば A sin(kx−ωt)、横成分（実部）なら A cos(kx−ωt)。つまり<strong>前回の波は、この回る針の「影」だった</strong>んですね。針ぜんぶが回ると、影の波形が横に走って見える。……本体は針で、sin は影。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ物理学者はわざわざ本体（複素数）で書くのか。強みは2つある。<strong>強みその1</strong>は、教室では絵で眺めるだけだった、あの不都合の解消だ。今日は式で確かめられる。矢印の<strong>長さ</strong>を考えてごらん。sin の値は 1→0→−1 と暴れるけれど、回っている矢印の長さは？</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">ずっと 1 のままです。回転は向きを変えるだけで、長さは変えない。ψ＝A e<sup>i(kx−ωt)</sup> なら、どの場所でもどの瞬間でも<strong>矢印の長さは A のまま</strong>。「波の強さ」が場所によって消えたり現れたりしない。<strong>見つかる確率に縞ができる、あの不都合が消える</strong>――教室で見せられた絵は、式にするとこれだったんですね。……そうか、いま分かりました。影（sin）だけ見ていたから 0 に見えたんだ。本体の針は、影が 0 になった瞬間も横を向いて堂々と存在していた。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">そのとおり。その矢印の長さは、複素数の教室でやった<strong>絶対値</strong>だね。|a＋bi|＝√(a²＋b²)、三平方の定理そのものだった。波の場合は |ψ| と書く。cos²θ＋sin²θ＝1 だから |e<sup>iθ</sup>|＝1、よって |ψ|＝A で一定。<strong>強みその2</strong>は、この先の導出の生命線になる。予告だけしておこう。次の次のステージで、私たちは波を<strong>微分</strong>という道具にかける。詳しくはそのときやるけれど、sin は微分すると cos に化け、cos は −sin に化ける。<strong>形がころころ変わる</strong>んだ。ところが e<sup>iθ</sup> は、微分しても <strong>i が1個前に出てくるだけで、自分自身のまま</strong>。「変化の速さ＝i×いまの値」という、さっき円運動を導いたあの性質そのものだよ。形が崩れないから、方程式の材料として圧倒的に扱いやすい。</div>
-        </div>
       </div>
 
       <div class="diagram-box">
@@ -254,6 +226,34 @@
       </div>
 
       <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">針の縦成分（虚部）だけを取り出せば A sin(kx−ωt)、横成分（実部）なら A cos(kx−ωt)。つまり<strong>前回の波は、この回る針の「影」だった</strong>んですね。針ぜんぶが回ると、影の波形が横に走って見える。……本体は針で、sin は影。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ物理学者はわざわざ本体（複素数）で書くのか。強みは2つある。<strong>強みその1</strong>は、教室では絵で眺めるだけだった、あの不都合の解消だ。今日は式で確かめられる。矢印の<strong>長さ</strong>を考えてごらん。sin の値は 1→0→−1 と暴れるけれど、回っている矢印の長さは？</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">ずっと 1 のままです。回転は向きを変えるだけで、長さは変えない。ψ＝A e<sup>i(kx−ωt)</sup> なら、どの場所でもどの瞬間でも<strong>矢印の長さは A のまま</strong>。「波の強さ」が場所によって消えたり現れたりしない。<strong>見つかる確率に縞ができる、あの不都合が消える</strong>――教室で見せられた絵は、式にするとこれだったんですね。……そうか、いま分かりました。影（sin）だけ見ていたから 0 に見えたんだ。本体の針は、影が 0 になった瞬間も横を向いて堂々と存在していた。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。その矢印の長さは、複素数の教室でやった<strong>絶対値</strong>だね。|a＋bi|＝√(a²＋b²)、三平方の定理そのものだった。波の場合は |ψ| と書く。cos²θ＋sin²θ＝1 だから |e<sup>iθ</sup>|＝1、よって |ψ|＝A で一定。<strong>強みその2</strong>は、この先の導出の生命線になる。予告だけしておこう。次の次のステージで、私たちは波を<strong>微分</strong>という道具にかける。詳しくはそのときやるけれど、sin は微分すると cos に化け、cos は −sin に化ける。<strong>形がころころ変わる</strong>んだ。ところが e<sup>iθ</sup> は、微分しても <strong>i が1個前に出てくるだけで、自分自身のまま</strong>。「変化の速さ＝i×いまの値」という、さっき円運動を導いたあの性質そのものだよ。形が崩れないから、方程式の材料として圧倒的に扱いやすい。</div>
+        </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
