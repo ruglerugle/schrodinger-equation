@@ -71,6 +71,12 @@
   .lin-col.ng .lin-title{color:#c8433f}
   .lin-ex{font-size:13px;font-weight:900;color:var(--ink);line-height:1.8}
   .lin-note{font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7;margin-top:6px}
+  .lin-why{margin:4px 0 2px}
+  .lin-why summary{cursor:pointer;font-size:11.5px;font-weight:900;color:var(--gold-dark);list-style:none;display:inline-block;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:var(--paper2)}
+  .lin-why summary::-webkit-details-marker{display:none}
+  .lin-why[open] summary{background:#fff}
+  .lin-why-body{font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.8;margin-top:6px;padding:8px 10px;border-left:3px solid var(--gold);background:var(--paper2);border-radius:0 8px 8px 0}
+  .lin-eq{font-weight:900;font-variant-numeric:tabular-nums}
   .cv-wrap{width:100%}
   #ordc,#ord3d,#supc{display:block;width:100%;height:auto}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
@@ -268,6 +274,9 @@
             <div class="lin-title">足し算をすり抜ける操作</div>
             <div class="lin-ex">2倍する：2×(a＋b) ＝ 2a＋2b</div>
             <div class="lin-ex">微分する：(f＋g) の傾き ＝ f の傾き ＋ g の傾き</div>
+            <details class="lin-why"><summary>なぜ？（2行で済む）</summary>
+              <div class="lin-why-body">ステージ4の定義「増え幅÷進んだ幅」に入れるだけ。h＝f＋g として、x を d だけ進めたときの h の増え幅は<br><span class="lin-eq">h(x＋d)−h(x) ＝ [f(x＋d)−f(x)] ＋ [g(x＋d)−g(x)]</span><br>（足し算の順番を入れ替えただけ）。両辺を d で割れば「h の増え幅÷d ＝ f の増え幅÷d ＋ g の増え幅÷d」。d を小さくしていくと、左は (f＋g) の傾き、右は f の傾き＋g の傾き。<strong>高さが足し算なら増え幅も足し算、だから傾きも足し算</strong>。2回微分はこれを2回使うだけ。V(x) や iℏ を掛けるほうは、中1の分配法則 V(ψ₁＋ψ₂)＝Vψ₁＋Vψ₂ そのもの</div>
+            </details>
             <div class="lin-note">方程式に出てくる操作は<strong>「微分する」「数を掛ける」だけ</strong>。だから ψ₁＋ψ₂ を入れると各項がほどけて、ψ₁ の式 ＋ ψ₂ の式 になる。両方が成り立つなら、和も成り立つ</div>
           </div>
           <div class="lin-col ng">
