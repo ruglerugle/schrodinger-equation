@@ -95,6 +95,40 @@
           </div>
           <div class="dialog-bubble">では、方程式を初めて<strong>使って</strong>みよう。問題はいちばん簡単なものにする。幅 L の箱の中に、電子が1個閉じ込められている。箱の中（0 から L のあいだ）では、電子はどこにいても力を受けない――前回の地形図の言葉で言えば、V の地形が完全に平らということだ。平らな床の高さは基準の取り方にすぎないから、いちばん簡単な 0 に選ぶ（箱の中では V＝0）。次に壁だ。壁は「<strong>そこに入るには無限のエネルギーが要る場所</strong>」として作る。地形図で言えば、箱の両端で V が一気に無限大まで立ち上がる崖だね。V が無限大というのは現実の壁を理想化した言い方で、どんなに固い壁もものすごいエネルギーをぶつければ壊れるけれど、「いくらぶつけても絶対に入れない壁」がほしいときは V＝∞ とおくのがいちばん簡単なんだ。物理屋はこの設定を<strong>井戸型ポテンシャル</strong>と呼ぶ。では、この設定を方程式に入れてみよう。方程式をエネルギーの帳簿として読み下すと、<strong>E ψ ＝（運動エネルギーの項）ψ ＋ V ψ</strong> だったね。壁の外のどこか1点で、もし ψ が 0 でない値を持ったとする。するとその点では、右辺の V ψ が「無限大 × 0 でない数」で<strong>無限大</strong>になる。ところが左辺の E ψ は、E が電子の決まった有限のエネルギーだから<strong>有限</strong>のまま。有限＝無限大は成り立たない。この矛盾を避ける方法はただ1つ、<strong>壁の外では ψ＝0</strong>。見つかる確率 |ψ|² も 0 だから、波は壁の外には一切はみ出せない。これが、壁の条件を波の言葉に翻訳した第一歩だ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="井戸型ポテンシャルの地形図。横軸は場所x、縦軸はVの高さ。0からLの箱の中はV＝0の平らな床、両端は無限に高い崖。壁の外に波がはみ出すと右辺のVψが無限大になり、有限の左辺と等しくなれないので、外ではψ＝0になる">
+          <text class="strong" x="14" y="16">井戸型ポテンシャル：箱の中は平ら、両端は無限の崖</text>
+          <rect x="20" y="28" width="80" height="122" fill="rgba(200,67,63,.08)"></rect>
+          <rect x="240" y="28" width="80" height="122" fill="rgba(200,67,63,.08)"></rect>
+          <line class="axis" x1="20" y1="150" x2="320" y2="150"></line>
+          <line class="wall" x1="100" y1="150" x2="100" y2="34"></line>
+          <line class="wall" x1="240" y1="150" x2="240" y2="34"></line>
+          <polygon class="arrowhead" points="100,26 95,36 105,36"></polygon>
+          <polygon class="arrowhead" points="240,26 235,36 245,36"></polygon>
+          <line class="axis" x1="100" y1="150" x2="240" y2="150" stroke-width="3"></line>
+          <text class="label" x="100" y="166" text-anchor="middle">0</text>
+          <text class="label" x="240" y="166" text-anchor="middle">L</text>
+          <text class="label" x="170" y="166" text-anchor="middle">V＝0（平らな床）</text>
+          <text class="strong" x="60" y="46" text-anchor="middle">V＝∞</text>
+          <text class="strong" x="280" y="46" text-anchor="middle">V＝∞</text>
+          <text class="label" x="60" y="62" text-anchor="middle">入れない壁</text>
+          <text class="label" x="280" y="62" text-anchor="middle">入れない壁</text>
+          <path class="wave" d="M100 150 C120 150 130 84 170 84 C210 84 220 150 240 150"></path>
+          <path d="M240 150 C248 150 252 122 262 122 C272 122 276 150 284 150" fill="none" stroke="#c8433f" stroke-width="2" stroke-dasharray="5 4"></path>
+          <line x1="254" y1="114" x2="270" y2="130" stroke="#c8433f" stroke-width="2.2"></line>
+          <line x1="270" y1="114" x2="254" y2="130" stroke="#c8433f" stroke-width="2.2"></line>
+          <text class="lbA" x="170" y="76" text-anchor="middle">箱の中：波はいてよい</text>
+          <text class="lbR" x="284" y="100" text-anchor="middle">はみ出すと</text>
+          <text class="lbR" x="284" y="114" text-anchor="middle">Vψ＝∞</text>
+          <text class="label" x="14" y="182">壁の外で ψ≠0 なら、右辺 Vψ は無限大、左辺 Eψ は有限</text>
+          <text class="label" x="14" y="196">→ 等式が成り立たない → 外では ψ＝0</text>
+        </svg>
+        <div class="diagram-caption">V の地形図。0 から L の箱の中は V＝0 の平らな床、両端は V＝∞ の崖（いくらエネルギーをぶつけても入れない壁の理想化）。赤の点線のように波が壁の外へはみ出すと、方程式の右辺 Vψ が「無限大×0でない数」で無限大になり、有限の左辺 Eψ と等しくなれない。だから外では ψ＝0 に押さえつけられる（金色の線は箱の中に収まった波の一例。この形が本当に許される形かどうかは、このあと確かめていく）</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
