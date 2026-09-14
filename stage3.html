@@ -42,6 +42,15 @@
   .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
   .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
   .sq-svg .lamhead{fill:var(--gold-dark)}
+  .sq-svg .legM{stroke:var(--ink);stroke-width:2.4}
+  .sq-svg .legP{stroke:#2f6fa6;stroke-width:2.4}
+  .sq-svg .hypE{stroke:var(--gold-dark);stroke-width:2.4}
+  .sq-svg .arcE{fill:none;stroke:var(--gold-dark);stroke-width:1;stroke-dasharray:4 3}
+  .sq-svg .rangle{fill:none;stroke:var(--muted);stroke-width:1}
+  .sq-svg .gap{stroke:#b5504a;stroke-width:4}
+  .sq-svg .lbM{fill:var(--ink);font-size:11px;font-weight:900}
+  .sq-svg .lbE{fill:var(--gold-dark);font-size:12px;font-weight:900}
+  .sq-svg .lbG{fill:#b5504a;font-size:11px;font-weight:800}
   .sq-svg .parrow{stroke:#b5504a;stroke-width:3}
   .sq-svg .phead{fill:#b5504a}
   .sq-svg .lbP{fill:#b5504a;font-size:11px;font-weight:900}
@@ -143,8 +152,54 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そこで相対性理論の出番だ。エネルギー・運動量・質量の関係は、ほんとうは1本の式にまとまっていてね。<br><strong>E²＝(pc)²＋(mc²)²</strong><br>読み下すと「エネルギーの2乗は、<strong>動きのぶん</strong>と<strong>質量のぶん</strong>の足し算」。この式に、3通りの場合を入れてみよう。<strong>止まっている重いもの</strong>（p＝0）なら、残るのは E＝mc²――あの有名な式だ。<strong>ゆっくり動く重いもの</strong>なら、計算すると運動量は p≒mv に戻る。そして<strong>質量ゼロのもの</strong>（m＝0）を入れると、質量のぶんがまるごと消えて <strong>E＝pc</strong> だけが残る。p＝mv と E＝pc は別々の法則ではなく、<strong>同じ1本の式の両端</strong>なんだ。だから光は、質量ではなく<strong>エネルギーを持っていること</strong>によって運動量を持つ。この1本の式そのものの導出は相対性理論の仕事だから、今日は事実として借りておこう。</div>
+          <div class="dialog-bubble">そこで相対性理論の出番だ。エネルギー・運動量・質量の関係は、ほんとうは1本の式にまとまっていてね。<br><strong>E²＝(pc)²＋(mc²)²</strong><br>読み下すと「エネルギーの2乗は、<strong>動きのぶん</strong>と<strong>質量のぶん</strong>の足し算」。この式に、3通りの場合を入れてみよう。<strong>止まっている重いもの</strong>（p＝0）なら、残るのは E＝mc²――あの有名な式だ。<strong>ゆっくり動く重いもの</strong>なら、見慣れた p＝mv が近似として戻ってくる。そして<strong>質量ゼロのもの</strong>（m＝0）を入れると、質量のぶんがまるごと消えて <strong>E＝pc</strong> だけが残る。p＝mv と E＝pc は別々の法則ではなく、<strong>同じ1本の式の両端</strong>なんだ。だから光は、質量ではなく<strong>エネルギーを持っていること</strong>によって運動量を持つ。この1本の式そのものの導出は相対性理論の仕事だから、今日は事実として借りておこう。</div>
         </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その「戻ってくる」が引っかかります。E²＝(pc)²＋(mc²)² のどこをどういじったら、p＝mv が出てくるんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">やってみせよう。使うのは<strong>因数分解</strong>だけだよ。まず (mc²)² を左辺に移す。<br>E²−(mc²)²＝(pc)²<br>左辺は「2乗ひく2乗」の形だから、<strong>和と差の積</strong>に分解できるね。<br>(E−mc²)(E＋mc²)＝(pc)²<br>ここで「ゆっくり」が効いてくる。ゆっくり動くものは、<strong>動きのぶん pc が、質量のぶん mc² に比べてうんと小さい</strong>。すると全エネルギー E は mc² とほとんど同じ大きさになるから、E＋mc² は <strong>2mc²</strong> とみなしていい。<br>(E−mc²)×2mc² ≒ p²c²<br>両辺を 2mc² で割ると、c² が約分されて<br><strong>E−mc² ≒ p²/(2m)</strong><br>この左辺 E−mc² は、止まっているときのエネルギー mc² を<strong>超えた分</strong>――つまり<strong>運動エネルギー</strong>だ。そしてニュートン力学では、運動エネルギーは <strong>½mv²</strong> と書ける。同じものを2通りに書いたのだから、等しいとおいてごらん。<br>p²/(2m) ＝ ½mv²　→　p²＝m²v²　→　<strong>p＝mv</strong><br>ほら、戻ってきた。効いたのは「E＋mc² ≒ 2mc²」の一手だけ。これが成り立つのは、pc が mc² に比べて小さいとき――つまり光速よりずっと遅いとき、という条件つきだよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="tri-svg" viewBox="0 0 340 178" width="100%" role="img" aria-label="E²=(pc)²+(mc²)² を直角三角形で表した図。横の辺が質量のぶん mc²、縦の辺が動きのぶん pc、斜辺が全エネルギー E。速さを上げると縦の辺が伸び、斜辺が底辺より長くなる。その差が運動エネルギー">
+          <text class="strong" x="14" y="16">E²＝(pc)²＋(mc²)² ＝ 直角三角形（三平方の定理）</text>
+          <path class="arcE" id="tri-arc"></path>
+          <line class="legM" x1="45" y1="125" x2="195" y2="125"></line>
+          <line class="legP" id="tri-p" x1="195" y1="125" x2="195" y2="78"></line>
+          <line class="hypE" id="tri-h" x1="45" y1="125" x2="195" y2="78"></line>
+          <path class="rangle" d="M183 125 L183 113 L195 113"></path>
+          <text class="lbM" x="120" y="141" text-anchor="middle">mc²（質量のぶん）</text>
+          <text class="lbP" id="tri-plb" x="201" y="104">pc（動きのぶん）</text>
+          <text class="lbE" id="tri-elb" x="111" y="96" text-anchor="end">E</text>
+          <line class="gap" id="tri-gap" x1="195" y1="125" x2="202" y2="125"></line>
+          <text class="lbG" x="236" y="158" text-anchor="middle">↑ E−mc²（運動エネルギー）</text>
+          <text class="label" x="14" y="174">ゆっくりのとき pc は短く、斜辺 E は底辺 mc² とほとんど同じ長さ</text>
+        </svg>
+        <div class="sim-ctrl">
+          <label for="tri-v">速さ v</label>
+          <input type="range" id="tri-v" min="0.02" max="0.5" step="0.01" value="0.3" aria-label="速さ v（光速 c に対する割合）">
+          <span class="val" id="tri-vv">0.30 c</span>
+        </div>
+        <div class="readout">
+          <span style="color:#2f6fa6">pc ÷ mc² ＝ <b id="tri-r1">0.314</b></span>
+          <span>E＋mc² ÷ 2mc² ＝ <b id="tri-r2">1.024</b></span>
+          <span style="color:#b5504a">p ÷ mv ＝ <b id="tri-r3">1.048</b></span>
+          <span class="sub">まん中が「E＋mc² ≒ 2mc²」の近似の精度。右がその結果として p＝mv がどれだけ合っているか</span>
+        </div>
+        <div class="diagram-caption">E²＝(pc)²＋(mc²)² は、<strong>直角をはさむ2辺が pc と mc²、斜辺が E</strong> の三角形と同じ形をしている（三平方の定理）。速さ v を上げると縦の辺 pc が伸び、斜辺 E が底辺より目に見えて長くなる。逆に<strong>ゆっくりのときは縦の辺がほとんど無く、E は mc² とほぼ同じ長さ</strong>――だから E＋mc² を 2mc² で置き換えてよく、そこから p＝mv が出てくる。音速（秒速340 m）でも v は光速の 0.0001 % ほどしかないので、p÷mv は 1.0000000000006 くらい。日常では p＝mv が完璧に見えるのは、このためだよ。光速の 50% まで動かせる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -380,6 +435,40 @@
     oE.innerHTML = sci(E, 1);
     oP.innerHTML = sci(p, 1);
     oB.innerHTML = sci(p / BALL, 1);
+  }
+  sl.addEventListener('input', draw);
+  draw();
+})();
+</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('tri-svg');
+  if (!svg) return;
+  var LX = 45, RX = 195, BY = 125, BASE = RX - LX;   /* 底辺＝mc² */
+  var legP = document.getElementById('tri-p'), hyp = document.getElementById('tri-h'),
+      arc = document.getElementById('tri-arc'), gap = document.getElementById('tri-gap'),
+      plb = document.getElementById('tri-plb'), elb = document.getElementById('tri-elb');
+  var sl = document.getElementById('tri-v'), slv = document.getElementById('tri-vv');
+  var r1 = document.getElementById('tri-r1'), r2 = document.getElementById('tri-r2'), r3 = document.getElementById('tri-r3');
+
+  function draw() {
+    var b = +sl.value, g = 1 / Math.sqrt(1 - b * b);
+    var lp = BASE * g * b, le = BASE * g;            /* pc と E の長さ（mc²＝BASE として） */
+    var ty = BY - lp, ex = LX + le;
+
+    legP.setAttribute('y2', ty.toFixed(1));
+    hyp.setAttribute('x2', RX); hyp.setAttribute('y2', ty.toFixed(1));
+    arc.setAttribute('d', 'M' + RX + ' ' + ty.toFixed(1) + ' A ' + le.toFixed(1) + ' ' + le.toFixed(1) + ' 0 0 1 ' + ex.toFixed(1) + ' ' + BY);
+    gap.setAttribute('x1', RX); gap.setAttribute('x2', ex.toFixed(1));
+    plb.setAttribute('y', ((BY + ty) / 2 + 4).toFixed(1));
+    elb.setAttribute('y', (BY - lp * 0.52 - 6).toFixed(1));
+    elb.setAttribute('x', (LX + BASE * 0.44).toFixed(1));
+
+    slv.textContent = b.toFixed(2) + ' c';
+    r1.textContent = (g * b).toFixed(3);
+    r2.textContent = ((g + 1) / 2).toFixed(3);
+    r3.textContent = g.toFixed(3);
   }
   sl.addEventListener('input', draw);
   draw();
