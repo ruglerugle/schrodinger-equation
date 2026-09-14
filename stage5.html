@@ -74,6 +74,10 @@
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
   .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  @media (max-width:560px){
+    .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
+    .sim-ctrl label{grid-column:1 / -1;white-space:normal}
+  }
   #ord3d{touch-action:none;cursor:grab}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
     background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
@@ -316,7 +320,7 @@
         </div>
         <div class="cv-wrap" style="margin-top:14px"><canvas id="ord3d" role="img" aria-label="ψ(x,t) の曲面の3Dグラフ。手前の金色の曲線が t＝0 の形で、時間が進むにつれて曲面が奥へ描き足されていく。t＝0 の形のねじれを変えると、決まる未来（曲面全体）が変わる。ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
-          <label for="ord-k">シュレディンガー：t＝0 の形を選ぶ（針の巻き方 k₀）</label>
+          <label for="ord-k">t＝0 の形を選ぶ（針の巻き方 k₀）</label>
           <input type="range" id="ord-k" min="-2.5" max="2.5" step="0.5" value="1.5" aria-label="t＝0 の形を選ぶ（針の列の巻き方）">
           <span class="val" id="ord-kv">＋1.5</span>
         </div>
