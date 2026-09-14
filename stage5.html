@@ -47,6 +47,8 @@
   .calc-steps .eq{display:block;text-align:center;font-size:14px;font-weight:900;color:var(--ink);line-height:1.9}
   .calc-steps .eq.gold{color:var(--gold-dark)}
   .calc-steps .eq.blue{color:#2f6fa6}
+  .calc-steps .eq .gold{color:var(--gold-dark)}
+  .calc-steps .eq .blue{color:#2f6fa6}
   .calc-steps .eq.big{font-size:17px}
   .calc-steps .why{display:block;text-align:left;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7}
   .calc-nav{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:12px;flex-wrap:wrap}
@@ -212,7 +214,7 @@
 
       <div class="diagram-box">
         <div class="calc-head">V＝0 のときの検算 ― ψ＝A e<sup>i(kx−ωt)</sup> を方程式に入れる</div>
-        <ol class="calc-steps" id="chk-steps">
+        <ol class="calc-steps" data-stepper="chk">
           <li><span class="eq">iℏ ∂ψ/∂t ＝ −(ℏ²/2m) ∂²ψ/∂x²</span><span class="why">出発点。V＝0 なので位置エネルギーの項が消えている。ここに ψ＝A e<sup>i(kx−ωt)</sup> を入れていく</span></li>
           <li><span class="eq gold">∂ψ/∂t ＝ −iω ψ</span><span class="why">【左辺の準備】t で1回微分する。e の肩を微分すると<strong>肩にある t の係数がそのまま前に出て、形は自分のまま</strong>。肩は i(kx−ωt) だから、出てくるのは −iω</span></li>
           <li><span class="eq gold">iℏ ∂ψ/∂t ＝ iℏ×(−iω)ψ ＝ ℏω ψ</span><span class="why">左辺の iℏ を掛ける。i×(−i)＝−i²＝1 なので、<strong>i が消えて</strong> ℏω だけが残る</span></li>
@@ -224,11 +226,11 @@
           <li><span class="eq">E ψ ＝ (p²/2m) ψ</span><span class="why">左辺と右辺を並べる。どちらも「<strong>ψ の何倍か</strong>」という同じ形になっている</span></li>
           <li><span class="eq big">E ＝ p²/2m</span><span class="why">両辺を ψ で割る（ψ は 0 ではない）。これは<strong>運動エネルギーだけを持つ自由な粒子</strong>の式そのもの。p＝mv を入れれば p²/2m＝½mv² ――つじつまが合った</span></li>
         </ol>
-        <div class="calc-nav">
-          <button type="button" id="chk-prev">← 1歩もどる</button>
-          <button type="button" id="chk-next">次の一手 →</button>
-          <button type="button" id="chk-reset">最初から</button>
-          <span class="cnt" id="chk-count">1 / 10</span>
+        <div class="calc-nav" data-stepper="chk">
+          <button type="button" data-act="prev">← 1歩もどる</button>
+          <button type="button" data-act="next">次の一手 →</button>
+          <button type="button" data-act="reset">最初から</button>
+          <span class="cnt" data-act="count">1 / 10</span>
         </div>
         <div class="diagram-caption">「次の一手」を押すと、式変形が1行ずつ進む。金色が<strong>左辺</strong>（時間の側）、青が<strong>右辺</strong>（場所の側）の計算で、どちらも「<strong>微分すると、肩の係数が前に出るだけで ψ の形は変わらない</strong>」という e<sup>iθ</sup> の性質だけで進む。最後に両辺とも ψ の定数倍になるので、ψ で割れば E＝p²/2m が残る</div>
       </div>
@@ -265,6 +267,22 @@
             <div class="lin-ex">（余分な 2ab が出てくる）</div>
             <div class="lin-note">もし方程式に ψ² のような項があったら、2つの解を足したものは解に<strong>ならない</strong>。シュレディンガーはそういう形を選ばなかった</div>
           </div>
+        </div>
+        <div class="calc-head" style="margin-top:14px">ψ₁＋ψ₂ を方程式に入れると何が起きるか</div>
+        <ol class="calc-steps" data-stepper="lin">
+          <li><span class="eq gold">(1)　iℏ ∂ψ₁/∂t ＝ −(ℏ²/2m) ∂²ψ₁/∂x² ＋ Vψ₁</span><span class="why">ψ₁ は方程式の解だとする。つまりこの等式が成り立っている</span></li>
+          <li><span class="eq blue">(2)　iℏ ∂ψ₂/∂t ＝ −(ℏ²/2m) ∂²ψ₂/∂x² ＋ Vψ₂</span><span class="why">ψ₂ も別の解だとする。こちらの等式も成り立っている</span></li>
+          <li><span class="eq">左辺に ψ₁＋ψ₂ を入れる：iℏ ∂(ψ₁＋ψ₂)/∂t ＝ <span class="gold">iℏ ∂ψ₁/∂t</span> ＋ <span class="blue">iℏ ∂ψ₂/∂t</span></span><span class="why">「和の微分＝微分の和」（微分は足し算をすり抜ける）。左辺が2つの塊にほどけた</span></li>
+          <li><span class="eq">右辺に ψ₁＋ψ₂ を入れる：−(ℏ²/2m) ∂²(ψ₁＋ψ₂)/∂x² ＋ V(ψ₁＋ψ₂)<br>＝ <span class="gold">[−(ℏ²/2m) ∂²ψ₁/∂x² ＋ Vψ₁]</span> ＋ <span class="blue">[−(ℏ²/2m) ∂²ψ₂/∂x² ＋ Vψ₂]</span></span><span class="why">2回微分も、V を掛けるのも、足し算をすり抜ける。右辺も2つの塊にほどけた</span></li>
+          <li><span class="eq"><span class="gold">金の塊どうし</span>は (1) で等しい。<span class="blue">青の塊どうし</span>は (2) で等しい</span><span class="why">ほどけた左辺と右辺を見比べると、ψ₁ の分は (1) そのもの、ψ₂ の分は (2) そのもの</span></li>
+          <li><span class="eq big">iℏ ∂(ψ₁＋ψ₂)/∂t ＝ −(ℏ²/2m) ∂²(ψ₁＋ψ₂)/∂x² ＋ V(ψ₁＋ψ₂)</span><span class="why">等しいもの同士を足せば、和も等しい。<strong>ψ₁＋ψ₂ も方程式を満たす</strong>。新しい計算は何もしていない――ほどいて、(1)(2) を使って、また束ねただけ</span></li>
+          <li><span class="eq">もし ψ² の項があったら：(ψ₁＋ψ₂)² ＝ ψ₁² ＋ ψ₂² ＋ <span style="color:#c8433f">2ψ₁ψ₂</span></span><span class="why">(1)(2) を足しても出てこない<strong>余分な 2ψ₁ψ₂</strong> が残り、和は解にならない。「足し算してよい形」とは、この余分が出てこない形のこと</span></li>
+        </ol>
+        <div class="calc-nav" data-stepper="lin">
+          <button type="button" data-act="prev">← 1歩もどる</button>
+          <button type="button" data-act="next">次の一手 →</button>
+          <button type="button" data-act="reset">最初から</button>
+          <span class="cnt" data-act="count">1 / 7</span>
         </div>
         <div class="cv-wrap"><canvas id="supc" role="img" aria-label="上段：足し合わせる平面波を1本ずつ並べたもの。下段：それらを足した結果。1本なら波の強さはどこも同じだが、本数を増やすほど波は1か所に集まり、時間とともに進みながら広がる"></canvas></div>
         <div class="sim-ctrl">
@@ -359,28 +377,32 @@
 <script>SQ.initStagePage(5);</script>
 
 <script>
-/* V＝0 の検算を1手ずつ見せる */
+/* 式変形を1手ずつ見せるステッパー（data-stepper で ol と nav を対応づける） */
 (function(){
-  var list = document.getElementById('chk-steps');
-  if (!list) return;
-  var items = list.querySelectorAll('li');
-  var prev = document.getElementById('chk-prev'), next = document.getElementById('chk-next'),
-      reset = document.getElementById('chk-reset'), cnt = document.getElementById('chk-count');
-  var n = 1;
-  function render() {
-    for (var i = 0; i < items.length; i++) {
-      items[i].classList.toggle('on', i < n);
-      items[i].classList.remove('cur');
+  var lists = document.querySelectorAll('ol.calc-steps[data-stepper]');
+  Array.prototype.forEach.call(lists, function(list){
+    var key = list.getAttribute('data-stepper');
+    var nav = document.querySelector('.calc-nav[data-stepper="' + key + '"]');
+    if (!nav) return;
+    var items = list.querySelectorAll('li');
+    var prev = nav.querySelector('[data-act=prev]'), next = nav.querySelector('[data-act=next]'),
+        reset = nav.querySelector('[data-act=reset]'), cnt = nav.querySelector('[data-act=count]');
+    var n = 1;
+    function render() {
+      for (var i = 0; i < items.length; i++) {
+        items[i].classList.toggle('on', i < n);
+        items[i].classList.remove('cur');
+      }
+      items[n - 1].classList.add('cur');
+      prev.disabled = (n === 1);
+      next.disabled = (n === items.length);
+      cnt.textContent = n + ' / ' + items.length;
     }
-    items[n - 1].classList.add('cur');
-    prev.disabled = (n === 1);
-    next.disabled = (n === items.length);
-    cnt.textContent = n + ' / ' + items.length;
-  }
-  next.addEventListener('click', function(){ if (n < items.length) { n++; render(); } });
-  prev.addEventListener('click', function(){ if (n > 1) { n--; render(); } });
-  reset.addEventListener('click', function(){ n = 1; render(); });
-  render();
+    next.addEventListener('click', function(){ if (n < items.length) { n++; render(); } });
+    prev.addEventListener('click', function(){ if (n > 1) { n--; render(); } });
+    reset.addEventListener('click', function(){ n = 1; render(); });
+    render();
+  });
 })();
 </script>
 <script>
