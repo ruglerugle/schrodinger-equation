@@ -38,6 +38,23 @@
   .sq-svg .slotboxB{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.4}
   .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
   .sq-svg .flowhead{fill:var(--ink)}
+  .calc-head{font-size:12.5px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:10px}
+  .calc-steps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+  .calc-steps li{padding:8px 10px;border-radius:8px;border:1px solid transparent;opacity:.22;
+    transition:opacity .18s,background .18s,border-color .18s}
+  .calc-steps li.on{opacity:1;background:var(--paper2);border-color:var(--line)}
+  .calc-steps li.cur{border-color:var(--gold-dark);box-shadow:0 0 0 2px rgba(217,164,65,.22)}
+  .calc-steps .eq{display:block;text-align:center;font-size:14px;font-weight:900;color:var(--ink);line-height:1.9}
+  .calc-steps .eq.gold{color:var(--gold-dark)}
+  .calc-steps .eq.blue{color:#2f6fa6}
+  .calc-steps .eq.big{font-size:17px}
+  .calc-steps .why{display:block;text-align:left;font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7}
+  .calc-nav{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:12px;flex-wrap:wrap}
+  .calc-nav button{border:1px solid var(--line);background:var(--paper2);border-radius:999px;padding:6px 14px;
+    font-size:12px;font-weight:800;color:var(--ink);cursor:pointer}
+  .calc-nav button:hover:not(:disabled){background:#fff}
+  .calc-nav button:disabled{opacity:.4;cursor:not-allowed}
+  .calc-nav .cnt{font-size:12px;font-weight:900;color:var(--muted);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -171,6 +188,29 @@
         </div>
       </div>
 
+      <div class="diagram-box">
+        <div class="calc-head">V＝0 のときの検算 ― ψ＝A e<sup>i(kx−ωt)</sup> を方程式に入れる</div>
+        <ol class="calc-steps" id="chk-steps">
+          <li><span class="eq">iℏ ∂ψ/∂t ＝ −(ℏ²/2m) ∂²ψ/∂x²</span><span class="why">出発点。V＝0 なので位置エネルギーの項が消えている。ここに ψ＝A e<sup>i(kx−ωt)</sup> を入れていく</span></li>
+          <li><span class="eq gold">∂ψ/∂t ＝ −iω ψ</span><span class="why">【左辺の準備】t で1回微分する。e の肩を微分すると<strong>肩にある t の係数がそのまま前に出て、形は自分のまま</strong>。肩は i(kx−ωt) だから、出てくるのは −iω</span></li>
+          <li><span class="eq gold">iℏ ∂ψ/∂t ＝ iℏ×(−iω)ψ ＝ ℏω ψ</span><span class="why">左辺の iℏ を掛ける。i×(−i)＝−i²＝1 なので、<strong>i が消えて</strong> ℏω だけが残る</span></li>
+          <li><span class="eq gold">＝ E ψ</span><span class="why">辞書の1本目 <strong>E＝ℏω</strong> を使う。左辺の正体は「E の ψ 倍」だった</span></li>
+          <li><span class="eq blue">∂ψ/∂x ＝ ik ψ</span><span class="why">【右辺の準備】こんどは x で1回微分。肩の x の係数 ik が前に出る</span></li>
+          <li><span class="eq blue">∂²ψ/∂x² ＝ (ik)² ψ ＝ −k² ψ</span><span class="why">もう1回 x で微分するので、ik がもう1つ出て2乗になる。(ik)²＝i²k²＝−k²</span></li>
+          <li><span class="eq blue">−(ℏ²/2m) ∂²ψ/∂x² ＝ −(ℏ²/2m)×(−k²)ψ ＝ (ℏ²k²/2m) ψ</span><span class="why">右辺の係数を掛ける。マイナス×マイナスでプラスに戻る</span></li>
+          <li><span class="eq blue">＝ (p²/2m) ψ</span><span class="why">辞書の2本目 <strong>p＝ℏk</strong> を使う。ℏ²k²＝(ℏk)²＝p²。右辺の正体は「p²/2m の ψ 倍」だった</span></li>
+          <li><span class="eq">E ψ ＝ (p²/2m) ψ</span><span class="why">左辺と右辺を並べる。どちらも「<strong>ψ の何倍か</strong>」という同じ形になっている</span></li>
+          <li><span class="eq big">E ＝ p²/2m</span><span class="why">両辺を ψ で割る（ψ は 0 ではない）。これは<strong>運動エネルギーだけを持つ自由な粒子</strong>の式そのもの。p＝mv を入れれば p²/2m＝½mv² ――つじつまが合った</span></li>
+        </ol>
+        <div class="calc-nav">
+          <button type="button" id="chk-prev">← 1歩もどる</button>
+          <button type="button" id="chk-next">次の一手 →</button>
+          <button type="button" id="chk-reset">最初から</button>
+          <span class="cnt" id="chk-count">1 / 10</span>
+        </div>
+        <div class="diagram-caption">「次の一手」を押すと、式変形が1行ずつ進む。金色が<strong>左辺</strong>（時間の側）、青が<strong>右辺</strong>（場所の側）の計算で、どちらも「<strong>微分すると、肩の係数が前に出るだけで ψ の形は変わらない</strong>」という e<sup>iθ</sup> の性質だけで進む。最後に両辺とも ψ の定数倍になるので、ψ で割れば E＝p²/2m が残る</div>
+      </div>
+
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -251,5 +291,31 @@
 
 <script src="js/progress.js"></script>
 <script>SQ.initStagePage(5);</script>
+
+<script>
+/* V＝0 の検算を1手ずつ見せる */
+(function(){
+  var list = document.getElementById('chk-steps');
+  if (!list) return;
+  var items = list.querySelectorAll('li');
+  var prev = document.getElementById('chk-prev'), next = document.getElementById('chk-next'),
+      reset = document.getElementById('chk-reset'), cnt = document.getElementById('chk-count');
+  var n = 1;
+  function render() {
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.toggle('on', i < n);
+      items[i].classList.remove('cur');
+    }
+    items[n - 1].classList.add('cur');
+    prev.disabled = (n === 1);
+    next.disabled = (n === items.length);
+    cnt.textContent = n + ' / ' + items.length;
+  }
+  next.addEventListener('click', function(){ if (n < items.length) { n++; render(); } });
+  prev.addEventListener('click', function(){ if (n > 1) { n--; render(); } });
+  reset.addEventListener('click', function(){ n = 1; render(); });
+  render();
+})();
+</script>
 </body>
 </html>
