@@ -68,12 +68,13 @@
   .lin-ex{font-size:13px;font-weight:900;color:var(--ink);line-height:1.8}
   .lin-note{font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7;margin-top:6px}
   .cv-wrap{width:100%;max-width:520px;margin:0 auto}
-  #ordc,#supc{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);border:1px solid var(--line)}
+  #ordc,#ord3d,#supc{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);border:1px solid var(--line)}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
   .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  #ord3d{touch-action:none;cursor:grab}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
     background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
   .sim-play:hover{background:#fff}
@@ -297,17 +298,21 @@
 
       <div class="diagram-box">
         <div class="calc-head">「ある瞬間の ψ の形さえ決まれば、そこから先は全部決まる」とは</div>
-        <div class="cv-wrap"><canvas id="ordc" role="img" aria-label="上段：ニュートンの運動。同じ場所からボールを投げても、初速が違えば違う軌道になる。下段：シュレディンガーの波。t＝0 の形（ねじれ）を決めると、その形だけで波が進む向きと速さが決まる"></canvas></div>
+        <div class="cv-wrap"><canvas id="ordc" role="img" aria-label="ニュートンの運動。同じ場所からボールを投げても、初速が違えば違う軌道になる。位置だけでは未来が決まらない"></canvas></div>
         <div class="sim-ctrl">
           <label for="ord-v">ニュートン：初速 v₀</label>
           <input type="range" id="ord-v" min="0" max="8" step="0.5" value="4" aria-label="ボールを投げ上げる初速">
           <span class="val" id="ord-vv">4.0 m/s</span>
+        </div>
+        <div class="cv-wrap" style="margin-top:14px"><canvas id="ord3d" role="img" aria-label="ψ(x,t) の曲面の3Dグラフ。手前の金色の曲線が t＝0 の形で、時間が進むにつれて曲面が奥へ描き足されていく。t＝0 の形のねじれを変えると、決まる未来（曲面全体）が変わる。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
           <label for="ord-k">シュレディンガー：t＝0 の形のねじれ k₀</label>
-          <input type="range" id="ord-k" min="-3" max="3" step="0.5" value="1.5" aria-label="t＝0 における波のねじれ（運動量）">
+          <input type="range" id="ord-k" min="-2.5" max="2.5" step="0.5" value="1.5" aria-label="t＝0 における波のねじれ（運動量）">
           <span class="val" id="ord-kv">＋1.5</span>
         </div>
         <button class="sim-play" id="ord-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
-        <div class="diagram-caption"><strong>上段（ニュートン）</strong>：F＝ma は「加速度＝速度の変化率」を決める式なので、<strong>いまの位置</strong>を渡されても<strong>いまの速度</strong>は教えてくれない。同じ場所から投げても、初速が違えば軌道が分かれる――位置と速度の<strong>2つ</strong>をそろえて初めて未来が決まる。<strong>下段（シュレディンガー）</strong>：方程式は「ψ の変化率＝いまの ψ から計算できるもの」の形なので、<strong>t＝0 の形を1枚</strong>渡せば次の瞬間が決まり、それを繰り返して未来が全部決まる。「速さ」の情報が別に要らないのは、それが<strong>形の中のねじれ</strong>（位相の進み方＝運動量）としてすでに描き込まれているから。ねじれの向きを変えると、同じ場所にある同じ塊が、逆向きに進む</div>
+        <div class="readout"><span class="sub">🖱️ 下の図はドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption"><strong>上（ニュートン）</strong>：F＝ma は「加速度＝速度の変化率」を決める式なので、<strong>いまの位置</strong>を渡されても<strong>いまの速度</strong>は教えてくれない。同じ場所から投げても初速が違えば軌道が分かれる――位置と速度の<strong>2つ</strong>をそろえて初めて未来が決まる。<strong>下（シュレディンガー）</strong>：床の2方向が場所 x と時刻 t、高さが ψ の値。手前の<strong>金色の断面が t＝0 の形</strong>で、渡すのはこの1本だけ。方程式は「ψ の変化率＝いまの ψ から計算できるもの」の形なので、この1本から次の瞬間の断面が決まり、それを繰り返して<strong>曲面全体（＝未来）が奥へ描き足されていく</strong>。「速さ」を別に渡さなくてよいのは、それが<strong>金色の断面のねじれ</strong>（位相の進み方＝運動量）としてすでに描き込まれているから。ねじれ k₀ を変えると同じ場所にある同じ塊が、逆向きに進む曲面になる</div>
       </div>
 
       <div class="dialogue-scene">
@@ -529,132 +534,177 @@
 })();
 </script>
 <script>
-/* 時間について1階＝「いまの形」だけで未来が決まる。ニュートン（2階）との対比 */
+/* 時間について1階＝「いまの形」だけで未来が決まる。
+   上：ニュートン（2次元）、下：ψ(x,t) の曲面を t＝0 の断面から奥へ描き足していく3D */
 (function(){
-  var cv = document.getElementById('ordc');
-  if (!cv) return;
-  var ctx = cv.getContext('2d');
+  var cvN = document.getElementById('ordc'), cv3 = document.getElementById('ord3d');
+  if (!cvN || !cv3) return;
+  var cn = cvN.getContext('2d'), c3 = cv3.getContext('2d');
   var sv = document.getElementById('ord-v'), svv = document.getElementById('ord-vv');
   var sk = document.getElementById('ord-k'), skv = document.getElementById('ord-kv');
   var btn = document.getElementById('ord-play');
-  var G = 9.8, Y0 = 0.3, TMAX = 2.0;
-  var XW = 24, DK = 2 * Math.PI / XW, N = 9;
-  var C = { gold: '#a6742a', blue: '#2f6fa6', band: 'rgba(47,111,166,.18)', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12', ghost: 'rgba(138,122,92,.35)' };
-  var W = 0, H = 0, t = 0;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12',
+            ghost: 'rgba(138,122,92,.35)', meshX: 'rgba(166,116,42,.3)', meshT: 'rgba(47,111,166,.3)' };
   var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var u = 0;                       /* 共通の時計（0〜1）。ニュートンの t と、曲面を描く深さの両方に使う */
+  var TN = 2.0, TS = 3.0;          /* ニュートン側の時間、曲面側の時間 */
 
-  function setSize() {
-    var w = cv.clientWidth || 320, h = 335, d = window.devicePixelRatio || 1;
-    cv.width = Math.round(w * d); cv.height = Math.round(h * d);
-    cv.style.height = h + 'px';
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h;
-  }
-
-  /* ---- 上段：投げ上げたボール ---- */
+  /* ---------- 上：投げ上げたボール ---------- */
+  var G = 9.8, Y0 = 0.3, WN = 0, HN = 0;
   function ball(v0, tt) { var y = Y0 + v0 * tt - 0.5 * G * tt * tt; return y < 0 ? 0 : y; }
-  function drawNewton() {
-    var X0 = 40, X1 = W - 14, TOP = 26, BOT = 132, v0 = +sv.value;
-    var YMAX = 3.9;
-    function px(tt) { return X0 + (X1 - X0) * tt / TMAX; }
+  function sizeN() {
+    var w = cvN.clientWidth || 320, h = 150, d = window.devicePixelRatio || 1;
+    cvN.width = Math.round(w * d); cvN.height = Math.round(h * d); cvN.style.height = h + 'px';
+    cn.setTransform(d, 0, 0, d, 0, 0); WN = w; HN = h;
+  }
+  function drawN() {
+    var t = u * TN, X0 = 40, X1 = WN - 14, TOP = 30, BOT = 128, v0 = +sv.value, YMAX = 3.9, i, tt;
+    function px(tt) { return X0 + (X1 - X0) * tt / TN; }
     function py(y) { return BOT - (BOT - TOP) * y / YMAX; }
-    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText('ニュートン：位置だけでは未来が決まらない', 14, 12);
-    ctx.strokeStyle = C.muted; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(X0, py(0)); ctx.lineTo(X1, py(0)); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(X0, py(0)); ctx.lineTo(X0, TOP); ctx.stroke();
-    ctx.fillStyle = C.muted; ctx.font = F;
-    ctx.fillText('時間 →', X1 - 40, py(0) + 10);
-    ctx.save(); ctx.translate(14, (TOP + BOT) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.fillText('高さ', 0, 0); ctx.restore();
-    /* 他の初速で描いた「ありえた未来」 */
-    var alts = [0, 2, 4, 6, 8], i, tt;
+    cn.clearRect(0, 0, WN, HN);
+    cn.fillStyle = C.ink; cn.font = '900 12px system-ui,sans-serif'; cn.textAlign = 'left'; cn.textBaseline = 'middle';
+    cn.fillText('ニュートン：位置だけでは未来が決まらない', 14, 12);
+    cn.strokeStyle = C.muted; cn.lineWidth = 1;
+    cn.beginPath(); cn.moveTo(X0, py(0)); cn.lineTo(X1, py(0)); cn.stroke();
+    cn.beginPath(); cn.moveTo(X0, py(0)); cn.lineTo(X0, TOP); cn.stroke();
+    cn.fillStyle = C.muted; cn.font = F; cn.fillText('時間 →', X1 - 40, py(0) + 10);
+    cn.save(); cn.translate(14, (TOP + BOT) / 2); cn.rotate(-Math.PI / 2); cn.textAlign = 'center'; cn.fillText('高さ', 0, 0); cn.restore();
+    var alts = [0, 2, 4, 6, 8];
     for (i = 0; i < alts.length; i++) {
       if (alts[i] === v0) continue;
-      ctx.strokeStyle = C.ghost; ctx.lineWidth = 1; ctx.setLineDash([4, 3]); ctx.beginPath();
-      for (tt = 0; tt <= TMAX; tt += 0.02) { var yy = ball(alts[i], tt); if (tt === 0) ctx.moveTo(px(tt), py(yy)); else ctx.lineTo(px(tt), py(yy)); }
-      ctx.stroke(); ctx.setLineDash([]);
+      cn.strokeStyle = C.ghost; cn.lineWidth = 1; cn.setLineDash([4, 3]); cn.beginPath();
+      for (tt = 0; tt <= TN; tt += 0.02) { var yy = ball(alts[i], tt); if (tt === 0) cn.moveTo(px(tt), py(yy)); else cn.lineTo(px(tt), py(yy)); }
+      cn.stroke(); cn.setLineDash([]);
     }
-    /* 選んだ初速の軌道と、いまのボール */
-    ctx.strokeStyle = C.red; ctx.lineWidth = 2.2; ctx.beginPath();
-    for (tt = 0; tt <= t; tt += 0.02) { var y2 = ball(v0, tt); if (tt === 0) ctx.moveTo(px(tt), py(y2)); else ctx.lineTo(px(tt), py(y2)); }
-    ctx.stroke();
-    var bx = px(t), by = py(ball(v0, t));
-    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(bx, by, 5, 0, 7); ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
-    /* 出発点 */
-    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(px(0), py(Y0), 3.5, 0, 7); ctx.fill();
-    ctx.fillStyle = C.muted; ctx.font = F; ctx.textAlign = 'left';
-    ctx.fillText('同じ場所から出発', px(0) + 8, py(Y0) - 10);
-    ctx.fillStyle = C.red; ctx.fillText('赤：初速 ' + v0.toFixed(1) + ' m/s のときの未来', X0 + 8, TOP + 2);
-    ctx.fillStyle = C.muted; ctx.textAlign = 'right'; ctx.fillText('点線：ほかの初速だった場合', X1, TOP + 2); ctx.textAlign = 'left';
+    cn.strokeStyle = C.red; cn.lineWidth = 2.2; cn.beginPath();
+    for (tt = 0; tt <= t; tt += 0.02) { var y2 = ball(v0, tt); if (tt === 0) cn.moveTo(px(tt), py(y2)); else cn.lineTo(px(tt), py(y2)); }
+    cn.stroke();
+    cn.fillStyle = C.red; cn.beginPath(); cn.arc(px(t), py(ball(v0, t)), 5, 0, 7); cn.fill();
+    cn.strokeStyle = '#fff'; cn.lineWidth = 1.5; cn.stroke();
+    cn.fillStyle = C.ink; cn.beginPath(); cn.arc(px(0), py(Y0), 3.5, 0, 7); cn.fill();
+    cn.fillStyle = C.muted; cn.font = F; cn.textAlign = 'left';
+    cn.fillText('同じ場所から出発', px(0) + 8, py(Y0) - 10);
+    cn.fillStyle = C.red; cn.fillText('赤：初速 ' + v0.toFixed(1) + ' m/s のときの未来', X0 + 8, TOP - 4);
+    cn.fillStyle = C.muted; cn.textAlign = 'right'; cn.fillText('点線：ほかの初速だった場合', X1, TOP - 4);
   }
 
-  /* ---- 下段：ねじれをもった波の塊 ---- */
-  function comps(k0) {
-    var a = [], c = (N - 1) / 2, sg = N / 3, sum = 0, i;
-    for (i = 0; i < N; i++) {
-      var w = Math.exp(-(i - c) * (i - c) / (2 * sg * sg)), k = k0 + (i - c) * DK;
-      a.push({ w: w, k: k, om: k * k / 2 }); sum += w;
-    }
-    for (i = 0; i < N; i++) a[i].w /= sum;
-    return a;
+  /* ---------- 下：ψ(x,t) の曲面 ---------- */
+  var XW = 30, SIG = 2.5, HZ = 2.6, TDEPTH = 12;     /* x の範囲、塊の幅、高さの倍率、t 方向の奥行き（描画単位） */
+  var yaw = 0.42, pitch = -1.0, W3 = 0, H3 = 0, sc = 1, cx = 0, cy = 0;
+  /* 自由に進むガウス型の塊（ℏ＝m＝1）。実部を返す */
+  function rePsi(x, t, k0) {
+    var tau = t / (2 * SIG * SIG), uu = x - k0 * t, d = 1 + tau * tau;
+    var re = -uu * uu / (4 * SIG * SIG * d);
+    var im = uu * uu * tau / (4 * SIG * SIG * d) + k0 * x - k0 * k0 * t / 2 - 0.5 * Math.atan(tau);
+    return Math.pow(d, -0.25) * Math.exp(re) * Math.cos(im);
   }
-  function drawSchr() {
-    var X0 = 40, X1 = W - 14, TOP = 182, k0 = +sk.value, cs = comps(k0), yc = 266, A = 48, i, px, x;
-    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText('シュレディンガー：t＝0 の形だけで未来が決まる', 14, TOP - 12);
-    ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X0, yc); ctx.lineTo(X1, yc); ctx.stroke();
-    ctx.fillStyle = C.muted; ctx.font = F; ctx.fillText('場所 →', X1 - 40, yc + 42);
-    var env = [];
-    for (px = X0; px <= X1; px += 2) {
-      x = (px - X0) / (X1 - X0) * XW - XW / 2;
-      var re = 0, im = 0;
-      for (i = 0; i < N; i++) { var ph = cs[i].k * x - cs[i].om * t; re += cs[i].w * Math.cos(ph); im += cs[i].w * Math.sin(ph); }
-      env.push([px, Math.sqrt(re * re + im * im), re]);
-    }
-    ctx.fillStyle = C.band; ctx.beginPath();
-    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc - A * env[i][1]); else ctx.lineTo(env[i][0], yc - A * env[i][1]); }
-    for (i = env.length - 1; i >= 0; i--) ctx.lineTo(env[i][0], yc + A * env[i][1]);
-    ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.beginPath();
-    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc - A * env[i][2]); else ctx.lineTo(env[i][0], yc - A * env[i][2]); }
-    ctx.stroke();
-    /* 出発点の印 */
-    var xs = X0 + (X1 - X0) / 2;
-    ctx.strokeStyle = C.ink; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(xs, yc - A - 6); ctx.lineTo(xs, yc + A + 6); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.fillText('t＝0 で塊があった場所', xs, yc + A + 16);
-    ctx.textAlign = 'left'; ctx.fillStyle = C.blue;
+  function proj(x, y, z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = x * cw + z * sw, Z1 = -x * sw + z * cw;
+    var Y2 = y * cp - Z1 * sp;
+    return [cx + sc * X1, cy - sc * Y2];
+  }
+  function pw(x, t, k0) { return proj(x, HZ * rePsi(x, t, k0), t / TS * TDEPTH - TDEPTH / 2); }
+  function line3(pts, color, wd) {
+    c3.strokeStyle = color; c3.lineWidth = wd; c3.beginPath();
+    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) c3.lineTo(p[0], p[1]); else c3.moveTo(p[0], p[1]); }
+    c3.stroke();
+  }
+  function cutT(tv, k0) { var a = [], j; for (j = 0; j <= 90; j++) a.push(pw(-XW / 2 + XW * j / 90, tv, k0)); return a; }
+  function cutX(xv, k0, tmax) { var a = [], j, n = 30; for (j = 0; j <= n; j++) a.push(pw(xv, tmax * j / n, k0)); return a; }
+  function arrow(p1, p2, label, dxl, dyl) {
+    line3([p1, p2], C.muted, 1.5);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    c3.fillStyle = C.muted; c3.beginPath();
+    c3.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
+    c3.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
+    c3.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
+    c3.closePath(); c3.fill();
+    c3.font = '900 12px system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
+    c3.fillText(label, p2[0] + dxl, p2[1] + dyl);
+  }
+  function size3() {
+    var w = cv3.clientWidth || 320, h = Math.round(w * 0.72), d = window.devicePixelRatio || 1;
+    cv3.width = Math.round(w * d); cv3.height = Math.round(h * d); cv3.style.height = h + 'px';
+    c3.setTransform(d, 0, 0, d, 0, 0);
+    W3 = w; H3 = h; sc = w / 46; cx = w / 2; cy = h / 2 - 6;
+  }
+  function draw3() {
+    var k0 = +sk.value, s = Math.min(1, u * 1.15) * TS;     /* 曲面を描く深さ（t＝0 → TS） */
+    var i, o = proj(-XW / 2, 0, -TDEPTH / 2);
+    c3.clearRect(0, 0, W3, H3);
+    c3.fillStyle = C.ink; c3.font = '900 12px system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
+    c3.fillText('シュレディンガー：t＝0 の断面1本から、曲面（未来）が決まる', 14, 12);
+    /* 床の枠 */
+    line3([o, proj(XW / 2, 0, -TDEPTH / 2), proj(XW / 2, 0, TDEPTH / 2), proj(-XW / 2, 0, TDEPTH / 2), o], '#ddd0ad', 1);
+    /* 描き足された曲面（t ≤ s） */
+    var nT = Math.max(1, Math.round(24 * s / TS));
+    for (i = 1; i <= nT; i++) line3(cutT(s * i / nT, k0), C.meshX, 0.8);
+    for (i = 0; i <= 24; i++) line3(cutX(-XW / 2 + XW * i / 24, k0, s), C.meshT, 0.8);
+    /* いま描いている縁（t＝s）と、渡された t＝0 の断面 */
+    if (s > 0.02) line3(cutT(s, k0), C.blue, 2);
+    line3(cutT(0, k0), C.gold, 3);
+    /* 軸 */
+    arrow(o, proj(XW / 2 + 3, 0, -TDEPTH / 2), 'x（場所）', -52, 18);
+    arrow(o, proj(-XW / 2, 0, TDEPTH / 2 + 1.5), 't（時刻）', 8, -6);
+    arrow(o, proj(-XW / 2, HZ * 1.3, -TDEPTH / 2), 'ψ', 8, 2);
+    /* 凡例（視点を回しても重ならないよう、位置は固定） */
+    c3.font = F; c3.textAlign = 'left';
+    c3.fillStyle = C.gold; c3.fillText('━ 金：t＝0 の形（渡すのはこれだけ）', 14, H3 - 26);
+    c3.fillStyle = C.blue; c3.fillText('━ 青：t＝' + s.toFixed(1) + ' まで決まった未来の縁', 14, H3 - 12);
+    c3.fillStyle = C.muted; c3.textAlign = 'right';
     var dir = k0 > 0 ? '右へ進む' : (k0 < 0 ? '左へ進む' : 'その場で広がる');
-    ctx.fillText('ねじれ k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → ' + dir + '（速さの情報は形の中に入っている）', X0, TOP + 6);
+    c3.fillText('ねじれ k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → 塊は' + dir, W3 - 14, H3 - 12);
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    drawNewton(); drawSchr();
+  function drawAll() {
+    drawN(); draw3();
     svv.textContent = (+sv.value).toFixed(1) + ' m/s';
     var k0 = +sk.value; skv.textContent = (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1);
   }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; drawAll(); }); }
 
-  var playing = false, userPaused = false, raf = null, last = 0;
+  /* 時計 */
+  var playing = false, userPaused = false, raf = null, last = 0, hold = 0;
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    t += dt * 0.6; if (t > TMAX) t = 0;
-    draw(); raf = requestAnimationFrame(frame);
+    if (u >= 1) { hold += dt; if (hold > 1.3) { u = 0; hold = 0; } }
+    else { u = Math.min(1, u + dt / 4.2); }
+    drawAll(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
-  sv.addEventListener('input', function(){ t = 0; draw(); });
-  sk.addEventListener('input', function(){ t = 0; draw(); });
-  window.addEventListener('resize', function(){ setSize(); draw(); });
-  setSize(); draw();
+  sv.addEventListener('input', function(){ u = 0; hold = 0; invalidate(); });
+  sk.addEventListener('input', function(){ u = 0; hold = 0; invalidate(); });
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  /* 3D の回転（①STAGE6 と同じ方式） */
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv3.style.cursor = 'grabbing'; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; cv3.style.cursor = 'grab'; }
+  cv3.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv3.addEventListener('touchstart', down, { passive: false }); cv3.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+
+  function resize() { sizeN(); size3(); drawAll(); }
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { u = 1; userPaused = true; pause(); drawAll(); return; }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv3);
   } else { play(); }
 })();
 </script>
+
 </body>
 </html>
