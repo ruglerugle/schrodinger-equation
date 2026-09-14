@@ -118,7 +118,7 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">外でゼロ、は納得です。でも、それだけなら<strong>壁の内側ぎりぎりまで波が高いままで、壁を境に段差でストンとゼロに落ちる</strong>形も、まだ許されていませんか？ 「壁のちょうど上で ψ＝0」とまで言い切るには、もうひと押し要る気がします。</div>
+          <div class="dialog-bubble">外でゼロ、は納得です。でも、それだけなら、<strong>井戸に水を溜めるように壁の内側ぎりぎりまで波が高いままで、壁を境に段差でストンとゼロに落ちる</strong>形も、まだ許されていませんか？ 「壁のちょうど上で ψ＝0」とまで言い切るには、もうひと押し要る気がします。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
@@ -127,6 +127,36 @@
           </div>
           <div class="dialog-bubble">そのもうひと押しは、前のステージで組んだ検出器が与えてくれる。波の<strong>傾きは、運動量の読み取り</strong>だったね（−iℏ∂/∂x）。段差でぷつんと切れた波は、その一点で<strong>無限に急な傾き</strong>を持つことになる。読み取られる運動量は無限大、運動エネルギー p²/2m も無限大――こちらの請求も、有限の E では払えない。つまり<strong>「外にはみ出す」のも「段差を作る」のも、どちらも無限のエネルギーがかかって不可能</strong>なんだ。波は途切れずなめらかにつながるしかなく、外側のゼロと連続につながるには、<strong>壁のちょうど上（x＝0 と x＝L）で ψ＝0</strong> でなければならない。これが、あとで効いてくる<strong>境界条件</strong>だ。……ちなみに壁の高さが<strong>有限</strong>なら、請求が有限で済むぶん話が変わって、波は壁の中へわずかに染み込む。この染み込みのせいで、十分に薄い壁なら波が向こう側へ通り抜けてしまう――<strong>トンネル効果</strong>と呼ばれる現象だ。壁を無限に高くした極限で、染み込みがゼロに潰れて「端でゼロ」になる、と思ってもいい。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="箱の中のψの候補2つの比較。左は井戸に水を溜めたように壁ぎりぎりまで高く、壁で段差になって0に落ちる形。段差の一点で傾きが無限大になり、運動量と運動エネルギーが無限大になるので不可。右は壁のちょうど上で0になり、なめらかにつながる形。傾きは有限で許される">
+          <text class="strong" x="14" y="16">壁ぎわの2つの候補</text>
+          <text class="lbR" x="90" y="36" text-anchor="middle">井戸に水を溜めた形</text>
+          <text class="lbA" x="250" y="36" text-anchor="middle">壁の上でちょうど 0 になる形</text>
+          <line class="wall" x1="40" y1="150" x2="40" y2="50"></line>
+          <line class="wall" x1="140" y1="150" x2="140" y2="50"></line>
+          <line class="axis" x1="20" y1="150" x2="160" y2="150"></line>
+          <path d="M20 150 L40 150 L40 80 L140 80 L140 150 L160 150" fill="none" stroke="#c8433f" stroke-width="2.4"></path>
+          <circle cx="40" cy="80" r="5" fill="none" stroke="#c8433f" stroke-width="1.5"></circle>
+          <circle cx="140" cy="80" r="5" fill="none" stroke="#c8433f" stroke-width="1.5"></circle>
+          <text class="lbR" x="90" y="70" text-anchor="middle">段差＝傾き ∞</text>
+          <text class="label" x="90" y="168" text-anchor="middle">運動量 ∞ → 運動エネルギー ∞</text>
+          <text class="lbR" x="90" y="186" text-anchor="middle">✕ 有限の E では払えない</text>
+          <line class="wall" x1="200" y1="150" x2="200" y2="50"></line>
+          <line class="wall" x1="300" y1="150" x2="300" y2="50"></line>
+          <line class="axis" x1="180" y1="150" x2="320" y2="150"></line>
+          <path class="wave" d="M180 150 L200 150 C214 150 222 80 250 80 C278 80 286 150 300 150 L320 150"></path>
+          <circle cx="200" cy="150" r="4" fill="#a6742a"></circle>
+          <circle cx="300" cy="150" r="4" fill="#a6742a"></circle>
+          <text class="lbA" x="250" y="70" text-anchor="middle">壁の上で ψ＝0</text>
+          <text class="label" x="250" y="168" text-anchor="middle">傾きはどこでも有限</text>
+          <text class="lbA" x="250" y="186" text-anchor="middle">○ なめらかに外の 0 へつながる</text>
+        </svg>
+        <div class="diagram-caption">左：井戸に水を溜めたように、壁ぎりぎりまで高いまま段差で 0 に落ちる形。段差の一点（赤丸）では傾きが無限大で、傾きは運動量の読み取り（−iℏ∂/∂x）だったから運動量も運動エネルギー p²/2m も無限大になり、有限の E では成り立たない。右：壁のちょうど上（x＝0, L）で ψ＝0 になって外の 0 となめらかにつながる形。傾きはどこでも有限で、これだけが許される。この「壁の上で ψ＝0」が境界条件</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
