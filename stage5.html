@@ -645,14 +645,19 @@
     /* いま描いている縁（t＝s）と、渡された t＝0 の断面 */
     if (s > 0.02) line3(cutT(s, k0), C.blue, 2);
     line3(cutT(0, k0), C.gold, 1.2);
-    /* t＝0 の断面は複素数なので「針の列」で描く。高さ＝実部、手前への突き出し＝虚部。
-       針の巻き方（らせんの向き）が運動量。実部だけだと ±k₀ が同じ絵になってしまう */
-    var z0 = -TDEPTH / 2, DIM = 3.0, xx;
-    for (xx = -XW / 2; xx <= XW / 2 + 0.01; xx += 0.6) {
-      var v = psi(xx, 0, k0), base = proj(xx, 0, z0), tip = proj(xx, HZ * v[0], z0 - DIM * v[1]);
-      line3([base, tip], C.gold, 1.9);
-      c3.fillStyle = C.gold; c3.beginPath(); c3.arc(tip[0], tip[1], 2.2, 0, 7); c3.fill();
+    /* 断面は複素数なので「針の列」で描く。高さ＝実部、手前への突き出し＝虚部。
+       針の巻き方（らせんの向き）が運動量。実部だけだと ±k₀ が同じ絵になってしまう。
+       t＝0（金）に加えて、いま決まった縁 t＝s（青）にも針を立て、時間とともに針が回って塊が進むのを見せる */
+    function hands(tv, color) {
+      var zz = tv / TS * TDEPTH - TDEPTH / 2, DIM = 3.0, xx;
+      for (xx = -XW / 2; xx <= XW / 2 + 0.01; xx += 0.6) {
+        var v = psi(xx, tv, k0), base = proj(xx, 0, zz), tip = proj(xx, HZ * v[0], zz - DIM * v[1]);
+        line3([base, tip], color, 1.9);
+        c3.fillStyle = color; c3.beginPath(); c3.arc(tip[0], tip[1], 2.2, 0, 7); c3.fill();
+      }
     }
+    hands(0, C.gold);
+    if (s > 0.02) hands(s, C.blue);
     /* 軸 */
     arrow(o, proj(XW / 2 + 3, 0, -TDEPTH / 2), 'x（場所）', -52, 18);
     arrow(o, proj(-XW / 2, 0, TDEPTH / 2 + 1.5), 't（時刻）', 8, -6);
@@ -660,7 +665,7 @@
     /* 凡例（視点を回しても重ならないよう、位置は固定） */
     c3.font = F; c3.textAlign = 'left';
     c3.fillStyle = C.gold; c3.fillText('金の針：t＝0 の ψ（複素数の針の列。巻き方が運動量）― 渡すのはこれだけ', 14, H3 - 26);
-    c3.fillStyle = C.blue; c3.fillText('━ 青：t＝' + s.toFixed(1) + ' まで決まった未来の縁', 14, H3 - 12);
+    c3.fillStyle = C.blue; c3.fillText('青の針：t＝' + s.toFixed(1) + ' の ψ（針が回りながら塊が進む）', 14, H3 - 12);
     c3.fillStyle = C.muted; c3.textAlign = 'right';
     var dir = k0 > 0 ? '右へ進む' : (k0 < 0 ? '左へ進む' : 'その場で広がる');
     c3.fillText('針の巻き方 k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → 塊は' + dir, W3 - 14, H3 - 12);
