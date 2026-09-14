@@ -68,7 +68,7 @@
   .lin-ex{font-size:13px;font-weight:900;color:var(--ink);line-height:1.8}
   .lin-note{font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7;margin-top:6px}
   .cv-wrap{width:100%;max-width:520px;margin:0 auto}
-  #supc{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);border:1px solid var(--line)}
+  #ordc,#supc{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);border:1px solid var(--line)}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -295,6 +295,21 @@
         <div class="diagram-caption">上段は足し合わせる平面波（運動量が少しずつ違う）を1本ずつ並べたもの、下段はそれを<strong>ぜんぶ足した結果</strong>。線が ψ の値（実部）、薄い帯が波の強さ |ψ|。1本だけなら強さはどこでも同じで、場所の情報がない。ところが本数を増やすと、足し合わせで<strong>強め合う場所と打ち消し合う場所</strong>ができ、波は<strong>1か所に集まる</strong>――これが「1か所に集まった波（波束）」で、粒らしく動く電子の姿はここから出てくる。方程式が「足し算をすり抜ける形」だからこそ、1本1本が解なら、足した波もそのまま解になる。集まった波が進みながら少しずつ広がるのも、方程式の帰結だよ</div>
       </div>
 
+      <div class="diagram-box">
+        <div class="calc-head">「ある瞬間の ψ の形さえ決まれば、そこから先は全部決まる」とは</div>
+        <div class="cv-wrap"><canvas id="ordc" role="img" aria-label="上段：ニュートンの運動。同じ場所からボールを投げても、初速が違えば違う軌道になる。下段：シュレディンガーの波。t＝0 の形（ねじれ）を決めると、その形だけで波が進む向きと速さが決まる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="ord-v">ニュートン：初速 v₀</label>
+          <input type="range" id="ord-v" min="0" max="8" step="0.5" value="4" aria-label="ボールを投げ上げる初速">
+          <span class="val" id="ord-vv">4.0 m/s</span>
+          <label for="ord-k">シュレディンガー：t＝0 の形のねじれ k₀</label>
+          <input type="range" id="ord-k" min="-3" max="3" step="0.5" value="1.5" aria-label="t＝0 における波のねじれ（運動量）">
+          <span class="val" id="ord-kv">＋1.5</span>
+        </div>
+        <button class="sim-play" id="ord-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="diagram-caption"><strong>上段（ニュートン）</strong>：F＝ma は「加速度＝速度の変化率」を決める式なので、<strong>いまの位置</strong>を渡されても<strong>いまの速度</strong>は教えてくれない。同じ場所から投げても、初速が違えば軌道が分かれる――位置と速度の<strong>2つ</strong>をそろえて初めて未来が決まる。<strong>下段（シュレディンガー）</strong>：方程式は「ψ の変化率＝いまの ψ から計算できるもの」の形なので、<strong>t＝0 の形を1枚</strong>渡せば次の瞬間が決まり、それを繰り返して未来が全部決まる。「速さ」の情報が別に要らないのは、それが<strong>形の中のねじれ</strong>（位相の進み方＝運動量）としてすでに描き込まれているから。ねじれの向きを変えると、同じ場所にある同じ塊が、逆向きに進む</div>
+      </div>
+
       <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -510,6 +525,134 @@
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if (visible && !userPaused) play(); else if (!visible) pause(); }, { threshold: 0.15 }).observe(cv);
+  } else { play(); }
+})();
+</script>
+<script>
+/* 時間について1階＝「いまの形」だけで未来が決まる。ニュートン（2階）との対比 */
+(function(){
+  var cv = document.getElementById('ordc');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sv = document.getElementById('ord-v'), svv = document.getElementById('ord-vv');
+  var sk = document.getElementById('ord-k'), skv = document.getElementById('ord-kv');
+  var btn = document.getElementById('ord-play');
+  var G = 9.8, Y0 = 0.3, TMAX = 2.0;
+  var XW = 24, DK = 2 * Math.PI / XW, N = 9;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', band: 'rgba(47,111,166,.18)', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12', ghost: 'rgba(138,122,92,.35)' };
+  var W = 0, H = 0, t = 0;
+  var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  function setSize() {
+    var w = cv.clientWidth || 320, h = 335, d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+    cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h;
+  }
+
+  /* ---- 上段：投げ上げたボール ---- */
+  function ball(v0, tt) { var y = Y0 + v0 * tt - 0.5 * G * tt * tt; return y < 0 ? 0 : y; }
+  function drawNewton() {
+    var X0 = 40, X1 = W - 14, TOP = 26, BOT = 132, v0 = +sv.value;
+    var YMAX = 3.9;
+    function px(tt) { return X0 + (X1 - X0) * tt / TMAX; }
+    function py(y) { return BOT - (BOT - TOP) * y / YMAX; }
+    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('ニュートン：位置だけでは未来が決まらない', 14, 12);
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(X0, py(0)); ctx.lineTo(X1, py(0)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(X0, py(0)); ctx.lineTo(X0, TOP); ctx.stroke();
+    ctx.fillStyle = C.muted; ctx.font = F;
+    ctx.fillText('時間 →', X1 - 40, py(0) + 10);
+    ctx.save(); ctx.translate(14, (TOP + BOT) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; ctx.fillText('高さ', 0, 0); ctx.restore();
+    /* 他の初速で描いた「ありえた未来」 */
+    var alts = [0, 2, 4, 6, 8], i, tt;
+    for (i = 0; i < alts.length; i++) {
+      if (alts[i] === v0) continue;
+      ctx.strokeStyle = C.ghost; ctx.lineWidth = 1; ctx.setLineDash([4, 3]); ctx.beginPath();
+      for (tt = 0; tt <= TMAX; tt += 0.02) { var yy = ball(alts[i], tt); if (tt === 0) ctx.moveTo(px(tt), py(yy)); else ctx.lineTo(px(tt), py(yy)); }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    /* 選んだ初速の軌道と、いまのボール */
+    ctx.strokeStyle = C.red; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (tt = 0; tt <= t; tt += 0.02) { var y2 = ball(v0, tt); if (tt === 0) ctx.moveTo(px(tt), py(y2)); else ctx.lineTo(px(tt), py(y2)); }
+    ctx.stroke();
+    var bx = px(t), by = py(ball(v0, t));
+    ctx.fillStyle = C.red; ctx.beginPath(); ctx.arc(bx, by, 5, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+    /* 出発点 */
+    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(px(0), py(Y0), 3.5, 0, 7); ctx.fill();
+    ctx.fillStyle = C.muted; ctx.font = F; ctx.textAlign = 'left';
+    ctx.fillText('同じ場所から出発', px(0) + 8, py(Y0) - 10);
+    ctx.fillStyle = C.red; ctx.fillText('赤：初速 ' + v0.toFixed(1) + ' m/s のときの未来', X0 + 8, TOP + 2);
+    ctx.fillStyle = C.muted; ctx.textAlign = 'right'; ctx.fillText('点線：ほかの初速だった場合', X1, TOP + 2); ctx.textAlign = 'left';
+  }
+
+  /* ---- 下段：ねじれをもった波の塊 ---- */
+  function comps(k0) {
+    var a = [], c = (N - 1) / 2, sg = N / 3, sum = 0, i;
+    for (i = 0; i < N; i++) {
+      var w = Math.exp(-(i - c) * (i - c) / (2 * sg * sg)), k = k0 + (i - c) * DK;
+      a.push({ w: w, k: k, om: k * k / 2 }); sum += w;
+    }
+    for (i = 0; i < N; i++) a[i].w /= sum;
+    return a;
+  }
+  function drawSchr() {
+    var X0 = 40, X1 = W - 14, TOP = 182, k0 = +sk.value, cs = comps(k0), yc = 266, A = 48, i, px, x;
+    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('シュレディンガー：t＝0 の形だけで未来が決まる', 14, TOP - 12);
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X0, yc); ctx.lineTo(X1, yc); ctx.stroke();
+    ctx.fillStyle = C.muted; ctx.font = F; ctx.fillText('場所 →', X1 - 40, yc + 42);
+    var env = [];
+    for (px = X0; px <= X1; px += 2) {
+      x = (px - X0) / (X1 - X0) * XW - XW / 2;
+      var re = 0, im = 0;
+      for (i = 0; i < N; i++) { var ph = cs[i].k * x - cs[i].om * t; re += cs[i].w * Math.cos(ph); im += cs[i].w * Math.sin(ph); }
+      env.push([px, Math.sqrt(re * re + im * im), re]);
+    }
+    ctx.fillStyle = C.band; ctx.beginPath();
+    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc - A * env[i][1]); else ctx.lineTo(env[i][0], yc - A * env[i][1]); }
+    for (i = env.length - 1; i >= 0; i--) ctx.lineTo(env[i][0], yc + A * env[i][1]);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.beginPath();
+    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc - A * env[i][2]); else ctx.lineTo(env[i][0], yc - A * env[i][2]); }
+    ctx.stroke();
+    /* 出発点の印 */
+    var xs = X0 + (X1 - X0) / 2;
+    ctx.strokeStyle = C.ink; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(xs, yc - A - 6); ctx.lineTo(xs, yc + A + 6); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.fillText('t＝0 で塊があった場所', xs, yc + A + 16);
+    ctx.textAlign = 'left'; ctx.fillStyle = C.blue;
+    var dir = k0 > 0 ? '右へ進む' : (k0 < 0 ? '左へ進む' : 'その場で広がる');
+    ctx.fillText('ねじれ k₀＝' + (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1) + ' → ' + dir + '（速さの情報は形の中に入っている）', X0, TOP + 6);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawNewton(); drawSchr();
+    svv.textContent = (+sv.value).toFixed(1) + ' m/s';
+    var k0 = +sk.value; skv.textContent = (k0 > 0 ? '＋' : (k0 < 0 ? '−' : '')) + Math.abs(k0).toFixed(1);
+  }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.6; if (t > TMAX) t = 0;
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sv.addEventListener('input', function(){ t = 0; draw(); });
+  sk.addEventListener('input', function(){ t = 0; draw(); });
+  window.addEventListener('resize', function(){ setSize(); draw(); });
+  setSize(); draw();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
   } else { play(); }
 })();
 </script>
