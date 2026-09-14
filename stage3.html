@@ -39,6 +39,20 @@
   .sq-svg .boxR{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.2}
   .sq-svg .bigarrow{stroke:var(--ink);stroke-width:2}
   .sq-svg .bigarrowhead{fill:var(--ink)}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
+  .sq-svg .lamhead{fill:var(--gold-dark)}
+  .sq-svg .parrow{stroke:#b5504a;stroke-width:3}
+  .sq-svg .phead{fill:#b5504a}
+  .sq-svg .lbP{fill:#b5504a;font-size:11px;font-weight:900}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -103,6 +117,38 @@
           </div>
           <div class="dialog-bubble">その通り、それで十分だ。比例定数 h は<strong>プランク定数</strong>、約 6.6×10⁻³⁴ ジュール秒という、とてつもなく小さい数だったね。では、2本目の式に進む前に、<strong>運動量</strong>をもう一度そろえておこう。量子力学の教室で出会ったとおり、物体の運動量 p は<strong>質量 m × 速度 v</strong>――「動きの勢い」「止めにくさ」を表す量だったね。同じ速さでも、卓球の球よりボウリングの球のほうが止めにくい。質量のぶん勢いが大きいからだ。物理学者がこの量を特別扱いするのは、<strong>衝突の前後で全体の運動量が必ず保存される</strong>という、宇宙で例外の見つかっていない法則があるからなんだ。さて、光もぶつかった相手を押す。彗星の尾が太陽と反対側にたなびくのは、太陽の光が塵を押すからだ。つまり<strong>光も運動量を持つ</strong>。光子1個の運動量を計算すると（アインシュタインの相対性理論が、質量ゼロで光速 c で飛ぶものに与えるエネルギーと運動量の関係 <strong>E＝pc</strong> を借りる。導出はこの旅の外に置いて、事実として受け取ってほしい）、p＝E/c＝hν/c。そして光の速さは c＝λν（1秒に ν 個ぶんの波長 λ が通過する）だから ν/c＝1/λ。代入すると――<strong>p＝h/λ</strong>。エネルギーの式と対になる、美しい式が出てくる。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" id="ph-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="光子1個について、波長λを変えるとエネルギーEと運動量pがどう変わるかを示す図。上は実際の波長で描いた波、下は運動量の大きさを表す矢印。波長が短いほど波は詰まり、運動量の矢印は長くなる">
+          <text class="strong" x="14" y="16">光子1個：波長 λ を変えると、E と p はどうなるか</text>
+          <line class="axis" x1="30" y1="58" x2="316" y2="58"></line>
+          <path id="ph-wave" fill="none" stroke="#888" stroke-width="2"></path>
+          <line class="lamarrow" id="ph-lam" y1="92" y2="92"></line>
+          <polygon class="lamhead" id="ph-lh1"></polygon>
+          <polygon class="lamhead" id="ph-lh2"></polygon>
+          <text class="strong" id="ph-lamtxt" y="87" text-anchor="middle">λ</text>
+          <text class="label" x="30" y="110">1500 nm ぶんの空間を切り取って描いている（<tspan id="ph-band">可視光</tspan>）</text>
+          <text class="lbP" x="30" y="134">運動量 p ＝ h/λ</text>
+          <line class="parrow" id="ph-p" x1="30" y1="150" x2="180" y2="150"></line>
+          <polygon class="phead" id="ph-ph"></polygon>
+          <text class="label" x="30" y="166">↑ 矢印の長さが p。λ を半分にすると p は2倍になる（反比例）</text>
+        </svg>
+        <div class="sim-ctrl">
+          <label for="ph-l">波長 λ</label>
+          <input type="range" id="ph-l" min="100" max="1000" step="5" value="500" aria-label="光子の波長 λ（ナノメートル）">
+          <span class="val" id="ph-lv">500 nm</span>
+        </div>
+        <div class="readout">
+          <span>ν ＝ c/λ ＝ <b id="ph-nu">6.0×10<sup>14</sup></b> Hz</span>
+          <span style="color:#a6742a">E ＝ hν ＝ <b id="ph-e">4.0×10<sup>−19</sup></b> J</span>
+          <span style="color:#b5504a">p ＝ h/λ ＝ <b id="ph-p-val">1.3×10<sup>−27</sup></b> kg·m/s</span>
+          <span class="sub">この運動量は、145 g の野球ボールが秒速 <b id="ph-ball">9×10<sup>−27</sup></b> m で進むのと同じ大きさ</span>
+        </div>
+        <div class="diagram-caption">上の波は、1500 nm ぶんの空間に<strong>実際の波長で</strong>描いたもの（可視光の範囲では波長に対応する色をつけている）。λ を短くすると波は詰まり、同時に下の運動量の矢印が伸びる――<strong>p＝h/λ</strong> の反比例がそのまま見える。ν＝c/λ、E＝hν、p＝E/c の3本が連動して動くので、どれか1つを決めれば残りは全部決まる。h＝6.63×10<sup>−34</sup> J·s、c＝3.00×10<sup>8</sup> m/s を使用</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -216,5 +262,86 @@
 
 <script src="js/progress.js"></script>
 <script>SQ.initStagePage(3);</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('ph-svg');
+  if (!svg) return;
+  var H = 6.626e-34, C = 2.998e8, BALL = 0.145;
+  var X0 = 30, X1 = 316, SPAN = 1500, PXNM = (X1 - X0) / SPAN;
+  var wave = document.getElementById('ph-wave'), band = document.getElementById('ph-band');
+  var lam = document.getElementById('ph-lam'), lh1 = document.getElementById('ph-lh1'), lh2 = document.getElementById('ph-lh2'),
+      lamtxt = document.getElementById('ph-lamtxt');
+  var parrow = document.getElementById('ph-p'), phead = document.getElementById('ph-ph');
+  var sl = document.getElementById('ph-l'), slv = document.getElementById('ph-lv');
+  var oNu = document.getElementById('ph-nu'), oE = document.getElementById('ph-e'),
+      oP = document.getElementById('ph-p-val'), oB = document.getElementById('ph-ball');
+
+  /* 数値を「仮数×10のべき乗」の形のHTMLにする（上付き文字つき） */
+  function sci(v, d) {
+    var e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
+    if (m >= 9.995) { m /= 10; e += 1; }
+    return m.toFixed(d) + '×10<sup>' + String(e).replace('-', '−') + '</sup>';
+  }
+
+  /* 可視光（380〜780nm）のおおよその色。範囲外は灰色 */
+  function color(nm) {
+    var r = 0, g = 0, b = 0;
+    if (nm < 380 || nm > 780) return '#8a7a5c';
+    if (nm < 440) { r = (440 - nm) / 60; b = 1; }
+    else if (nm < 490) { g = (nm - 440) / 50; b = 1; }
+    else if (nm < 510) { g = 1; b = (510 - nm) / 20; }
+    else if (nm < 580) { r = (nm - 510) / 70; g = 1; }
+    else if (nm < 645) { r = 1; g = (645 - nm) / 65; }
+    else { r = 1; }
+    var f = nm > 700 ? 0.3 + 0.7 * (780 - nm) / 80 : (nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : 1);
+    var q = function(v){ return Math.round(255 * Math.pow(Math.max(v, 0) * f, 0.8)); };
+    return 'rgb(' + q(r) + ',' + q(g) + ',' + q(b) + ')';
+  }
+
+  function draw() {
+    var nm = +sl.value, m = nm * 1e-9;
+    var nu = C / m, E = H * nu, p = H / m;
+
+    var per = nm * PXNM, d = '', first = true;
+    for (var x = X0; x <= X1; x += 2) {
+      var y = 58 - 18 * Math.sin(2 * Math.PI * (x - X0) / per);
+      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+      first = false;
+    }
+    wave.setAttribute('d', d);
+    wave.setAttribute('stroke', color(nm));
+
+    var xe = X0 + per;
+    lam.setAttribute('x1', X0); lam.setAttribute('x2', xe.toFixed(1));
+    lh1.setAttribute('points', X0 + ',92 ' + (X0 + 7) + ',88.5 ' + (X0 + 7) + ',95.5');
+    lh2.setAttribute('points', xe.toFixed(1) + ',92 ' + (xe - 7).toFixed(1) + ',88.5 ' + (xe - 7).toFixed(1) + ',95.5');
+    if (per < 78) {                      /* 矢印が短いときは、ラベルを右横に逃がす */
+      lamtxt.setAttribute('x', (xe + 8).toFixed(1));
+      lamtxt.setAttribute('y', '96');
+      lamtxt.setAttribute('text-anchor', 'start');
+    } else {
+      lamtxt.setAttribute('x', ((X0 + xe) / 2).toFixed(1));
+      lamtxt.setAttribute('y', '87');
+      lamtxt.setAttribute('text-anchor', 'middle');
+    }
+    lamtxt.textContent = 'λ＝' + nm + ' nm';
+
+    band.textContent = nm < 380 ? '紫外線' : (nm > 780 ? '赤外線' : '可視光');
+
+    var L = 240 * 100 / nm, xp = X0 + L;
+    parrow.setAttribute('x2', xp.toFixed(1));
+    phead.setAttribute('points', (xp + 9).toFixed(1) + ',150 ' + xp.toFixed(1) + ',144 ' + xp.toFixed(1) + ',156');
+
+    slv.textContent = nm + ' nm';
+    oNu.innerHTML = sci(nu, 1);
+    oE.innerHTML = sci(E, 1);
+    oP.innerHTML = sci(p, 1);
+    oB.innerHTML = sci(p / BALL, 1);
+  }
+  sl.addEventListener('input', draw);
+  draw();
+})();
+</script>
 </body>
 </html>
