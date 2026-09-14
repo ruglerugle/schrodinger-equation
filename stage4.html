@@ -45,9 +45,9 @@
   .sq-svg .machineB{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.6}
   .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
   .sq-svg .flowhead{fill:var(--ink)}
-  .cv-wrap{width:100%;max-width:520px;margin:0 auto;aspect-ratio:16/11}
-  #psi3d{width:100%;height:100%;display:block;border-radius:8px;background:var(--paper2);
-    border:1px solid var(--line);touch-action:pan-y;cursor:grab}
+  .cv-wrap{width:100%;max-width:520px;margin:0 auto}
+  #psi3d{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);
+    border:1px solid var(--line);touch-action:none;cursor:grab}
   #psi3d:active{cursor:grabbing}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
@@ -144,16 +144,16 @@
         </div>
         <div class="sim-ctrl">
           <label for="p3-x">場所 x₀</label>
-          <input type="range" id="p3-x" min="0" max="4" step="0.05" value="2" aria-label="断面を取る場所 x">
-          <span class="val" id="p3-xv">2.00</span>
+          <input type="range" id="p3-x" min="0" max="8" step="0.1" value="4" aria-label="断面を取る場所 x">
+          <span class="val" id="p3-xv">4.0</span>
           <label for="p3-t">時刻 t₀</label>
-          <input type="range" id="p3-t" min="0" max="4" step="0.05" value="1" aria-label="断面を取る時刻 t">
-          <span class="val" id="p3-tv">1.00</span>
+          <input type="range" id="p3-t" min="0" max="8" step="0.1" value="2" aria-label="断面を取る時刻 t">
+          <span class="val" id="p3-tv">2.0</span>
         </div>
         <div class="readout">
           <span style="color:#a6742a">━ t を凍結した断面 → ∂ψ/∂x ＝ <b id="p3-dx">+1.90</b></span>
           <span style="color:#2f6fa6">━ x を凍結した断面 → ∂ψ/∂t ＝ <b id="p3-dt">−1.25</b></span>
-          <span class="sub">図をドラッグすると立体を回せます（スマホは左右にドラッグ）</span>
+          <span class="sub">🖱️ 図をドラッグ（スマホは指でなぞる）すると視点を自由に回せます</span>
         </div>
         <div class="diagram-caption">ψ(x, t) の立体グラフ。床の2方向が<strong>場所 x</strong> と<strong>時刻 t</strong>、高さが ψ の値（本当は複素数なので、ここでは実部だけを高さにしている）。入力が2つあるとグラフは線ではなく<strong>面</strong>になり、「傾き」は<strong>どちらへ歩くか</strong>で変わる。金色の線は時刻 t を凍結して x 方向へ歩いた断面、青い線は場所 x を凍結して t 方向へ歩いた断面で、交点に引いた接線の傾きがそれぞれ <strong>∂ψ/∂x</strong> と <strong>∂ψ/∂t</strong>。∂ は「ほかの入力は凍結中」という目印だった。x₀・t₀ を動かすと交点が面の上を移動し、2つの傾きが別々に変わる</div>
       </div>
@@ -352,114 +352,143 @@
 })();
 </script>
 <script>
-/* ψ(x,t) の立体グラフ。2つの入力があるので「傾き」も2方向ある――偏微分の絵 */
+/* ψ(x,t) の立体グラフ：ドラッグで自由に回せる3Dワイヤーフレーム。
+   同じ1点でも「x方向へ歩くか、t方向へ歩くか」で傾きが変わる＝偏微分の絵 */
 (function(){
   var cv = document.getElementById('psi3d');
   if (!cv) return;
   var ctx = cv.getContext('2d');
-  var K = 1.9, OM = 1.25, XM = 4, TM = 4;      /* 波数・角振動数と、描く範囲 */
-  var yaw = 0.62, ele = 0.92;                  /* 視点の向き（ラジアン） */
-  var W = 0, H = 0, S = 1, CX = 0, CY = 0;
+  var yaw = 0.45, pitch = -1.02;                 /* 視点の向き（ラジアン） */
+  var XM = 8, TM = 8, K = 1.0, OM = 0.62, AMP = 1.1;
+  var C = { mesh:'#cfc2a0', meshX:'rgba(166,116,42,.34)', meshT:'rgba(47,111,166,.34)',
+            gold:'#a6742a', blue:'#2f6fa6', red:'#c8433f', muted:'#8a7a5c',
+            tanX:'#8a5518', tanT:'#1d5a8f' };
+  var W = 0, H = 0, sc = 1, cx = 0, cy = 0;
   var sx = document.getElementById('p3-x'), stt = document.getElementById('p3-t');
   var vx = document.getElementById('p3-xv'), vt = document.getElementById('p3-tv');
   var rdx = document.getElementById('p3-dx'), rdt = document.getElementById('p3-dt');
 
-  function psi(x, t) { return Math.sin(K * x - OM * t); }
+  function f(x, t) { return AMP * Math.sin(K * x - OM * t); }
+  function dfdx(x, t) { return AMP * K * Math.cos(K * x - OM * t); }
+  function dfdt(x, t) { return -AMP * OM * Math.cos(K * x - OM * t); }
 
-  function setSize() {
-    var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
-    W = r.width; H = r.height;
-    cv.width = Math.round(W * d); cv.height = Math.round(H * d);
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    S = Math.min(W / 5.6, H / 3.7);
-    CX = W / 2; CY = H * 0.56;
+  /* (場所, 高さ, 時刻) を回して画面座標へ */
+  function proj(x, y, z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = x * cw + z * sw, Z1 = -x * sw + z * cw;
+    var Y2 = y * cp - Z1 * sp;
+    return [cx + sc * X1, cy - sc * Y2];
   }
+  function pw(x, t, h) { return proj(x - XM / 2, h === undefined ? f(x, t) : h, t - TM / 2); }
 
-  /* (x, t, 高さ) → 画面座標。yaw で回し、ele で見下ろす角度を変える */
-  function P(x, t, z) {
-    var u = x - XM / 2, v = t - TM / 2;
-    var c = Math.cos(yaw), s = Math.sin(yaw);
-    var a = u * c - v * s, b = u * s + v * c;
-    return [CX + a * S, CY + b * Math.sin(ele) * S * 0.68 - z * Math.cos(ele) * S * 0.62];
-  }
-
-  function poly(pts, color, w, dash) {
-    ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = w;
-    ctx.setLineDash(dash || []);
-    for (var i = 0; i < pts.length; i++) {
-      if (i === 0) ctx.moveTo(pts[i][0], pts[i][1]); else ctx.lineTo(pts[i][0], pts[i][1]);
-    }
+  function line(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []);
+    ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
     ctx.stroke(); ctx.setLineDash([]);
   }
-  function cutX(t, n) { var a = [], i; for (i = 0; i <= n; i++) { var x = XM * i / n; a.push(P(x, t, psi(x, t))); } return a; }
-  function cutT(x, n) { var a = [], i; for (i = 0; i <= n; i++) { var t = TM * i / n; a.push(P(x, t, psi(x, t))); } return a; }
+  function curveT(tv) { var a = [], j; for (j = 0; j <= 48; j++) a.push(pw(XM * j / 48, tv)); return a; }
+  function curveX(xv) { var a = [], j; for (j = 0; j <= 48; j++) a.push(pw(xv, TM * j / 48)); return a; }
+  function dotAt(p, color) {
+    ctx.fillStyle = color; ctx.beginPath(); ctx.arc(p[0], p[1], 4.5, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  function arrow(p1, p2, label, dxl, dyl) {
+    line([p1, p2], C.muted, 1.5);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    ctx.fillStyle = C.muted; ctx.beginPath();
+    ctx.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
+    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
+    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
+    ctx.closePath(); ctx.fill();
+    ctx.font = '900 12px system-ui,sans-serif';
+    ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
+  }
 
   function draw() {
     var x0 = +sx.value, t0 = +stt.value;
-    var z0 = psi(x0, t0);
-    var gx = K * Math.cos(K * x0 - OM * t0);     /* ∂ψ/∂x */
-    var gt = -OM * Math.cos(K * x0 - OM * t0);   /* ∂ψ/∂t */
-    var i;
+    var z0 = f(x0, t0), gx = dfdx(x0, t0), gt = dfdt(x0, t0), i;
 
     ctx.clearRect(0, 0, W, H);
+    for (i = 0; i <= 16; i++) line(curveT(TM * i / 16), C.meshX, 0.8);
+    for (i = 0; i <= 16; i++) line(curveX(XM * i / 16), C.meshT, 0.8);
+    line(curveT(t0), C.gold, 2.8);
+    line(curveX(x0), C.blue, 2.8);
 
-    /* 床（z＝0 の面）の枠と、x₀・t₀ の位置を示す線 */
-    poly([P(0,0,0), P(XM,0,0), P(XM,TM,0), P(0,TM,0), P(0,0,0)], '#ddd0ad', 1);
-    poly([P(0,0,-1.25), P(0,0,1.25)], '#ddd0ad', 1);
-    poly([P(0,t0,0), P(XM,t0,0)], 'rgba(166,116,42,.5)', 1, [4,3]);
-    poly([P(x0,0,0), P(x0,TM,0)], 'rgba(47,111,166,.5)', 1, [4,3]);
+    /* 交点に立てた2本の接線 */
+    var L = 1.1;
+    line([pw(x0 - L, t0, z0 - gx * L), pw(x0 + L, t0, z0 + gx * L)], C.tanX, 2.6);
+    line([pw(x0, t0 - L, z0 - gt * L), pw(x0, t0 + L, z0 + gt * L)], C.tanT, 2.6);
 
-    /* 面のメッシュ */
-    for (i = 1; i < 10; i++) poly(cutX(TM * i / 10, 48), 'rgba(166,116,42,.3)', 1);
-    for (i = 1; i < 10; i++) poly(cutT(XM * i / 10, 48), 'rgba(47,111,166,.3)', 1);
+    var o = proj(-XM / 2, 0, -TM / 2);
+    arrow(o, proj(XM / 2 + 1.2, 0, -TM / 2), 'x（場所）', -50, 18);
+    arrow(o, proj(-XM / 2, 0, TM / 2 + 1.2), 't（時刻）', 8, -6);
+    arrow(o, proj(-XM / 2, 2.4, -TM / 2), 'ψ', 8, 2);
 
-    /* 2つの断面 */
-    poly(cutX(t0, 64), '#a6742a', 2.6);
-    poly(cutT(x0, 64), '#2f6fa6', 2.6);
+    ctx.font = '900 12px system-ui,sans-serif';
+    ctx.fillStyle = C.blue;
+    var pX = proj(x0 - XM / 2, 0, -TM / 2); ctx.fillText('x₀', pX[0] - 6, pX[1] + 17);
+    ctx.fillStyle = C.gold;
+    var pT = proj(-XM / 2, 0, t0 - TM / 2); ctx.fillText('t₀', pT[0] - 20, pT[1] + 4);
 
-    /* 交点と、そこに立てた2本の接線 */
-    var L = 0.55;
-    poly([P(x0, t0, 0), P(x0, t0, z0)], '#b5504a', 1, [3,3]);
-    poly([P(x0 - L, t0, z0 - gx * L), P(x0 + L, t0, z0 + gx * L)], '#8a5518', 2.6);
-    poly([P(x0, t0 - L, z0 - gt * L), P(x0, t0 + L, z0 + gt * L)], '#1d5a8f', 2.6);
-    var p0 = P(x0, t0, z0);
-    ctx.beginPath(); ctx.fillStyle = '#b5504a'; ctx.arc(p0[0], p0[1], 4.5, 0, 6.284); ctx.fill();
+    var cr = pw(x0, t0);
+    line([pw(x0, t0, 0), cr], C.red, 1, [3, 3]);
+    dotAt(cr, C.red);
 
-    /* 軸の名前 */
-    ctx.font = '800 12px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
-    ctx.fillStyle = '#8a7a5c'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    var lx = P(XM / 2, -0.55, 0), lt = P(-0.55, TM / 2, 0);
-    ctx.fillText('場所 x', lx[0], lx[1]);
-    ctx.fillText('時刻 t', lt[0], lt[1]);
-    var lz = P(0, 0, 1.5);
-    ctx.fillText('ψ', lz[0], lz[1]);
-
-    vx.textContent = x0.toFixed(2);
-    vt.textContent = t0.toFixed(2);
+    vx.textContent = x0.toFixed(1);
+    vt.textContent = t0.toFixed(1);
     rdx.textContent = (gx >= 0 ? '＋' : '−') + Math.abs(gx).toFixed(2);
     rdt.textContent = (gt >= 0 ? '＋' : '−') + Math.abs(gt).toFixed(2);
   }
 
-  function redraw() { setSize(); draw(); }
-
-  var drag = null;
-  cv.addEventListener('pointerdown', function(e){
-    drag = { x: e.clientX, y: e.clientY, yaw: yaw, ele: ele };
-    if (cv.setPointerCapture) cv.setPointerCapture(e.pointerId);
-  });
-  cv.addEventListener('pointermove', function(e){
-    if (!drag) return;
-    yaw = drag.yaw + (e.clientX - drag.x) * 0.008;
-    ele = Math.max(0.22, Math.min(1.45, drag.ele + (e.clientY - drag.y) * 0.005));
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(w * 0.88);
+    var dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cv.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    W = w; H = h; sc = w / 16; cx = w / 2; cy = h / 2;
     draw();
-  });
-  ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
-    cv.addEventListener(ev, function(){ drag = null; });
-  });
-  sx.addEventListener('input', draw);
-  stt.addEventListener('input', draw);
-  window.addEventListener('resize', redraw);
-  redraw();
+  }
+
+  /* 描画は requestAnimationFrame に1回だけ束ねる（ドラッグ中もなめらかに） */
+  var queued = false;
+  function invalidate() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function(){ queued = false; draw(); });
+  }
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) {
+    dragging = true;
+    var p = e.touches ? e.touches[0] : e;
+    lx = p.clientX; ly = p.clientY; cv.style.cursor = 'grabbing';
+    if (e.cancelable) e.preventDefault();
+  }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01;              /* 手前をつかんで回す感覚 */
+    pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5;
+    if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY;
+    invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; cv.style.cursor = 'grab'; }
+
+  cv.addEventListener('mousedown', down);
+  window.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false });
+  cv.addEventListener('touchmove', move, { passive: false });
+  window.addEventListener('touchend', up);
+  sx.addEventListener('input', invalidate);
+  stt.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
 })();
 </script>
 </body>
