@@ -55,6 +55,28 @@
   .calc-nav button:hover:not(:disabled){background:#fff}
   .calc-nav button:disabled{opacity:.4;cursor:not-allowed}
   .calc-nav .cnt{font-size:12px;font-weight:900;color:var(--muted);font-variant-numeric:tabular-nums}
+  .lin-rule{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;width:100%}
+  @media (max-width:560px){.lin-rule{grid-template-columns:1fr}}
+  .lin-col{border-radius:10px;padding:10px 12px;text-align:left;min-width:0}
+  .lin-col.ok{background:rgba(47,158,92,.07);border:1px solid #8fd1ab}
+  .lin-col.ng{background:rgba(200,67,63,.06);border:1px solid #e79a97}
+  .lin-title{font-size:12px;font-weight:900;margin-bottom:6px}
+  .lin-col.ok .lin-title{color:#2f9e5c}
+  .lin-col.ng .lin-title{color:#c8433f}
+  .lin-ex{font-size:13px;font-weight:900;color:var(--ink);line-height:1.8}
+  .lin-note{font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.7;margin-top:6px}
+  .cv-wrap{width:100%;max-width:520px;margin:0 auto}
+  #supc{display:block;width:100%;height:auto;border-radius:8px;background:var(--paper2);border:1px solid var(--line)}
+  .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
+    max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
+  .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+  .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -226,6 +248,36 @@
           </div>
           <div class="dialog-bubble">そのとおりだ。ごまかさずに言っておこう。あれは<strong>検算であって、検証ではない</strong>。連立方程式を解いたあとで、答えを元の式に入れ直して確かめるのと同じ種類の作業でね。分かるのは「代入や符号を間違えていない」ことだけで、方程式が正しい証拠は1つも増えていない。……そのうえで、私たちがどこに賭けたのかをはっきりさせておこう。さっき話した V(x) への一般化に加えて、じつはあと2つある。ひとつは、方程式の形を<strong>「足し算してよい形」に選んだ</strong>こと。組み立てに使ったのは、運動量もエネルギーも1つに決まった平面波、たった1本だ。ところがこの方程式は、<strong>2つの解を足したものも、また解になる</strong>。そこから重ね合わせも、干渉も、1か所に集まった波も出てくる――平面波1本からは、絶対に出てこない主張だよ。もうひとつは、<strong>時間について1回しか微分していない</strong>こと。これは「<strong>ある瞬間の ψ の形さえ決まれば、そこから先は全部決まる</strong>」と宣言したのと同じでね。ニュートンの F＝ma が、位置と速度の2つをそろえないと未来を言えないのとは、そこが違う。この3つの賭けは、どれも平面波の検算では確かめられない。だから最後は、実験に裁いてもらうしかなかったんだ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="calc-head">「足し算してよい形」とは何か ― 平面波を足していくと何が起きるか</div>
+        <div class="lin-rule">
+          <div class="lin-col ok">
+            <div class="lin-title">足し算をすり抜ける操作</div>
+            <div class="lin-ex">2倍する：2×(a＋b) ＝ 2a＋2b</div>
+            <div class="lin-ex">微分する：(f＋g) の傾き ＝ f の傾き ＋ g の傾き</div>
+            <div class="lin-note">方程式に出てくる操作は<strong>「微分する」「数を掛ける」だけ</strong>。だから ψ₁＋ψ₂ を入れると各項がほどけて、ψ₁ の式 ＋ ψ₂ の式 になる。両方が成り立つなら、和も成り立つ</div>
+          </div>
+          <div class="lin-col ng">
+            <div class="lin-title">足し算をすり抜けない操作</div>
+            <div class="lin-ex">2乗する：(a＋b)² ≠ a²＋b²</div>
+            <div class="lin-ex">（余分な 2ab が出てくる）</div>
+            <div class="lin-note">もし方程式に ψ² のような項があったら、2つの解を足したものは解に<strong>ならない</strong>。シュレディンガーはそういう形を選ばなかった</div>
+          </div>
+        </div>
+        <div class="cv-wrap"><canvas id="supc" role="img" aria-label="上段：足し合わせる平面波を1本ずつ並べたもの。下段：それらを足した結果。1本なら波の強さはどこも同じだが、本数を増やすほど波は1か所に集まり、時間とともに進みながら広がる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="sup-n">足す平面波の本数</label>
+          <input type="range" id="sup-n" min="1" max="9" step="1" value="1" aria-label="足し合わせる平面波の本数">
+          <span class="val" id="sup-nv">1 本</span>
+        </div>
+        <button class="sim-play" id="sup-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub" id="sup-msg">1本だけ：山と谷は動くが、波の強さ（薄い帯の高さ）はどこも同じ。「電子がどこにいるか」は言えない</span></div>
+        <div class="diagram-caption">上段は足し合わせる平面波（運動量が少しずつ違う）を1本ずつ並べたもの、下段はそれを<strong>ぜんぶ足した結果</strong>。線が ψ の値（実部）、薄い帯が波の強さ |ψ|。1本だけなら強さはどこでも同じで、場所の情報がない。ところが本数を増やすと、足し合わせで<strong>強め合う場所と打ち消し合う場所</strong>ができ、波は<strong>1か所に集まる</strong>――これが「1か所に集まった波（波束）」で、粒らしく動く電子の姿はここから出てくる。方程式が「足し算をすり抜ける形」だからこそ、1本1本が解なら、足した波もそのまま解になる。集まった波が進みながら少しずつ広がるのも、方程式の帰結だよ</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -329,6 +381,114 @@
   prev.addEventListener('click', function(){ if (n > 1) { n--; render(); } });
   reset.addEventListener('click', function(){ n = 1; render(); });
   render();
+})();
+</script>
+<script>
+/* 平面波を足していくと波が1か所に集まる（重ね合わせ＝足し算してよい形の帰結） */
+(function(){
+  var cv = document.getElementById('supc');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sl = document.getElementById('sup-n'), slv = document.getElementById('sup-nv');
+  var btn = document.getElementById('sup-play'), msg = document.getElementById('sup-msg');
+  var K0 = 2.5, DK = 0.25, XW = 2 * Math.PI / DK;      /* 波数の中心・間隔。和は XW ごとに繰り返す */
+  var TMAX = XW / K0;                                  /* 塊が画面を1往復ぶん進んだら最初に戻す */
+  var W = 0, H = 0, t = 0;
+  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.55)', blue: '#2f6fa6', band: 'rgba(47,111,166,.18)', muted: '#8a7a5c', ink: '#241d12' };
+
+  /* 足し合わせる平面波の一覧（波数 k を中心 K0 のまわりに等間隔で並べ、端ほど弱くする） */
+  function comps() {
+    var N = +sl.value, a = [], i, c = (N - 1) / 2, sg = Math.max(N / 3, 0.8), sum = 0;
+    for (i = 0; i < N; i++) {
+      var w = Math.exp(-(i - c) * (i - c) / (2 * sg * sg)), k = K0 + (i - c) * DK;
+      a.push({ w: w, k: k, om: k * k / 2 }); sum += w;
+    }
+    for (i = 0; i < N; i++) a[i].w /= sum;
+    return a;
+  }
+
+  function setSize() {
+    var w = cv.clientWidth || 320, h = 250, d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d);
+    cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h;
+  }
+
+  function draw() {
+    var cs = comps(), N = cs.length, i, px, x;
+    var X0 = 34, X1 = W - 12, SPAN = X1 - X0;
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+    ctx.textBaseline = 'middle';
+
+    /* 上段：足す平面波を1本ずつ */
+    var top = 8, area = 112, sh = area / N;
+    for (i = 0; i < N; i++) {
+      var yc = top + (i + 0.5) * sh;
+      var amp = Math.min(Math.min(sh * 0.42, 15) * cs[i].w * N, sh * 0.45);
+      ctx.strokeStyle = C.goldFaint; ctx.lineWidth = 1.4; ctx.beginPath();
+      for (px = X0; px <= X1; px += 2) {
+        x = (px - X0) / SPAN * XW - XW / 2;
+        var y = yc - amp * Math.cos(cs[i].k * x - cs[i].om * t);
+        if (px === X0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
+      }
+      ctx.stroke();
+      if (i > 0) { ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.fillText('＋', 18, yc - sh / 2); }
+    }
+    ctx.fillStyle = C.muted; ctx.textAlign = 'left';
+    ctx.fillText(N === 1 ? '平面波 1本' : '平面波 ' + N + ' 本（運動量が少しずつ違う）', X0, top + area + 8);
+
+    ctx.fillStyle = C.ink; ctx.textAlign = 'center';
+    ctx.font = '900 14px system-ui,sans-serif';
+    ctx.fillText('＝', 18, 152);
+
+    /* 下段：足した結果（線＝実部、帯＝|ψ|） */
+    var yc2 = 194, A = 40, env = [];
+    for (px = X0; px <= X1; px += 2) {
+      x = (px - X0) / SPAN * XW - XW / 2;
+      var re = 0, im = 0;
+      for (i = 0; i < N; i++) { var ph = cs[i].k * x - cs[i].om * t; re += cs[i].w * Math.cos(ph); im += cs[i].w * Math.sin(ph); }
+      env.push([px, Math.sqrt(re * re + im * im), re]);
+    }
+    ctx.fillStyle = C.band; ctx.beginPath();
+    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc2 - A * env[i][1]); else ctx.lineTo(env[i][0], yc2 - A * env[i][1]); }
+    for (i = env.length - 1; i >= 0; i--) { ctx.lineTo(env[i][0], yc2 + A * env[i][1]); }
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X0, yc2); ctx.lineTo(X1, yc2); ctx.stroke();
+    ctx.strokeStyle = C.gold; ctx.lineWidth = 2; ctx.beginPath();
+    for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc2 - A * env[i][2]); else ctx.lineTo(env[i][0], yc2 - A * env[i][2]); }
+    ctx.stroke();
+    ctx.fillStyle = C.blue; ctx.textAlign = 'left';
+    ctx.font = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+    ctx.fillText('足した結果（線＝ψ の値、帯＝強さ |ψ|）', X0, H - 8);
+
+    slv.textContent = N + ' 本';
+    msg.textContent = N === 1
+      ? '1本だけ：山と谷は動くが、波の強さ（薄い帯の高さ）はどこも同じ。「電子がどこにいるか」は言えない'
+      : (N === 2
+        ? '2本：足すと、強め合う場所と打ち消し合う場所ができて、強さにむらが出はじめる'
+        : N + '本：波が1か所に集まり、かたまりのまま進む。進むうちに少しずつ広がるのも方程式の帰結');
+  }
+
+  var playing = false, userPaused = false, visible = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.8; if (t > TMAX) t = 0;
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sl.addEventListener('input', function(){ t = 0; draw(); });
+  window.addEventListener('resize', function(){ setSize(); draw(); });
+  setSize(); draw();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if (visible && !userPaused) play(); else if (!visible) pause(); }, { threshold: 0.15 }).observe(cv);
+  } else { play(); }
 })();
 </script>
 </body>
