@@ -706,7 +706,7 @@
   }
 
   function draw() {
-    var c = Math.cos(th), s = -Math.sin(th), E = +se.value, i, x;
+    var c = Math.cos(th), s = -Math.sin(th), E = +se.value, i, x, nar = W < 520;
     ctx.clearRect(0, 0, W, H);
     var ax1 = W * 0.26, ay1 = H * 0.30, ax2 = W * 0.75, ay2 = H * 0.30, ax3 = W * 0.26, ay3 = H * 0.78, ax4 = W * 0.75, ay4 = H * 0.78;
     var psiV = function(x){ var f = phi(x); return [f * c, f * s]; };
@@ -734,14 +734,14 @@
     text(ax1 + aZ[0] - 4, ay1 + aZ[1] + 8, '虚部', C.muted, SUB);
 
     /* 見出しと一言 */
-    text(ax1, H * 0.045, 'ψ＝φ(x)e^(−iEt/ℏ)', C.ink, TITLE);
+    text(ax1, H * 0.045, nar ? 'ψ' : 'ψ＝φ(x)e^(−iEt/ℏ)', C.ink, TITLE);
     text(ax2, H * 0.045, '∂ψ/∂t', C.ink, TITLE);
     text(ax3, H * 0.525, '∂ψ/∂x', C.ink, TITLE);
     text(ax4, H * 0.525, '∂²ψ/∂x²', C.ink, TITLE);
-    text(ax1, H * 0.475, '長さの並び＝形 φ(x)。同じ向きで回る', C.gold, SUB);
-    text(ax2, H * 0.475, '針が 90° 回るだけ。形は同じ', C.blue, SUB);
-    text(ax3, H * 0.955, '長さ＝形の傾き φ′（頂上で 0）', C.blue, SUB);
-    text(ax4, H * 0.955, ok ? '長さ＝曲がり具合 φ″。形の逆向き×定数 → 方程式を満たす' : '長さ＝曲がり具合 φ″。定数倍でない → 満たさない', ok ? C.blue : C.red, SUB);
+    text(ax1, H * 0.475, nar ? '形 φ(x)。同じ向きで回る' : '長さの並び＝形 φ(x)。同じ向きで回る', C.gold, SUB);
+    text(ax2, H * 0.475, nar ? '90° 回るだけ。形は同じ' : '針が 90° 回るだけ。形は同じ', C.blue, SUB);
+    text(ax3, H * 0.955, nar ? '長さ＝形の傾き φ′' : '長さ＝形の傾き φ′（頂上で 0）', C.blue, SUB);
+    text(ax4, H * 0.955, ok ? (nar ? '逆向き×定数 → 満たす' : '長さ＝曲がり具合 φ″。形の逆向き×定数 → 方程式を満たす') : (nar ? '定数倍でない → 満たさない' : '長さ＝曲がり具合 φ″。定数倍でない → 満たさない'), ok ? C.blue : C.red, SUB);
 
     sev.textContent = E.toFixed(2);
     ssv.textContent = NAMES[+ss.value];
