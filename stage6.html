@@ -338,6 +338,29 @@
           </div>
           <div class="dialog-bubble">Eₙ ＝ ℏ²(nπ/L)²/2m ＝ <strong>n²π²ℏ²/(2mL²)</strong>。ℏ＝h/2π で h に戻すと、π²ℏ²＝π²h²/4π²＝h²/4 だから――<strong>Eₙ ＝ n²h²/(8mL²)</strong>。……出ました。エネルギーが n²、つまり <strong>1倍、4倍、9倍、16倍……という飛び飛びの値しか取れません</strong>。連続に変われない。誰も「飛び飛びにしろ」と命令していないのに、<strong>壁の条件と波の性質だけから、勝手に出てきた</strong>。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="calc-head">Eₙ ＝ n²h²/(8mL²) までの式変形を1手ずつ</div>
+        <ol class="calc-steps" data-stepper="en">
+          <li><span class="eq">E ＝ p²/2m</span><span class="why">箱の中は V＝0 なので、エネルギーは運動エネルギーだけ</span></li>
+          <li><span class="eq">p² ＝ (ℏk)²</span><span class="why">辞書の2本目 p＝ℏk を2乗する。定在波は p の値札は持たないが p² の値札は持つ、という話がここで効く</span></li>
+          <li><span class="eq">E ＝ ℏ²k²/2m</span><span class="why">(ℏk)²＝ℏ²k² を代入しただけ</span></li>
+          <li><span class="eq gold">Eₙ ＝ ℏ²(nπ/L)²/2m</span><span class="why">壁の条件で決まった k＝nπ/L を入れる。n ごとに値が決まるので添え字 n をつける</span></li>
+          <li><span class="eq gold">Eₙ ＝ n²π²ℏ²/(2mL²)</span><span class="why">2乗をばらす：(nπ/L)²＝n²π²/L²。分母の L² を 2m とまとめて 2mL²</span></li>
+          <li><span class="eq blue">ℏ² ＝ (h/2π)² ＝ h²/(4π²)</span><span class="why">ℏ＝h/2π を2乗する。(2π)²＝4π²</span></li>
+          <li><span class="eq blue">π²ℏ² ＝ π²×h²/(4π²) ＝ h²/4</span><span class="why">分子と分母の π² が約分されて消える。残るのは h²/4</span></li>
+          <li><span class="eq big">Eₙ ＝ n²×(h²/4)/(2mL²) ＝ n²h²/(8mL²)</span><span class="why">手順5の π²ℏ² を h²/4 で置き換える。分母は 4×2m L²＝8mL²。n² が残るので、エネルギーは 1, 4, 9, 16, … 倍の飛び飛び</span></li>
+        </ol>
+        <div class="calc-nav" data-stepper="en">
+          <button type="button" data-act="prev">← 1歩もどる</button>
+          <button type="button" data-act="next">次の一手 →</button>
+          <button type="button" data-act="reset">最初から</button>
+          <span class="cnt" data-act="count">1 / 8</span>
+        </div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
