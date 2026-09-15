@@ -782,7 +782,7 @@
     sheet(ax4, ay4, fDxx, tNow, T, psiRe, vDxx);
 
     /* 軸：左上は x・実部・虚部、右上は x・t・値 */
-    var oC = rot((XA - 0.5) * XS - 1, 0, 0), aX = rot((XA - 0.5) * XS + 6, 0, 0), aY = rot((XA - 0.5) * XS - 1, HZ * 1.2, 0), aZ = rot((XA - 0.5) * XS - 1, 0, -DIM * 1.2);
+    var oC = rot((XA - 0.5) * XS - 1, 0, 0), aX = rot((XB - 0.5) * XS + 2.5, 0, 0), aY = rot((XA - 0.5) * XS - 1, HZ * 1.2, 0), aZ = rot((XA - 0.5) * XS - 1, 0, -DIM * 1.2);
     ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5;
     [aX, aY, aZ].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax1 + oC[0], ay1 + oC[1]); ctx.lineTo(ax1 + a[0], ay1 + a[1]); ctx.stroke(); });
     text(ax1 + aX[0] + 6, ay1 + aX[1] + 2, 'x', C.muted, SUB, 'left');
