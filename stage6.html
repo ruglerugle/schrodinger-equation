@@ -724,7 +724,7 @@
   }
 
   function draw() {
-    var c = Math.cos(th), s = -Math.sin(th), i, x, mode = +sm.value, E = +se.value;
+    var c = Math.cos(th), s = -Math.sin(th), i, x, mode = +sm.value, E = +se.value, nar = W < 520;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText('横：場所 x　高さ：実部　手前：虚部', 14, 12);
@@ -746,26 +746,26 @@
       if (mode === 1) {
         /* ∂ψ/∂t ＝ (−iE)ψ：針を −90° 回して E 倍。表示は E で割って等倍にしている */
         vec = function(x){ var f = phi(x); return [f * s, -f * c]; };
-        note1 = '青：∂ψ/∂t ＝ (−iE/ℏ)ψ。全部の針が 90° 回っただけ、長さの並び（形）は ψ と同じ';
-        note2 = '長さは本当は E/ℏ＝' + E.toFixed(2) + ' 倍（表示は等倍に縮小）。回っても形は変わらない';
+        note1 = nar ? '青：∂ψ/∂t＝(−iE/ℏ)ψ。針が90°回るだけ、形は同じ' : '青：∂ψ/∂t ＝ (−iE/ℏ)ψ。全部の針が 90° 回っただけ、長さの並び（形）は ψ と同じ';
+        note2 = nar ? '本当は長さ E/ℏ＝' + E.toFixed(2) + ' 倍（表示は等倍）' : '長さは本当は E/ℏ＝' + E.toFixed(2) + ' 倍（表示は等倍に縮小）。回っても形は変わらない';
       } else if (mode === 2) {
         var m1 = maxAbs(dphi);
         vec = function(x){ var g = dphi(x) / m1; return [g * c, g * s]; };
-        note1 = '青：∂ψ/∂x ＝ φ′(x)e^(−iEt/ℏ)。向きは ψ と同じ軸、長さは形の傾き φ′';
-        note2 = '頂上で 0、左右で逆向き（表示は 1/' + m1.toFixed(1) + ' 倍に縮小）';
+        note1 = nar ? '青：∂ψ/∂x＝φ′e^(−iEt/ℏ)。長さは形の傾き φ′' : '青：∂ψ/∂x ＝ φ′(x)e^(−iEt/ℏ)。向きは ψ と同じ軸、長さは形の傾き φ′';
+        note2 = '頂上で 0、左右で逆向き（表示は 1/' + m1.toFixed(1) + ' 倍）';
       } else {
         var m2 = maxAbs(ddphi), ok = proportional();
         vec = function(x){ var g = ddphi(x) / m2; return [g * c, g * s]; };
-        note1 = '青：∂²ψ/∂x² ＝ φ″(x)e^(−iEt/ℏ)。長さは曲がり具合 φ″（表示は 1/' + m2.toFixed(1) + ' 倍）';
-        note2 = ok ? 'この形では φ″ が φ の「同じ形で逆向き」→ −(ℏ²/2m)φ″＝Eφ を満たす'
-                   : 'この形では φ″ が φ の定数倍にならない → 方程式を満たさない';
+        note1 = nar ? '青：∂²ψ/∂x²＝φ″e^(−iEt/ℏ)。長さは曲がり具合 φ″' : '青：∂²ψ/∂x² ＝ φ″(x)e^(−iEt/ℏ)。長さは曲がり具合 φ″（表示は 1/' + m2.toFixed(1) + ' 倍）';
+        note2 = ok ? (nar ? 'φ″ が φ の同じ形で逆向き → 方程式を満たす' : 'この形では φ″ が φ の「同じ形で逆向き」→ −(ℏ²/2m)φ″＝Eφ を満たす')
+                   : (nar ? 'φ″ が φ の定数倍でない → 方程式を満たさない' : 'この形では φ″ が φ の定数倍にならない → 方程式を満たさない');
       }
       hands(vec, C.blue, C.envB, 1.7);
     }
     ctx.font = F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     if (mode === 0) {
-      ctx.fillStyle = C.gold; ctx.fillText('金の針：長さの並びが形 φ(x)。全部同じ向きで、同じペースで回る', 14, H - 26);
-      ctx.fillStyle = C.blue; ctx.fillText('青の点線：影（実部）。揺れて見えるが本体は回っているだけ', 14, H - 12);
+      ctx.fillStyle = C.gold; ctx.fillText(nar ? '金：長さの並びが形 φ(x)。同じ向きで同じペースで回る' : '金の針：長さの並びが形 φ(x)。全部同じ向きで、同じペースで回る', 14, H - 26);
+      ctx.fillStyle = C.blue; ctx.fillText(nar ? '青の点線：影（実部）。本体は回っているだけ' : '青の点線：影（実部）。揺れて見えるが本体は回っているだけ', 14, H - 12);
     } else {
       ctx.fillStyle = C.blue; ctx.fillText(note1, 14, H - 26);
       ctx.fillStyle = (mode === 3 && !proportional()) ? C.red : C.muted; ctx.fillText(note2, 14, H - 12);
