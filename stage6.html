@@ -84,6 +84,12 @@
   .calc-nav button:hover:not(:disabled){background:#fff}
   .calc-nav button:disabled{opacity:.4;cursor:not-allowed}
   .calc-nav .cnt{font-size:12px;font-weight:900;color:var(--muted);font-variant-numeric:tabular-nums}
+  .lin-why{margin:4px 0 2px}
+  .lin-why summary{cursor:pointer;font-size:11.5px;font-weight:900;color:var(--gold-dark);list-style:none;display:inline-block;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:var(--paper2)}
+  .lin-why summary::-webkit-details-marker{display:none}
+  .lin-why[open] summary{background:#fff}
+  .lin-why-body{font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.8;margin-top:6px;padding:8px 10px;border-left:3px solid var(--gold);background:var(--paper2);border-radius:0 8px 8px 0}
+  .lin-eq{font-weight:900;font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -256,6 +262,9 @@
 
       <div class="diagram-box">
         <div class="calc-head">sin(kx) ＝ 右向きの波 ＋ 左向きの波 ― 定在波には p の値札がない</div>
+        <details class="lin-why" style="text-align:left;margin-bottom:10px"><summary>なぜ sin(kx)＝(e<sup>ikx</sup>−e<sup>−ikx</sup>)/2i なのか？（2行で済む）</summary>
+          <div class="lin-why-body">オイラーの公式を、θ と −θ で並べる。<br><span class="lin-eq">e<sup>iθ</sup> ＝ cosθ ＋ i sinθ</span>（角度 θ の針）<br><span class="lin-eq">e<sup>−iθ</sup> ＝ cosθ − i sinθ</span>（角度 −θ の針。cos(−θ)＝cosθ、sin(−θ)＝−sinθ）<br>上から下を引くと cosθ が消えて <span class="lin-eq">e<sup>iθ</sup> − e<sup>−iθ</sup> ＝ 2i sinθ</span>。両辺を 2i で割れば <span class="lin-eq">sinθ ＝ (e<sup>iθ</sup> − e<sup>−iθ</sup>)/2i</span>。θ を kx にしたのが本文の式。針の絵で言えば、角度 θ の針と鏡写し（−θ）の針は横成分が同じで縦成分が逆向きなので、引き算で横が消えて縦だけが 2 倍残る（真上を向いた 2i sinθ）。「÷2i」は複素数の教室の「長さを半分にして 90° 戻す」なので、横に倒れてただの実数 sinθ になる。つまり <strong>sin(kx) は右巻きの列 e<sup>ikx</sup> と左巻きの列 e<sup>−ikx</sup> を半分ずつ重ねたもの</strong>――下の3段の図の「（上 − 中）÷ 2i ＝ 下」そのもの</div>
+        </details>
         <div class="cv-wrap"><canvas id="standc" role="img" aria-label="3段の針の列のアニメーション。上段は右向きに進む波 e^(ikx)（針のらせんが右へ流れる）、中段は左向きに進む波 e^(−ikx)（らせんが左へ流れる）、下段はその2つを足した sin(kx)（針が全部同じ向きでその場で回る定在波）。ドラッグで視点を回せる"></canvas></div>
         <div class="sim-ctrl">
           <label for="st-n">箱の中の波の番号 n（k＝nπ/L）</label>
