@@ -55,7 +55,7 @@
   .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
   .sq-svg .el{fill:var(--gold-dark)}
   .cv-wrap{width:100%}
-  #stat3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #stat3d,#mix3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
   .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
@@ -155,6 +155,16 @@
           </div>
           <div class="dialog-bubble">この旅の最後の問いだね。答えは<strong>重ね合わせ</strong>にある。量子力学の教室で、E₁ と E₂ が混ざった状態では |ψ|² の山が動き続ける、という絵を見たね。あの絵の中身を、式で開いてみよう。シュレディンガー方程式は都合のいい性質を持っていてね。ψ₁ と ψ₂ がどちらも解なら、<strong>足し合わせた ψ₁＋ψ₂ も解</strong>になる（方程式に入っている操作――微分も V を掛けるのも――が「和を保つ」からだ）。そこで、段 E₁ の状態と段 E₂ の状態を<strong>混ぜた</strong>状態を考えてごらん。E₁ の針は E₁/ℏ のペースで、E₂ の針は E₂/ℏ のペースで回る。<strong>回るペースが違う</strong>。すると2つの波は、合わさったり打ち消し合ったりを繰り返して、|ψ|² が<strong>ゆさゆさと揺れ始める</strong>んだ。ギターの弦を2本、わずかに違う音程で鳴らすと「わんわん」と<strong>うなり</strong>が聞こえる、あれと同じ理屈だよ。揺れの振動数を計算すると、位相差が (E₂−E₁)t/ℏ で進むから、ν＝(E₂−E₁)/h。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="mix3d" role="img" aria-label="エネルギーが混ざった状態の3Dアニメーション。左上：段E₁の状態ψ₁の針の列（E₁/ℏのペースで回る）。右上：段E₂の状態ψ₂の針の列（E₂/ℏのペースで回る）。左下：足したψ₁＋ψ₂の針の列と|ψ|²。右下：横x・奥tで|ψ|²の曲面を描いたもので、山が左右にゆさゆさ揺れる。ドラッグで視点を回せる"></canvas></div>
+        <button class="sim-play" id="mix-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">エネルギーが混ざった状態（箱の n＝1 と n＝2 を半分ずつ）。左上・右上は、それぞれ単独なら定常状態の針の列で、<strong>回るペースだけが違う</strong>（E₂＝4E₁）。左下はその2組を足した針の列で、2組の針の向きがそろって強め合う瞬間と、ずれて打ち消し合う瞬間を繰り返す――点線の |ψ|² が左右にゆさゆさ揺れる。右下は同じ |ψ|² を横 x・奥 t の曲面にしたもので、定常状態の図が t 方向に平らだったのと対照的に、うねっている。位相差が (E₂−E₁)t/ℏ で進むので、揺れの振動数は ν＝(E₂−E₁)/h――2本の弦のうなりと同じ理屈</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
@@ -471,6 +481,131 @@
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
     t += dt * 0.7; draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
+</script>
+<script>
+/* エネルギーが混ざった状態（箱の n＝1 と n＝2 を半分ずつ）：
+   左上 ψ₁ の針、右上 ψ₂ の針（回るペースが違う）、左下 足した針、右下 |ψ|² の曲面（横x・奥t）がゆさゆさ揺れる。ℏ＝m＝L＝1 */
+(function(){
+  var cv = document.getElementById('mix3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('mix-play');
+  var XS = 22, N = 32, HZ = 4.2, DIM = 3.6, TD = 14;
+  var E1 = Math.PI * Math.PI / 2, E2 = 4 * E1, TB = 2 * Math.PI / (E2 - E1);   /* うなりの周期 h/(E₂−E₁) */
+  var TT = 2 * TB;                                                            /* 曲面に描く時間の範囲＝うなり2回ぶん */
+  var yaw = 0.32, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#b5504a', muted: '#8a7a5c', ink: '#241d12',
+            envG: 'rgba(166,116,42,.55)', envB: 'rgba(47,111,166,.55)', envR: 'rgba(181,80,74,.55)', mesh: 'rgba(181,80,74,.35)', shadow: 'rgba(181,80,74,.85)' };
+  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var A = 1 / Math.sqrt(2);
+  function p1(x) { return Math.sin(Math.PI * x); }
+  function p2(x) { return Math.sin(2 * Math.PI * x); }
+  /* 複素数の値 [実部, 虚部] */
+  function v1(x, tt) { return [A * p1(x) * Math.cos(E1 * tt), -A * p1(x) * Math.sin(E1 * tt)]; }
+  function v2(x, tt) { return [A * p2(x) * Math.cos(E2 * tt), -A * p2(x) * Math.sin(E2 * tt)]; }
+  function vs(x, tt) { var a = v1(x, tt), b = v2(x, tt); return [a[0] + b[0], a[1] + b[1]]; }
+  function dens(x, tt) { var v = vs(x, tt); return v[0] * v[0] + v[1] * v[1]; }
+
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function comb(ax, ay, vec, color, envColor, withShadow) {
+    var i, x, env = [], sh = [];
+    function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    poly([P(-0.05, 0, 0), P(1.05, 0, 0)], C.muted, 1);
+    if (withShadow) { for (i = 0; i <= 80; i++) { x = i / 80; var d = dens(x, t); sh.push(P(x, d * 0.75, 0)); } poly(sh, C.shadow, 1.6, [4, 3]); }
+    for (i = 0; i <= N; i++) {
+      x = i / N; var v = vec(x, t), b = P(x, 0, 0), tp = P(x, v[0], v[1]);
+      ctx.strokeStyle = color; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.7, 0, 7); ctx.fill();
+    }
+    for (i = 0; i <= 80; i++) { x = i / 80; var v2_ = vec(x, t); env.push(P(x, v2_[0], v2_[1])); }
+    poly(env, envColor, 1.4);
+  }
+  function sheet(ax, ay) {
+    var i, j, pts, tNow = t % TT;
+    function P(x, tt, y) { var p = rot((x - 0.5) * XS, HZ * 0.7 * y, (tt / TT - 0.5) * TD); return [ax + p[0], ay + p[1]]; }
+    for (i = 0; i <= 16; i++) { var tt = TT * i / 16; pts = []; for (j = 0; j <= 40; j++) { var x = j / 40; pts.push(P(x, tt, dens(x, tt))); } poly(pts, C.mesh, 0.9); }
+    for (i = 0; i <= 12; i++) { var x2 = i / 12; pts = []; for (j = 0; j <= 40; j++) { var t2 = TT * j / 40; pts.push(P(x2, t2, dens(x2, t2))); } poly(pts, C.mesh, 0.9); }
+    poly([P(0, 0, 0), P(1, 0, 0), P(1, TT, 0), P(0, TT, 0), P(0, 0, 0)], 'rgba(138,122,92,.35)', 1);
+    pts = []; for (j = 0; j <= 60; j++) { var x3 = j / 60; pts.push(P(x3, tNow, dens(x3, tNow))); } poly(pts, C.red, 2.2);
+    var o = P(-0.04, 0, 0), aT = P(-0.04, TT * 1.06, 0), aY = P(-0.04, 0, 1.6), aX = P(1.06, 0, 0);
+    poly([o, aT], C.muted, 1.2); poly([o, aY], C.muted, 1.2);
+    text(aT[0] - 4, aT[1] - 8, 't', C.muted, SUB); text(aY[0], aY[1] - 8, '|ψ|²', C.muted, SUB); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
+  }
+
+  function draw() {
+    var nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax1 = W * 0.26, ay1 = H * 0.27, ax2 = W * 0.75, ay2 = H * 0.27, ax3 = W * 0.26, ay3 = H * 0.76, ax4 = W * 0.75, ay4 = H * 0.78;
+    comb(ax1, ay1, v1, C.gold, C.envG, false);
+    comb(ax2, ay2, v2, C.blue, C.envB, false);
+    comb(ax3, ay3, vs, C.red, C.envR, true);
+    sheet(ax4, ay4);
+    /* 軸（左上に1組） */
+    function P1(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax1 + p[0], ay1 + p[1]]; }
+    var o = P1(-0.05, 0, 0), aY = P1(-0.05, 1.2, 0), aZ = P1(-0.05, 0, 1.2), aX = P1(1.05, 0, 0);
+    poly([o, aY], C.muted, 1.2); poly([o, aZ], C.muted, 1.2);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 6, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    text(ax1, H * 0.045, nar ? 'ψ₁（n＝1）：E₁/ℏ で回る' : '段 E₁ の状態 ψ₁（n＝1）：針は E₁/ℏ のペースで回る', C.gold, TITLE);
+    text(ax2, H * 0.045, nar ? 'ψ₂（n＝2）：E₂/ℏ で回る' : '段 E₂ の状態 ψ₂（n＝2）：針は E₂/ℏ＝4E₁/ℏ のペースで回る', C.blue, TITLE);
+    text(ax1, H * 0.48, nar ? '回るペースが違う' : '回るペースが違う（E₂ は E₁ の4倍）', C.muted, SUB);
+    text(ax2, H * 0.48, nar ? 'どちらも単独なら |ψ|² は凍っている' : 'どちらも単独なら定常状態で、|ψ|² は凍っている', C.muted, SUB);
+    text(ax3, H * 0.545, nar ? '足した ψ₁＋ψ₂' : '足した ψ₁＋ψ₂（点線＝|ψ|²）', C.red, TITLE);
+    text(ax4, H * 0.545, nar ? '|ψ|² の曲面（横 x・奥 t）' : '|ψ|² の曲面（横 x・奥 t）：山が左右にゆさゆさ揺れる', C.red, TITLE);
+    text(ax3, H * 0.975, nar ? '針の向きがそろったりずれたり' : '2組の針の向きがそろったりずれたりを繰り返す', C.muted, SUB);
+    text(ax4, H * 0.975, nar ? 'うなり ν＝(E₂−E₁)/h' : '揺れの振動数 ν＝(E₂−E₁)/h（うなり）。赤い線が「いま」', C.muted, SUB);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 62;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.09;                       /* うなり1回（TB≈0.42）に約4.7秒 */
+    draw(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
