@@ -215,10 +215,13 @@
           <label for="sep-s">形 φ(x) の例</label>
           <input type="range" id="sep-s" min="0" max="2" step="1" value="0" aria-label="波の形の例を切り替える">
           <span class="val" id="sep-sv">山1つ</span>
+          <label for="sep-m">表示する量</label>
+          <input type="range" id="sep-m" min="0" max="3" step="1" value="0" aria-label="表示する量を切り替える：ψ、tで微分、xで1回微分、xで2回微分">
+          <span class="val" id="sep-mv">ψ</span>
         </div>
         <button class="sim-play" id="sep-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる</div>
+        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる。<strong>「表示する量」</strong>を切り替えると、同じ針の列を微分した結果が青で重なる。<strong>t で微分</strong>：全部の針が 90° 回って長さが E/ℏ 倍になるだけで、形は同じ（＝ E ψ の ψ 倍という形）。<strong>x で1回微分</strong>：針の向きは変わらず、長さが形の傾き φ′ に変わる。<strong>x で2回微分</strong>：長さが曲がり具合 φ″ になる。山1つ・山2つの形では φ″ が φ の「同じ形で逆向き」になり、これがまさに −(ℏ²/2m)φ″＝Eφ を満たすということ。片寄った山では定数倍にならず、方程式を満たさない――どんな形でもよいわけではない、という次の話への入口</div>
 
         <div class="calc-head" style="margin-top:16px">方程式に入れて、時間を追い出す</div>
         <ol class="calc-steps" data-stepper="sep">
@@ -648,19 +651,23 @@
 })();
 </script>
 <script>
-/* ψ＝φ(x)e^{−iEt/ℏ}：形 φ(x) の長さを持つ針の列が、全部同じ向きで同じペースで回る */
+/* ψ＝φ(x)e^{−iEt/ℏ}：形 φ(x) の長さを持つ針の列が、全部同じ向きで同じペースで回る。
+   表示モードで ∂ψ/∂t・∂ψ/∂x・∂²ψ/∂x² の針の列も重ねて見られる（ℏ＝1 として描く） */
 (function(){
   var cv = document.getElementById('sepc');
   if (!cv) return;
   var ctx = cv.getContext('2d');
   var se = document.getElementById('sep-e'), sev = document.getElementById('sep-ev');
   var ss = document.getElementById('sep-s'), ssv = document.getElementById('sep-sv');
+  var sm = document.getElementById('sep-m'), smv = document.getElementById('sep-mv');
   var btn = document.getElementById('sep-play');
   var XA = 0, XB = 1, XS = 22, N = 40, HZ = 5.2, DIM = 4.4;
   var yaw = 0.28, pitch = -0.55, W = 0, H = 0, sc = 1, cx = 0, cy = 0, th = 0.6;
-  var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', shadow: 'rgba(47,111,166,.85)', env: 'rgba(166,116,42,.55)' };
+  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.35)', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f',
+            shadow: 'rgba(47,111,166,.85)', env: 'rgba(166,116,42,.55)', envB: 'rgba(47,111,166,.55)' };
   var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   var NAMES = ['山1つ', '山2つ', '片寄った山'];
+  var MODES = ['ψ', '∂ψ/∂t', '∂ψ/∂x', '∂²ψ/∂x²'];
 
   /* 形 φ(x) の例（0〜1 の範囲で 0 から 0 へ戻る） */
   function phi(x) {
@@ -669,6 +676,17 @@
     if (k === 1) return Math.sin(2 * Math.PI * x);
     return Math.sin(Math.PI * x) * (0.55 + 0.45 * Math.cos(Math.PI * (x - 0.3)));
   }
+  var DH = 1e-3;
+  function dphi(x) { return (phi(x + DH) - phi(x - DH)) / (2 * DH); }
+  function ddphi(x) { return (phi(x + DH) - 2 * phi(x) + phi(x - DH)) / (DH * DH); }
+  function maxAbs(fn) { var m = 0, i; for (i = 0; i <= 200; i++) { var v = Math.abs(fn(XA + (XB - XA) * i / 200)); if (v > m) m = v; } return m || 1; }
+  /* φ″ が φ の定数倍になっているか（＝この形が方程式を満たすか） */
+  function proportional() {
+    var r0 = null, i;
+    for (i = 1; i < 20; i++) { var x = i / 20, f = phi(x); if (Math.abs(f) < 0.15) continue; var r = ddphi(x) / f; if (r0 === null) r0 = r; else if (Math.abs(r - r0) > 0.05 * Math.abs(r0)) return false; }
+    return true;
+  }
+
   function proj(X, Y, Z) {
     var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
     var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
@@ -692,37 +710,69 @@
     ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
+  /* 針の列を描く。vec(x) は [実部, 虚部] を返す */
+  function hands(vec, color, envColor, wd) {
+    var i, x, env = [];
+    for (i = 0; i <= N; i++) {
+      x = XA + (XB - XA) * i / N; var v = vec(x);
+      var base = P(x, 0, 0), tip = P(x, v[0], v[1]);
+      line([base, tip], color, wd);
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tip[0], tip[1], 2.2, 0, 7); ctx.fill();
+    }
+    for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var v2 = vec(x); env.push(P(x, v2[0], v2[1])); }
+    line(env, envColor, 2);
+  }
+
   function draw() {
-    var c = Math.cos(th), s = -Math.sin(th), i, x;
+    var c = Math.cos(th), s = -Math.sin(th), i, x, mode = +sm.value, E = +se.value;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText('横：場所 x　高さ：実部　手前：虚部', 14, 12);
-    /* 軸 */
     var o = proj((XA - 0.5) * XS - 1, 0, 0);
     arrow(o, proj((XB - 0.5) * XS + 2.5, 0, 0), 'x（場所）', -56, 16);
     arrow(o, proj((XA - 0.5) * XS - 1, HZ * 1.25, 0), '実部', 6, 2);
     arrow(o, proj((XA - 0.5) * XS - 1, 0, -DIM * 1.25), '虚部', 6, 10);
     line([P(XA, 0, 0), P(XB, 0, 0)], C.muted, 1);
-    /* 影（実部）：形が揺れているように見える */
-    var sh = [], env = [], tips = [];
-    for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var f = phi(x); sh.push(P(x, f * c, 0)); env.push(P(x, f * c, f * s)); }
-    line(sh, C.shadow, 1.8, [5, 4]);
-    /* 針の列：長さ φ(x)、向きは全部同じ θ */
-    for (i = 0; i <= N; i++) {
-      x = XA + (XB - XA) * i / N; var f2 = phi(x);
-      var base = P(x, 0, 0), tip = P(x, f2 * c, f2 * s);
-      line([base, tip], C.gold, 1.7);
-      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tip[0], tip[1], 2.2, 0, 7); ctx.fill();
-      tips.push(tip);
+
+    var psiV = function(x){ var f = phi(x); return [f * c, f * s]; };
+    if (mode === 0) {
+      var sh = [];
+      for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; sh.push(P(x, phi(x) * c, 0)); }
+      line(sh, C.shadow, 1.8, [5, 4]);
+      hands(psiV, C.gold, C.env, 1.7);
+    } else {
+      hands(psiV, C.goldFaint, 'rgba(166,116,42,.25)', 1.2);      /* ψ は薄く残す */
+      var vec, note1 = '', note2 = '';
+      if (mode === 1) {
+        /* ∂ψ/∂t ＝ (−iE)ψ：針を −90° 回して E 倍。表示は E で割って等倍にしている */
+        vec = function(x){ var f = phi(x); return [f * s, -f * c]; };
+        note1 = '青：∂ψ/∂t ＝ (−iE/ℏ)ψ。全部の針が 90° 回っただけ、長さの並び（形）は ψ と同じ';
+        note2 = '長さは本当は E/ℏ＝' + E.toFixed(2) + ' 倍（表示は等倍に縮小）。回っても形は変わらない';
+      } else if (mode === 2) {
+        var m1 = maxAbs(dphi);
+        vec = function(x){ var g = dphi(x) / m1; return [g * c, g * s]; };
+        note1 = '青：∂ψ/∂x ＝ φ′(x)e^(−iEt/ℏ)。向きは ψ と同じ軸、長さは形の傾き φ′';
+        note2 = '頂上で 0、左右で逆向き（表示は 1/' + m1.toFixed(1) + ' 倍に縮小）';
+      } else {
+        var m2 = maxAbs(ddphi), ok = proportional();
+        vec = function(x){ var g = ddphi(x) / m2; return [g * c, g * s]; };
+        note1 = '青：∂²ψ/∂x² ＝ φ″(x)e^(−iEt/ℏ)。長さは曲がり具合 φ″（表示は 1/' + m2.toFixed(1) + ' 倍）';
+        note2 = ok ? 'この形では φ″ が φ の「同じ形で逆向き」→ −(ℏ²/2m)φ″＝Eφ を満たす'
+                   : 'この形では φ″ が φ の定数倍にならない → 方程式を満たさない';
+      }
+      hands(vec, C.blue, C.envB, 1.7);
     }
-    /* 針先を結んだ輪郭＝形 φ(x)（回っても崩れない） */
-    line(env, C.env, 2.2);
-    /* 凡例 */
     ctx.font = F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = C.gold; ctx.fillText('金の針：長さの並びが形 φ(x)。全部同じ向きで、同じペースで回る', 14, H - 26);
-    ctx.fillStyle = C.blue; ctx.fillText('青の点線：影（実部）。揺れて見えるが本体は回っているだけ', 14, H - 12);
-    sev.textContent = (+se.value).toFixed(2);
+    if (mode === 0) {
+      ctx.fillStyle = C.gold; ctx.fillText('金の針：長さの並びが形 φ(x)。全部同じ向きで、同じペースで回る', 14, H - 26);
+      ctx.fillStyle = C.blue; ctx.fillText('青の点線：影（実部）。揺れて見えるが本体は回っているだけ', 14, H - 12);
+    } else {
+      ctx.fillStyle = C.blue; ctx.fillText(note1, 14, H - 26);
+      ctx.fillStyle = (mode === 3 && !proportional()) ? C.red : C.muted; ctx.fillText(note2, 14, H - 12);
+    }
+    sev.textContent = E.toFixed(2);
     ssv.textContent = NAMES[+ss.value];
+    smv.textContent = MODES[mode];
   }
   function resize() {
     var w = cv.clientWidth || 320, h = Math.round(Math.max(w * 0.7, 280)), d = window.devicePixelRatio || 1;
@@ -746,9 +796,10 @@
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
   se.addEventListener('input', invalidate);
   ss.addEventListener('input', invalidate);
+  sm.addEventListener('input', invalidate);
 
   var dragging = false, lx = 0, ly = 0;
-  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move'; if (e.cancelable) e.preventDefault(); }
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
   function move(e) {
     if (!dragging) return;
     var p = e.touches ? e.touches[0] : e;
@@ -757,7 +808,7 @@
     lx = p.clientX; ly = p.clientY; invalidate();
     if (e.cancelable) e.preventDefault();
   }
-  function up() { dragging = false; cv.style.cursor = 'move'; }
+  function up() { dragging = false; }
   cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
   window.addEventListener('resize', resize);
