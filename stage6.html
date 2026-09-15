@@ -685,6 +685,16 @@
     return [sc * X1, -sc * (Y * cp - Z1 * sp)];
   }
   function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function arrow(p1, p2, label, dxl, dyl) {
+    poly([p1, p2], C.muted, 1.4);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    ctx.fillStyle = C.muted; ctx.beginPath();
+    ctx.moveTo(p2[0] + Math.cos(ang) * 7, p2[1] + Math.sin(ang) * 7);
+    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 5, p2[1] + Math.sin(ang + 2.5) * 5);
+    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 5, p2[1] + Math.sin(ang - 2.5) * 5);
+    ctx.closePath(); ctx.fill();
+    text(p2[0] + dxl, p2[1] + dyl, label, C.muted, SUB, 'left');
+  }
   function poly(pts, color, wd, dash) {
     ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
     for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
@@ -738,6 +748,9 @@
       }
       for (j = 0; j <= 60; j++) { var x6 = XA + (XB - XA) * j / 60, v6 = vec(x6); env.push(P(x6, tNow + v6[1] * IMT / TD * T, v6[0])); }
       poly(env, 'rgba(47,111,166,.6)', 1.4);
+      /* 針の列に追随する軸：いまの断面の左端に、実部（上）と虚部（t 方向）の矢印 */
+      var O = P(XA - 0.04, tNow, 0), Ar = P(XA - 0.04, tNow, 1.15), Ai = P(XA - 0.04, tNow + 1.15 * IMT / TD * T, 0);
+      arrow(O, Ar, '実部', 4, -2); arrow(O, Ai, '虚部', 4, 8);
     }
   }
 
@@ -775,11 +788,10 @@
     text(ax1 + aX[0] + 6, ay1 + aX[1] + 2, 'x', C.muted, SUB, 'left');
     text(ax1 + aY[0], ay1 + aY[1] - 8, '実部', C.muted, SUB);
     text(ax1 + aZ[0] - 4, ay1 + aZ[1] + 8, '虚部', C.muted, SUB);
-    var o2 = rot((XA - 0.5) * XS - 1, 0, -TD / 2), bX = rot((XA - 0.5) * XS + 6, 0, -TD / 2), bT = rot((XA - 0.5) * XS - 1, 0, -TD / 2 + 7), bY = rot((XA - 0.5) * XS - 1, HZ * 1.2, -TD / 2);
-    [bX, bT, bY].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax2 + o2[0], ay2 + o2[1]); ctx.lineTo(ax2 + a[0], ay2 + a[1]); ctx.stroke(); });
+    var o2 = rot((XA - 0.5) * XS - 1, 0, -TD / 2), bX = rot((XA - 0.5) * XS + 6, 0, -TD / 2), bT = rot((XA - 0.5) * XS - 1, 0, TD / 2 + 1.2);
+    [bX, bT].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax2 + o2[0], ay2 + o2[1]); ctx.lineTo(ax2 + a[0], ay2 + a[1]); ctx.stroke(); });
     text(ax2 + bX[0] + 6, ay2 + bX[1] + 2, 'x', C.muted, SUB, 'left');
-    text(ax2 + bT[0] - 4, ay2 + bT[1] - 6, 't', C.muted, SUB);
-    text(ax2 + bY[0], ay2 + bY[1] - 8, '実部', C.muted, SUB);
+    text(ax2 + bT[0] + 6, ay2 + bT[1] - 4, 't', C.muted, SUB, 'left');
 
     /* 見出しと一言 */
     text(ax1, H * 0.045, nar ? 'ψ（いまの針）' : 'ψ＝φ(x)e^(−iEt/ℏ)（いまの針の列）', C.ink, TITLE);
