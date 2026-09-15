@@ -60,9 +60,7 @@
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
-  .sep-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-  @media (max-width:560px){.sep-grid{grid-template-columns:1fr}}
-  .sep-grid canvas{display:block;width:100%;height:auto;touch-action:none;cursor:move;border:1px solid var(--line);border-radius:8px;background:var(--paper2)}
+  #sep4c{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .calc-head{font-size:12.5px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:10px}
   .calc-steps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
   .calc-steps li{padding:8px 10px;border-radius:8px;border:1px solid transparent;opacity:.22;
@@ -209,12 +207,7 @@
 
       <div class="diagram-box">
         <div class="calc-head">ψ(x, t) ＝ φ(x) × e<sup>−iEt/ℏ</sup> ― 「形」と「そろって回る針」に分ける</div>
-        <div class="sep-grid">
-          <canvas id="sep-c0" role="img" aria-label="ψ の針の列。長さが形φ(x)で、全部同じ向きのまま同じペースで回る"></canvas>
-          <canvas id="sep-c1" role="img" aria-label="tで微分した針の列。全部の針が90°回るだけで、形は同じ"></canvas>
-          <canvas id="sep-c2" role="img" aria-label="xで1回微分した針の列。向きは同じで、長さが形の傾きになる"></canvas>
-          <canvas id="sep-c3" role="img" aria-label="xで2回微分した針の列。長さが形の曲がり具合になる。山1つ・山2つでは元の形の逆向きの定数倍になる"></canvas>
-        </div>
+        <div class="cv-wrap"><canvas id="sep4c" role="img" aria-label="1枚の図に4つの針の列を並べたもの。左上：ψ（長さが形φ(x)で、全部同じ向きのまま同じペースで回る）。右上：tで微分したもの（針が90°回るだけで形は同じ）。左下：xで1回微分したもの（長さが形の傾き）。右下：xで2回微分したもの（長さが曲がり具合。山1つ・山2つでは元の形の逆向きの定数倍）。ドラッグで4つがいっしょに回る"></canvas></div>
         <div class="sim-ctrl">
           <label for="sep-e">エネルギー E（回るペース）</label>
           <input type="range" id="sep-e" min="0.3" max="3" step="0.01" value="1" aria-label="エネルギー E。針が回るペースだけが変わる">
@@ -225,7 +218,7 @@
         </div>
         <button class="sim-play" id="sep-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる。右の3枚は、同じ針の列を微分した結果（青。比較用に ψ を薄く重ねてある）。どの図をドラッグしても4枚がいっしょに回る。<strong>t で微分</strong>：全部の針が 90° 回って長さが E/ℏ 倍になるだけで、形は同じ（＝ E ψ の ψ 倍という形）。<strong>x で1回微分</strong>：針の向きは変わらず、長さが形の傾き φ′ に変わる。<strong>x で2回微分</strong>：長さが曲がり具合 φ″ になる。山1つ・山2つの形では φ″ が φ の「同じ形で逆向き」になり、これがまさに −(ℏ²/2m)φ″＝Eφ を満たすということ。片寄った山では定数倍にならず、方程式を満たさない――どんな形でもよいわけではない、という次の話への入口</div>
+        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる。残りの3つは、同じ針の列を微分した結果（青。比較用に ψ を薄く重ねてある）。ドラッグすると4つがいっしょに回る。<strong>t で微分</strong>：全部の針が 90° 回って長さが E/ℏ 倍になるだけで、形は同じ（＝ E ψ の ψ 倍という形）。<strong>x で1回微分</strong>：針の向きは変わらず、長さが形の傾き φ′ に変わる。<strong>x で2回微分</strong>：長さが曲がり具合 φ″ になる。山1つ・山2つの形では φ″ が φ の「同じ形で逆向き」になり、これがまさに −(ℏ²/2m)φ″＝Eφ を満たすということ。片寄った山では定数倍にならず、方程式を満たさない――どんな形でもよいわけではない、という次の話への入口</div>
 
         <div class="calc-head" style="margin-top:16px">方程式に入れて、時間を追い出す</div>
         <ol class="calc-steps" data-stepper="sep">
@@ -655,21 +648,21 @@
 })();
 </script>
 <script>
-/* ψ＝φ(x)e^{−iEt/ℏ} と、その t 微分・x 微分・x 2回微分を、同じ視点・同じ時刻で4枚に並べて描く（ℏ＝1） */
+/* ψ＝φ(x)e^{−iEt/ℏ} と、その t 微分・x 微分・x 2回微分を、1枚の canvas に4つ並べて描く
+   （①量子力学の教室 STAGE6 の「3枚の曲面」と同じ配置方式。ℏ＝1） */
 (function(){
-  var cvs = [0, 1, 2, 3].map(function(i){ return document.getElementById('sep-c' + i); });
-  if (!cvs[0]) return;
-  var ctxs = cvs.map(function(c){ return c.getContext('2d'); });
+  var cv = document.getElementById('sep4c');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
   var se = document.getElementById('sep-e'), sev = document.getElementById('sep-ev');
   var ss = document.getElementById('sep-s'), ssv = document.getElementById('sep-sv');
   var btn = document.getElementById('sep-play');
-  var XA = 0, XB = 1, XS = 22, N = 36, HZ = 5.2, DIM = 4.4;
-  var yaw = 0.28, pitch = -0.55, th = 0.6;
+  var XA = 0, XB = 1, XS = 22, N = 34, HZ = 5.2, DIM = 4.4;
+  var yaw = 0.28, pitch = -0.55, th = 0.6, W = 0, H = 0, sc = 1;
   var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.3)', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f',
             shadow: 'rgba(47,111,166,.85)', env: 'rgba(166,116,42,.55)', envB: 'rgba(47,111,166,.55)' };
-  var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   var NAMES = ['山1つ', '山2つ', '片寄った山'];
-  var TITLES = ['ψ ＝ φ(x) e^(−iEt/ℏ)', '∂ψ/∂t', '∂ψ/∂x', '∂²ψ/∂x²'];
+  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
 
   function phi(x) {
     var k = +ss.value;
@@ -686,90 +679,89 @@
     for (i = 1; i < 20; i++) { var x = i / 20, f = phi(x); if (Math.abs(f) < 0.15) continue; var r = ddphi(x) / f; if (r0 === null) r0 = r; else if (Math.abs(r - r0) > 0.05 * Math.abs(r0)) return false; }
     return true;
   }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
 
-  /* 1枚ぶんの描画。vec(x) は [実部, 虚部]、faint は薄く重ねる ψ */
-  function drawPanel(idx, vec, color, envColor, faint, legend, legend2Red) {
-    var cv = cvs[idx], ctx = ctxs[idx], W = cv.clientWidth, H = cv.clientHeight;
-    var sc = W / 29, cx = W / 2 + 4, cy = H / 2 + 8, i, x;
-    function proj(X, Y, Z) {
-      var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-      var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
-      return [cx + sc * X1, cy - sc * (Y * cp - Z1 * sp)];
+  /* 針の列を1組、アンカー (ax, ay) に描く */
+  function comb(ax, ay, vec, color, envColor, wd, dotR) {
+    var i, x, env = [];
+    function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    for (i = 0; i <= N; i++) {
+      x = XA + (XB - XA) * i / N; var v = vec(x);
+      var b = P(x, 0, 0), t = P(x, v[0], v[1]);
+      ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(t[0], t[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(t[0], t[1], dotR, 0, 7); ctx.fill();
     }
-    function P(xx, re, im) { return proj((xx - 0.5) * XS, HZ * re, -DIM * im); }
-    function line(pts, col, wd, dash) {
-      ctx.strokeStyle = col; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
-      for (var j = 0; j < pts.length; j++) { var p = pts[j]; if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
-      ctx.stroke(); ctx.setLineDash([]);
-    }
-    function hands(fn, col, envCol, wd, dotR) {
-      var env = [];
-      for (i = 0; i <= N; i++) {
-        x = XA + (XB - XA) * i / N; var v = fn(x);
-        var base = P(x, 0, 0), tip = P(x, v[0], v[1]);
-        line([base, tip], col, wd);
-        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(tip[0], tip[1], dotR, 0, 7); ctx.fill();
-      }
-      for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var v2 = fn(x); env.push(P(x, v2[0], v2[1])); }
-      line(env, envCol, 1.8);
-    }
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText(TITLES[idx], 10, 12);
-    /* 軸（小さめ） */
-    var o = proj((XA - 0.5) * XS - 1, 0, 0);
-    line([o, proj((XB - 0.5) * XS + 1.5, 0, 0)], C.muted, 1.2);
-    line([o, proj((XA - 0.5) * XS - 1, HZ * 1.1, 0)], C.muted, 1.2);
-    line([o, proj((XA - 0.5) * XS - 1, 0, -DIM * 1.1)], C.muted, 1.2);
-    ctx.fillStyle = C.muted; ctx.font = F;
-    var px_ = proj((XB - 0.5) * XS + 1.5, 0, 0); ctx.fillText('x', px_[0] + 4, px_[1]);
-    var py_ = proj((XA - 0.5) * XS - 1, HZ * 1.1, 0); ctx.fillText('実部', py_[0] + 4, py_[1]);
-    var pz_ = proj((XA - 0.5) * XS - 1, 0, -DIM * 1.1); ctx.fillText('虚部', pz_[0] + 4, pz_[1] + 8);
-    if (faint) hands(faint, C.goldFaint, 'rgba(166,116,42,.22)', 1, 1.4);
-    if (idx === 0) {
-      var sh = []; var cc = Math.cos(th);
-      for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; sh.push(P(x, phi(x) * cc, 0)); }
-      line(sh, C.shadow, 1.6, [5, 4]);
-    }
-    hands(vec, color, envColor, 1.6, 2);
-    ctx.font = F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = color; ctx.fillText(legend[0], 10, H - 24);
-    ctx.fillStyle = legend2Red ? C.red : C.muted; ctx.fillText(legend[1], 10, H - 10);
+    for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var v2 = vec(x); env.push(P(x, v2[0], v2[1])); }
+    ctx.strokeStyle = envColor; ctx.lineWidth = 1.6; ctx.beginPath();
+    for (i = 0; i < env.length; i++) { if (i) ctx.lineTo(env[i][0], env[i][1]); else ctx.moveTo(env[i][0], env[i][1]); }
+    ctx.stroke();
+    /* 底線 */
+    var b0 = P(XA, 0, 0), b1 = P(XB, 0, 0);
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(b0[0], b0[1]); ctx.lineTo(b1[0], b1[1]); ctx.stroke();
   }
 
-  function drawAll() {
-    var c = Math.cos(th), s = -Math.sin(th), E = +se.value;
+  function draw() {
+    var c = Math.cos(th), s = -Math.sin(th), E = +se.value, i, x;
+    ctx.clearRect(0, 0, W, H);
+    var ax1 = W * 0.26, ay1 = H * 0.30, ax2 = W * 0.75, ay2 = H * 0.30, ax3 = W * 0.26, ay3 = H * 0.78, ax4 = W * 0.75, ay4 = H * 0.78;
     var psiV = function(x){ var f = phi(x); return [f * c, f * s]; };
     var m1 = maxAbs(dphi), m2 = maxAbs(ddphi), ok = proportional();
-    drawPanel(0, psiV, C.gold, C.env, null,
-      ['金：長さの並びが形 φ(x)。同じ向きで回る', '青の点線：影（実部）'], false);
-    drawPanel(1, function(x){ var f = phi(x); return [f * s, -f * c]; }, C.blue, C.envB, psiV,
-      ['＝(−iE/ℏ)ψ：針が 90° 回るだけ', '形は同じ（長さ E/ℏ＝' + E.toFixed(2) + ' 倍、表示は等倍）'], false);
-    drawPanel(2, function(x){ var g = dphi(x) / m1; return [g * c, g * s]; }, C.blue, C.envB, psiV,
-      ['＝φ′ e^(−iEt/ℏ)：長さが形の傾き φ′', '頂上で 0、左右で逆向き（表示 1/' + m1.toFixed(1) + ' 倍）'], false);
-    drawPanel(3, function(x){ var g = ddphi(x) / m2; return [g * c, g * s]; }, C.blue, C.envB, psiV,
-      ['＝φ″ e^(−iEt/ℏ)：長さが曲がり具合 φ″', ok ? 'φ の同じ形で逆向き → 方程式を満たす' : 'φ の定数倍でない → 方程式を満たさない'], !ok);
+    var dtV = function(x){ var f = phi(x); return [f * s, -f * c]; };
+    var dxV = function(x){ var g = dphi(x) / m1; return [g * c, g * s]; };
+    var ddV = function(x){ var g = ddphi(x) / m2; return [g * c, g * s]; };
+
+    /* ① ψ：影（実部）も描く */
+    ctx.strokeStyle = C.shadow; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]); ctx.beginPath();
+    for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var p = rot((x - 0.5) * XS, HZ * phi(x) * c, 0); if (i) ctx.lineTo(ax1 + p[0], ay1 + p[1]); else ctx.moveTo(ax1 + p[0], ay1 + p[1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+    comb(ax1, ay1, psiV, C.gold, C.env, 1.5, 1.9);
+    /* ②〜④：ψ を薄く重ねてから、微分した針 */
+    comb(ax2, ay2, psiV, C.goldFaint, 'rgba(166,116,42,.22)', 1, 1.2); comb(ax2, ay2, dtV, C.blue, C.envB, 1.5, 1.9);
+    comb(ax3, ay3, psiV, C.goldFaint, 'rgba(166,116,42,.22)', 1, 1.2); comb(ax3, ay3, dxV, C.blue, C.envB, 1.5, 1.9);
+    comb(ax4, ay4, psiV, C.goldFaint, 'rgba(166,116,42,.22)', 1, 1.2); comb(ax4, ay4, ddV, C.blue, C.envB, 1.5, 1.9);
+
+    /* 軸（左上の図の手前角から1組だけ） */
+    var oC = rot((XA - 0.5) * XS - 1, 0, 0), aX = rot((XA - 0.5) * XS + 6, 0, 0), aY = rot((XA - 0.5) * XS - 1, HZ * 1.2, 0), aZ = rot((XA - 0.5) * XS - 1, 0, -DIM * 1.2);
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5;
+    [aX, aY, aZ].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax1 + oC[0], ay1 + oC[1]); ctx.lineTo(ax1 + a[0], ay1 + a[1]); ctx.stroke(); });
+    text(ax1 + aX[0] + 6, ay1 + aX[1] + 2, 'x', C.muted, SUB, 'left');
+    text(ax1 + aY[0], ay1 + aY[1] - 8, '実部', C.muted, SUB);
+    text(ax1 + aZ[0] - 4, ay1 + aZ[1] + 8, '虚部', C.muted, SUB);
+
+    /* 見出しと一言 */
+    text(ax1, H * 0.045, 'ψ＝φ(x)e^(−iEt/ℏ)', C.ink, TITLE);
+    text(ax2, H * 0.045, '∂ψ/∂t', C.ink, TITLE);
+    text(ax3, H * 0.525, '∂ψ/∂x', C.ink, TITLE);
+    text(ax4, H * 0.525, '∂²ψ/∂x²', C.ink, TITLE);
+    text(ax1, H * 0.475, '長さの並び＝形 φ(x)。同じ向きで回る', C.gold, SUB);
+    text(ax2, H * 0.475, '針が 90° 回るだけ。形は同じ', C.blue, SUB);
+    text(ax3, H * 0.955, '長さ＝形の傾き φ′（頂上で 0）', C.blue, SUB);
+    text(ax4, H * 0.955, ok ? '長さ＝曲がり具合 φ″。形の逆向き×定数 → 方程式を満たす' : '長さ＝曲がり具合 φ″。定数倍でない → 満たさない', ok ? C.blue : C.red, SUB);
+
     sev.textContent = E.toFixed(2);
     ssv.textContent = NAMES[+ss.value];
   }
   function resize() {
-    var d = window.devicePixelRatio || 1;
-    cvs.forEach(function(cv, i){
-      var w = cv.clientWidth || 300, h = Math.round(Math.max(w * 0.8, 210));
-      cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
-      ctxs[i].setTransform(d, 0, 0, d, 0, 0);
-    });
-    drawAll();
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 62;
+    draw();
   }
   var queued = false;
-  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; drawAll(); }); }
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
 
   var playing = false, userPaused = false, raf = null, last = 0;
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
     th = (th + dt * 1.6 * (+se.value)) % (2 * Math.PI);
-    drawAll(); raf = requestAnimationFrame(frame);
+    draw(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
   function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
@@ -777,7 +769,6 @@
   se.addEventListener('input', invalidate);
   ss.addEventListener('input', invalidate);
 
-  /* どの図をドラッグしても4枚がいっしょに回る */
   var dragging = false, lx = 0, ly = 0;
   function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
   function move(e) {
@@ -789,18 +780,14 @@
     if (e.cancelable) e.preventDefault();
   }
   function up() { dragging = false; }
-  cvs.forEach(function(cv){
-    cv.addEventListener('mousedown', down);
-    cv.addEventListener('touchstart', down, { passive: false });
-    cv.addEventListener('touchmove', move, { passive: false });
-  });
-  window.addEventListener('mousemove', move); window.addEventListener('mouseup', up); window.addEventListener('touchend', up);
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
   window.addEventListener('resize', resize);
   resize();
 
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cvs[0].parentElement);
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
   } else { play(); }
 })();
 </script>
