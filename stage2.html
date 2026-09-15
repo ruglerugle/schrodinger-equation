@@ -61,7 +61,7 @@
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
   .cv-wrap{width:100%}
-  #hands3d{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
+  #hands3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
     background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
   .sim-play:hover{background:#fff}
@@ -485,7 +485,7 @@
   stt.addEventListener('input', function(){ userPaused = true; pause(); t = +stt.value; draw(); });
 
   var dragging = false, lx = 0, ly = 0;
-  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'grabbing'; if (e.cancelable) e.preventDefault(); }
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move'; if (e.cancelable) e.preventDefault(); }
   function move(e) {
     if (!dragging) return;
     var p = e.touches ? e.touches[0] : e;
@@ -494,7 +494,7 @@
     lx = p.clientX; ly = p.clientY; invalidate();
     if (e.cancelable) e.preventDefault();
   }
-  function up() { dragging = false; cv.style.cursor = 'grab'; }
+  function up() { dragging = false; cv.style.cursor = 'move'; }
   cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
   window.addEventListener('resize', resize);

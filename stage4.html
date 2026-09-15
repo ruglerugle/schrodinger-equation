@@ -46,8 +46,8 @@
   .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
   .sq-svg .flowhead{fill:var(--ink)}
   .cv-wrap{width:100%}
-  #psi3d{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
-  #psi3d:active{cursor:grabbing}
+  #psi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #psi3d:active{cursor:move}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -466,7 +466,7 @@
   function down(e) {
     dragging = true;
     var p = e.touches ? e.touches[0] : e;
-    lx = p.clientX; ly = p.clientY; cv.style.cursor = 'grabbing';
+    lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move';
     if (e.cancelable) e.preventDefault();
   }
   function move(e) {
@@ -480,7 +480,7 @@
     invalidate();
     if (e.cancelable) e.preventDefault();
   }
-  function up() { dragging = false; cv.style.cursor = 'grab'; }
+  function up() { dragging = false; cv.style.cursor = 'move'; }
 
   cv.addEventListener('mousedown', down);
   window.addEventListener('mousemove', move);

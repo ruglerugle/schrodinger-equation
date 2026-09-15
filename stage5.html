@@ -88,7 +88,7 @@
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
-  #ord3d{touch-action:none;cursor:grab}
+  #ord3d{touch-action:none;cursor:move}
   .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
     background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
   .sim-play:hover{background:#fff}
@@ -759,7 +759,7 @@
 
   /* 3D の回転（①STAGE6 と同じ方式） */
   var dragging = false, lx = 0, ly = 0;
-  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv3.style.cursor = 'grabbing'; if (e.cancelable) e.preventDefault(); }
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv3.style.cursor = 'move'; if (e.cancelable) e.preventDefault(); }
   function move(e) {
     if (!dragging) return;
     var p = e.touches ? e.touches[0] : e;
@@ -768,7 +768,7 @@
     lx = p.clientX; ly = p.clientY; invalidate();
     if (e.cancelable) e.preventDefault();
   }
-  function up() { dragging = false; cv3.style.cursor = 'grab'; }
+  function up() { dragging = false; cv3.style.cursor = 'move'; }
   cv3.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
   cv3.addEventListener('touchstart', down, { passive: false }); cv3.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
 
