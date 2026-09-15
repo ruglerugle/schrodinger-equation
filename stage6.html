@@ -60,7 +60,7 @@
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
-  #sep4c{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #sep4c,#standc{display:block;width:100%;height:auto;touch-action:none;cursor:move}
   .calc-head{font-size:12.5px;font-weight:900;color:var(--ink);text-align:center;margin-bottom:10px}
   .calc-steps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
   .calc-steps li{padding:8px 10px;border-radius:8px;border:1px solid transparent;opacity:.22;
@@ -252,6 +252,22 @@
           </div>
           <div class="dialog-bubble">いいところに引っかかったね。クビにしたのは「<strong>p の検出器</strong>（1回微分）」に対してだった。1回微分だと sin は cos に化けて、値札が読めない。ところがいま使ったのは「<strong>p² の検出器</strong>（2回微分）」。2回なら sin はちゃんと自分に戻ってくる。物理的に言うとね、sin(kx) は右向きの波 e<sup>ikx</sup> と左向きの波 e<sup>−ikx</sup> の<strong>重ね合わせ</strong>なんだ（オイラーの公式から sin(kx)＝(e<sup>ikx</sup>−e<sup>−ikx</sup>)/2i と書ける）。壁に挟まれた波は右へ行っては跳ね返り、左へ行っては跳ね返る。<strong>進む向きは決まっていない</strong>――だから p の値札はない。でも<strong>勢いの大きさ</strong>はどちら向きでも同じ ℏk――だから p² の値札はある。ギターの弦が「その場で震えるだけで、どちらへも進まない」のと同じ、<strong>定在波</strong>だよ。</div>
         </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="calc-head">sin(kx) ＝ 右向きの波 ＋ 左向きの波 ― 定在波には p の値札がない</div>
+        <div class="cv-wrap"><canvas id="standc" role="img" aria-label="3段の針の列のアニメーション。上段は右向きに進む波 e^(ikx)（針のらせんが右へ流れる）、中段は左向きに進む波 e^(−ikx)（らせんが左へ流れる）、下段はその2つを足した sin(kx)（針が全部同じ向きでその場で回る定在波）。ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="st-n">箱の中の波の番号 n（k＝nπ/L）</label>
+          <input type="range" id="st-n" min="1" max="3" step="1" value="1" aria-label="定在波の番号 n">
+          <span class="val" id="st-nv">n＝1</span>
+        </div>
+        <button class="sim-play" id="st-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">上段は<strong>右向きに進む波</strong> e<sup>i(kx−Et/ℏ)</sup>。針のらせんが右へ流れ、運動量は ＋ℏk。中段は<strong>左向きに進む波</strong> e<sup>−i(kx＋Et/ℏ)</sup>。らせんが左へ流れ、運動量は −ℏk。下段はこの2つを足して 2i で割ったもので、ちょうど sin(kx) e<sup>−iEt/ℏ</sup>――箱の中の定在波になる。針は全部同じ向きで<strong>その場で回るだけ</strong>で、どちらへも進まない。右向きと左向きが半分ずつ混ざっているから「進む向き（p の符号）」は決まっていない＝<strong>p の値札はない</strong>。しかしどちらの成分も勢いの大きさは同じ ℏk なので、<strong>p²＝(ℏk)² の値札はある</strong>。n を変えると k＝nπ/L が変わり、らせんの巻きと回る速さ（E∝k²）が変わる</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
@@ -827,6 +843,113 @@
   btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
   se.addEventListener('input', invalidate);
   ss.addEventListener('input', invalidate);
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
+})();
+</script>
+<script>
+/* sin(kx)e^{−iEt/ℏ} ＝ (右向き e^{i(kx−Et)} − 左向き e^{−i(kx+Et)}) / 2i を、3段の針の列で描く（ℏ＝1、L＝1） */
+(function(){
+  var cv = document.getElementById('standc');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sn = document.getElementById('st-n'), snv = document.getElementById('st-nv');
+  var btn = document.getElementById('st-play');
+  var XS = 24, N = 40, HZ = 2.9, DIM = 2.7;
+  var yaw = 0.3, pitch = -0.5, t = 0, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#b5504a', muted: '#8a7a5c', ink: '#241d12',
+            envG: 'rgba(166,116,42,.55)', envB: 'rgba(47,111,166,.55)', envR: 'rgba(181,80,74,.55)', shadow: 'rgba(181,80,74,.8)' };
+  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  /* 1段：vec(x)＝[実部, 虚部] の針の列。高さ＝実部、手前＝虚部 */
+  function comb(ax, ay, vec, color, envColor, withShadow) {
+    var i, x, env = [], sh = [];
+    function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    poly([P(-0.06, 0, 0), P(1.06, 0, 0)], C.muted, 1);
+    if (withShadow) { for (i = 0; i <= 80; i++) { x = i / 80; sh.push(P(x, vec(x)[0], 0)); } poly(sh, C.shadow, 1.4, [4, 3]); }
+    for (i = 0; i <= N; i++) {
+      x = i / N; var v = vec(x), b = P(x, 0, 0), tp = P(x, v[0], v[1]);
+      ctx.strokeStyle = color; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.8, 0, 7); ctx.fill();
+    }
+    for (i = 0; i <= 100; i++) { x = i / 100; var v2 = vec(x); env.push(P(x, v2[0], v2[1])); }
+    poly(env, envColor, 1.5);
+  }
+
+  function draw() {
+    var n = +sn.value, k = n * Math.PI, E = k * k / 2, nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay1 = H * 0.23, ay2 = H * 0.53, ay3 = H * 0.83;
+    /* 右向き e^{i(kx−Et)}、左向き e^{−i(kx+Et)}、和÷2i */
+    var right = function(x){ var a = k * x - E * t; return [Math.cos(a), Math.sin(a)]; };
+    var left = function(x){ var a = -(k * x + E * t); return [Math.cos(a), Math.sin(a)]; };
+    var sum = function(x){ var r = right(x), l = left(x); var re = r[0] - l[0], im = r[1] - l[1]; return [im / 2, -re / 2]; };  /* (r−l)/(2i) */
+    comb(ax, ay1, right, C.gold, C.envG, false);
+    comb(ax, ay2, left, C.blue, C.envB, false);
+    comb(ax, ay3, sum, C.red, C.envR, true);
+    /* 軸（上段の左端） */
+    function P1(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay1 + p[1]]; }
+    var o = P1(-0.06, 0, 0), aY = P1(-0.06, 1.3, 0), aZ = P1(-0.06, 0, 1.3), aX = P1(1.06, 0, 0);
+    poly([o, aY], C.muted, 1.3); poly([o, aZ], C.muted, 1.3);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
+    /* 見出し */
+    text(ax, H * 0.04, nar ? '右向きの波 e^(ikx)：p＝＋ℏk' : '右向きに進む波 e^(i(kx−Et/ℏ))：らせんが右へ流れる。運動量 p＝＋ℏk', C.gold, TITLE);
+    text(ax, H * 0.345, nar ? '左向きの波 e^(−ikx)：p＝−ℏk' : '左向きに進む波 e^(−i(kx＋Et/ℏ))：らせんが左へ流れる。運動量 p＝−ℏk', C.blue, TITLE);
+    text(ax, H * 0.645, nar ? '足して 2i で割る ＝ sin(kx)e^(−iEt/ℏ)' : '（上 − 中）÷ 2i ＝ sin(kx) e^(−iEt/ℏ)：針は同じ向きでその場で回るだけ', C.red, TITLE);
+    text(ax, H * 0.97, nar ? '向きは決まらない→p の値札なし。大きさは ℏk→p² の値札あり' : '進む向きは決まっていない → p の値札はない。どちらの成分も勢いの大きさは ℏk → p²＝(ℏk)² の値札はある', C.ink, SUB);
+    snv.textContent = 'n＝' + n;
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.18, 520)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 32;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.25;                       /* E＝k²/2 は n=1 で約4.9 → 針が1周に約5秒 */
+    draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sn.addEventListener('input', function(){ t = 0; invalidate(); });
 
   var dragging = false, lx = 0, ly = 0;
   function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
