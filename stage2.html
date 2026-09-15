@@ -386,7 +386,7 @@
   var XM = 8, XS = 3.4, N = 44, HZ = 4.2, DIM = 3.6;
   var yaw = 0.3, pitch = -0.55, W = 0, H = 0, sc = 1, cx = 0, cy = 0, t = 0;
   var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', shadow: 'rgba(47,111,166,.9)', env: 'rgba(166,116,42,.5)' };
-  var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var F = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
 
   function k() { return +sk.value; }
   function w() { return +sw.value; }
@@ -414,14 +414,14 @@
     ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
     ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
     ctx.closePath(); ctx.fill();
-    ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
 
   function draw() {
     var kk = k(), ww = w(), aa = amp(), i, x;
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = C.ink; ctx.font = '900 12px system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = C.ink; ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     ctx.fillText('横：場所 x　高さ：針の縦成分（虚部）　手前：横成分（実部）', 14, 12);
     var o = proj((0 - XM / 2) * XS - 1, 0, 0);
     arrow(o, proj((XM - XM / 2) * XS + 2.5, 0, 0), 'x（場所）', -56, 16);
@@ -505,6 +505,10 @@
     new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
   } else { play(); }
 })();
+</script>
+<script>
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
 </script>
 </body>
 </html>

@@ -395,7 +395,7 @@
   var yaw = 0.34, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
   var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', wall: 'rgba(200,67,63,.7)',
             tube: 'rgba(166,116,42,.22)', env: 'rgba(166,116,42,.6)', mesh: 'rgba(47,111,166,.35)', now: '#2f6fa6' };
-  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
 
   function phi(x) { return Math.sin(NW * Math.PI * x); }
   function rot(X, Y, Z) {
@@ -522,7 +522,7 @@
   var yaw = 0.32, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
   var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#b5504a', muted: '#8a7a5c', ink: '#241d12',
             envG: 'rgba(166,116,42,.55)', envB: 'rgba(47,111,166,.55)', envR: 'rgba(181,80,74,.55)', mesh: 'rgba(181,80,74,.35)', shadow: 'rgba(181,80,74,.85)' };
-  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var TITLE = '900 12px "GreekNu",system-ui,sans-serif', SUB = '700 10.5px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   var A = 1 / Math.sqrt(2);
   function p1(x) { return Math.sin(Math.PI * x); }
   function p2(x) { return Math.sin(2 * Math.PI * x); }
@@ -632,6 +632,10 @@
     new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
   } else { play(); }
 })();
+</script>
+<script>
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
 </script>
 </body>
 </html>

@@ -524,7 +524,7 @@
     var cs = comps(), N = cs.length, i, px, x;
     var X0 = 34, X1 = W - 12, SPAN = X1 - X0;
     ctx.clearRect(0, 0, W, H);
-    ctx.font = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+    ctx.font = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
     ctx.textBaseline = 'middle';
 
     /* 上段：足す平面波を1本ずつ */
@@ -545,7 +545,7 @@
     ctx.fillText(N === 1 ? '平面波 1本' : '平面波 ' + N + ' 本（運動量が少しずつ違う）', X0, top + area + 8);
 
     ctx.fillStyle = C.ink; ctx.textAlign = 'center';
-    ctx.font = '900 14px system-ui,sans-serif';
+    ctx.font = '900 14px "GreekNu",system-ui,sans-serif';
     ctx.fillText('＝', 18, 152);
 
     /* 下段：足した結果（線＝実部、帯＝|ψ|） */
@@ -565,7 +565,7 @@
     for (i = 0; i < env.length; i++) { if (i === 0) ctx.moveTo(env[i][0], yc2 - A * env[i][2]); else ctx.lineTo(env[i][0], yc2 - A * env[i][2]); }
     ctx.stroke();
     ctx.fillStyle = C.blue; ctx.textAlign = 'left';
-    ctx.font = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+    ctx.font = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
     ctx.fillText('足した結果（線＝ψ の値、帯＝強さ |ψ|）', X0, H - 8);
 
     slv.textContent = N + ' 本';
@@ -608,7 +608,7 @@
   var btn = document.getElementById('ord-play');
   var C = { gold: '#a6742a', blue: '#2f6fa6', red: '#c8433f', muted: '#8a7a5c', ink: '#241d12',
             ghost: 'rgba(138,122,92,.35)', meshX: 'rgba(166,116,42,.3)', meshT: 'rgba(47,111,166,.3)' };
-  var F = '800 11px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+  var F = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
   var u = 0;                       /* 共通の時計（0〜1）。ニュートンの t と、曲面を描く深さの両方に使う */
   var TN = 2.0, TS = 3.0;          /* ニュートン側の時間、曲面側の時間 */
 
@@ -625,7 +625,7 @@
     function px(tt) { return X0 + (X1 - X0) * tt / TN; }
     function py(y) { return BOT - (BOT - TOP) * y / YMAX; }
     cn.clearRect(0, 0, WN, HN);
-    cn.fillStyle = C.ink; cn.font = '900 12px system-ui,sans-serif'; cn.textAlign = 'left'; cn.textBaseline = 'middle';
+    cn.fillStyle = C.ink; cn.font = '900 12px "GreekNu",system-ui,sans-serif'; cn.textAlign = 'left'; cn.textBaseline = 'middle';
     cn.fillText('ニュートン：位置だけでは未来が決まらない', 14, 12);
     cn.strokeStyle = C.muted; cn.lineWidth = 1;
     cn.beginPath(); cn.moveTo(X0, py(0)); cn.lineTo(X1, py(0)); cn.stroke();
@@ -684,7 +684,7 @@
     c3.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
     c3.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
     c3.closePath(); c3.fill();
-    c3.font = '900 12px system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
+    c3.font = '900 12px "GreekNu",system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
     c3.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
   function size3() {
@@ -697,7 +697,7 @@
     var k0 = +sk.value, s = Math.min(1, u * 1.15) * TS;     /* 曲面を描く深さ（t＝0 → TS） */
     var i, o = proj(-XW / 2, 0, -TDEPTH / 2);
     c3.clearRect(0, 0, W3, H3);
-    c3.fillStyle = C.ink; c3.font = '900 12px system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
+    c3.fillStyle = C.ink; c3.font = '900 12px "GreekNu",system-ui,sans-serif'; c3.textAlign = 'left'; c3.textBaseline = 'middle';
     c3.fillText('シュレディンガー：t＝0 の1本から未来が決まる', 14, 12);
     /* 床の枠 */
     line3([o, proj(XW / 2, 0, -TDEPTH / 2), proj(XW / 2, 0, TDEPTH / 2), proj(-XW / 2, 0, TDEPTH / 2), o], '#ddd0ad', 1);
@@ -783,5 +783,9 @@
 })();
 </script>
 
+<script>
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
+</script>
 </body>
 </html>

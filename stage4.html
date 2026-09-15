@@ -404,7 +404,7 @@
     ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
     ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
     ctx.closePath(); ctx.fill();
-    ctx.font = '900 12px system-ui,sans-serif';
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif';
     ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
 
@@ -428,7 +428,7 @@
     arrow(o, proj(-XM / 2, 0, TM / 2 + 1.2), 't（時刻）', 8, -6);
     arrow(o, proj(-XM / 2, 2.4, -TM / 2), 'ψ', 8, 2);
 
-    ctx.font = '900 12px system-ui,sans-serif';
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif';
     ctx.fillStyle = C.blue;
     var pX = proj(x0 - XM / 2, 0, -TM / 2); ctx.fillText('x₀', pX[0] - 6, pX[1] + 17);
     ctx.fillStyle = C.gold;
@@ -493,6 +493,10 @@
   window.addEventListener('resize', resize);
   resize();
 })();
+</script>
+<script>
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
 </script>
 </body>
 </html>
