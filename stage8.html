@@ -54,6 +54,12 @@
   .sq-svg .strip{fill:#1d1330;stroke:var(--muted);stroke-width:1}
   .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
   .sq-svg .el{fill:var(--gold-dark)}
+  .cv-wrap{width:100%}
+  #stat3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
+  .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -121,20 +127,10 @@
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="stat-svg" viewBox="0 0 340 220" width="100%" role="img" aria-label="定常状態の図。上段：箱の中のn=2の波の各地点に立つ針が、同じペースでいっせいに回り続ける。下段：確率密度|ψ|²の形は時間がたってもまったく動かない">
-          <text class="strong" x="14" y="16">定常状態：針は回る、けれど景色は凍っている</text>
-          <line class="wall" x1="40" y1="28" x2="40" y2="110"></line>
-          <line class="wall" x1="300" y1="28" x2="300" y2="110"></line>
-          <line class="axis" x1="40" y1="70" x2="300" y2="70"></line>
-          <g id="st-hands"></g>
-          <text class="label" x="14" y="126">↑ 各地点の針（長さ＝|φ|、そろって回転中）</text>
-          <line class="wall" x1="40" y1="140" x2="40" y2="208"></line>
-          <line class="wall" x1="300" y1="140" x2="300" y2="208"></line>
-          <line class="axis" x1="40" y1="200" x2="300" y2="200"></line>
-          <path class="prob" d="M40 200 C 83 200 83 150 105 150 C 127 150 127 200 170 200 C 213 200 213 150 235 150 C 257 150 257 200 300 200 Z"></path>
-          <text class="lbA" x="170" y="136" text-anchor="middle">|ψ|²＝|φ|²：時間がたっても微動だにしない</text>
-        </svg>
-        <div class="diagram-caption">定常状態（図は箱の n＝2）。各地点の針は E/ℏ のペースでそろって回り続けるが、<strong>針の長さの分布 |ψ|² は完全に静止</strong>している。観測にかかる景色に動きがない＝電波も出さない＝安定。原子が潰れない理由がこれだ</div>
+        <div class="cv-wrap"><canvas id="stat3d" role="img" aria-label="定常状態の3Dアニメーション（箱のn＝2）。上段：横x・高さ実部・手前虚部で、各地点の針が同じペースでそろって回る。針の先が通る跡のチューブの太さ＝|φ|は変わらない。下段：横x・奥t・高さ|ψ|²の曲面で、t方向にまったく変わらない（凍っている）。青い線がいまの断面。ドラッグで視点を回せる"></canvas></div>
+        <button class="sim-play" id="stat-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
+        <div class="diagram-caption">定常状態（図は箱の n＝2）。上段は横 x・高さ 実部・手前 虚部で、各地点の針は E/ℏ のペースでそろって回り続ける（薄いチューブは針の先が通る跡で、太さ＝|φ| は変わらない）。下段は横 x・奥 t・高さ |ψ|² の曲面で、t 方向にまったく変わらない。つまり<strong>針の長さの分布 |ψ|² は完全に静止</strong>している。観測にかかる景色に動きがない＝電波も出さない＝安定。原子が潰れない理由がこれだ</div>
       </div>
 
       <div class="dialogue-scene">
@@ -378,52 +374,128 @@
 </script>
 
 <script>
+/* 定常状態（箱の n＝2）：上は針の列（横 x・高さ 実部・手前 虚部）が |φ| のチューブの中で回る。
+   下は横 x・奥 t・高さ |ψ|² の曲面――t 方向に平ら（凍っている）。1枚の canvas に2段。ℏ＝1、L＝1 */
 (function(){
-  var svg = document.getElementById('stat-svg');
-  if (!svg) return;
-  var g = document.getElementById('st-hands');
-  var NS = 'http://www.w3.org/2000/svg';
-  var X0 = 55, X1 = 285, N = 11, AXIS = 70, HRMAX = 30;
-  var hands = [], dots = [], amps = [], i;
-  for (i = 0; i < N; i++) {
-    var x = X0 + (X1 - X0) * i / (N - 1);
-    var amp = Math.sin(2 * Math.PI * (x - 40) / 260); // n=2 の形（箱40〜300）
-    var ln = document.createElementNS(NS, 'line');
-    ln.setAttribute('class', 'hand');
-    ln.setAttribute('x1', x); ln.setAttribute('y1', AXIS);
-    g.appendChild(ln);
-    var dt = document.createElementNS(NS, 'circle');
-    dt.setAttribute('class', 'handdot'); dt.setAttribute('r', '2.4');
-    g.appendChild(dt);
-    hands.push(ln); dots.push(dt); amps.push(amp);
+  var cv = document.getElementById('stat3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var btn = document.getElementById('stat-play');
+  var XS = 24, N = 36, HZ = 3.2, DIM = 2.8, TD = 12, TT = 4, E = 2.2, NW = 2;
+  var yaw = 0.34, pitch = -0.55, t = 0, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', wall: 'rgba(200,67,63,.7)',
+            tube: 'rgba(166,116,42,.22)', env: 'rgba(166,116,42,.6)', mesh: 'rgba(47,111,166,.35)', now: '#2f6fa6' };
+  var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
+
+  function phi(x) { return Math.sin(NW * Math.PI * x); }
+  function rot(X, Y, Z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * sw, Z1 = -X * sw + Z * cw;
+    return [sc * X1, -sc * (Y * cp - Z1 * sp)];
+  }
+  function text(x, y, str, color, font, align) { ctx.fillStyle = color; ctx.textAlign = align || 'center'; ctx.textBaseline = 'middle'; ctx.font = font; ctx.fillText(str, x, y); }
+  function poly(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { if (i) ctx.lineTo(pts[i][0], pts[i][1]); else ctx.moveTo(pts[i][0], pts[i][1]); }
+    ctx.stroke(); ctx.setLineDash([]);
   }
 
-  function draw(t) {
-    for (var i = 0; i < N; i++) {
-      var x = X0 + (X1 - X0) * i / (N - 1);
-      var r = HRMAX * amps[i]; // 符号込み：位相が180°反転する側は逆向き
-      var px = x + r * Math.cos(t), py = AXIS - r * Math.sin(t);
-      hands[i].setAttribute('x2', px.toFixed(1)); hands[i].setAttribute('y2', py.toFixed(1));
-      dots[i].setAttribute('cx', px.toFixed(1)); dots[i].setAttribute('cy', py.toFixed(1));
+  /* 上段：|φ| のチューブ（針の先が通る跡）と、いまの針 */
+  function combRow(ax, ay) {
+    var i, j, x, pts, c = Math.cos(E * t), s = -Math.sin(E * t);
+    function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    for (i = 0; i <= 12; i++) {
+      x = i / 12; var r = Math.abs(phi(x)); pts = [];
+      for (j = 0; j <= 24; j++) { var a = 2 * Math.PI * j / 24; pts.push(P(x, r * Math.cos(a), r * Math.sin(a))); }
+      poly(pts, C.tube, 0.9);
     }
+    for (j = 0; j < 8; j++) {
+      var a2 = 2 * Math.PI * j / 8; pts = [];
+      for (i = 0; i <= 40; i++) { x = i / 40; var r2 = Math.abs(phi(x)); pts.push(P(x, r2 * Math.cos(a2), r2 * Math.sin(a2))); }
+      poly(pts, C.tube, 0.9);
+    }
+    /* 壁と軸 */
+    poly([P(0, -1.15, 0), P(0, 1.15, 0)], C.wall, 2); poly([P(1, -1.15, 0), P(1, 1.15, 0)], C.wall, 2);
+    poly([P(-0.06, 0, 0), P(1.06, 0, 0)], C.muted, 1);
+    var env = [];
+    for (i = 0; i <= N; i++) {
+      x = i / N; var f = phi(x), b = P(x, 0, 0), tp = P(x, f * c, f * s);
+      ctx.strokeStyle = C.gold; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(tp[0], tp[1]); ctx.stroke();
+      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tp[0], tp[1], 1.9, 0, 7); ctx.fill();
+    }
+    for (i = 0; i <= 80; i++) { x = i / 80; var f2 = phi(x); env.push(P(x, f2 * c, f2 * s)); }
+    poly(env, C.env, 1.5);
+    var o = P(-0.06, 0, 0), aY = P(-0.06, 1.3, 0), aZ = P(-0.06, 0, 1.3), aX = P(1.06, 0, 0);
+    poly([o, aY], C.muted, 1.3); poly([o, aZ], C.muted, 1.3);
+    text(aY[0], aY[1] - 8, '実部', C.muted, SUB); text(aZ[0] - 4, aZ[1] + 9, '虚部', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
   }
-  draw(Math.PI / 3);
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var t = 0, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.03;
-    draw(t);
-    raf = requestAnimationFrame(loop);
+  /* 下段：横 x・奥 t・高さ |ψ|²。t 方向にまったく変わらない */
+  function sheetRow(ax, ay) {
+    var i, j, pts, tNow = t % TT;
+    function P(x, tt, y) { var p = rot((x - 0.5) * XS, HZ * 1.1 * y, (tt / TT - 0.5) * TD); return [ax + p[0], ay + p[1]]; }
+    function f(x) { var v = phi(x); return v * v; }
+    for (i = 0; i <= 10; i++) { var tt = TT * i / 10; pts = []; for (j = 0; j <= 40; j++) { var x = j / 40; pts.push(P(x, tt, f(x))); } poly(pts, C.mesh, 0.9); }
+    for (i = 0; i <= 16; i++) { var x2 = i / 16; pts = []; for (j = 0; j <= 20; j++) { var t2 = TT * j / 20; pts.push(P(x2, t2, f(x2))); } poly(pts, C.mesh, 0.9); }
+    poly([P(0, 0, 0), P(1, 0, 0), P(1, TT, 0), P(0, TT, 0), P(0, 0, 0)], 'rgba(138,122,92,.35)', 1);
+    poly([P(0, 0, 0), P(0, TT, 0)], C.wall, 1.5); poly([P(1, 0, 0), P(1, TT, 0)], C.wall, 1.5);
+    pts = []; for (j = 0; j <= 60; j++) { var x3 = j / 60; pts.push(P(x3, tNow, f(x3))); } poly(pts, C.now, 2.2);
+    var o = P(-0.04, 0, 0), aT = P(-0.04, TT * 1.08, 0), aY = P(-0.04, 0, 1.25), aX = P(1.06, 0, 0);
+    poly([o, aT], C.muted, 1.3); poly([o, aY], C.muted, 1.3);
+    text(aT[0] - 4, aT[1] - 8, 't', C.muted, SUB); text(aY[0], aY[1] - 8, '|ψ|²', C.muted, SUB); text(aX[0] + 8, aX[1] + 2, 'x', C.muted, SUB, 'left');
   }
+
+  function draw() {
+    var nar = W < 520;
+    ctx.clearRect(0, 0, W, H);
+    var ax = W * 0.5, ay1 = H * 0.27, ay2 = H * 0.76;
+    combRow(ax, ay1);
+    sheetRow(ax, ay2);
+    text(ax, H * 0.045, nar ? '針は回る（ψ＝φe^(−iEt/ℏ)、n＝2）' : '針は回る：各地点の針（長さ＝|φ|）が E/ℏ のペースでそろって回る（箱の n＝2）', C.gold, TITLE);
+    text(ax, H * 0.47, nar ? '薄いチューブ＝針の先が通る跡。太さは変わらない' : '薄いチューブは針の先が通る跡。その太さ ＝ |φ| は時間がたっても変わらない', C.muted, SUB);
+    text(ax, H * 0.535, nar ? '景色は凍っている：|ψ|² は t 方向に平ら' : '景色は凍っている：|ψ|²＝|φ|² の曲面は t 方向にまったく変わらない', C.blue, TITLE);
+    text(ax, H * 0.975, nar ? '青い線＝いまの断面。動いても形は同じ' : '青い線が「いま」の断面。奥へ進んでも形は同じ＝観測にかかる景色に動きがない', C.blue, SUB);
+  }
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w; H = h; sc = w / 34;
+    draw();
+  }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    t += dt * 0.7; draw(); raf = requestAnimationFrame(frame);
+  }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  resize();
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.1 }).observe(cv);
+  } else { play(); }
 })();
 </script>
 </body>
