@@ -218,7 +218,7 @@
         </div>
         <button class="sim-play" id="sep-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout"><span class="sub">🖱️ ドラッグ（スマホは指でなぞる）で視点を回せます</span></div>
-        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる。残りの3つは微分した結果を、横＝場所 x・奥＝時刻 t・高さ＝値（実部）の<strong>曲面</strong>で描いたもの。微分しても値は複素数のままだが、曲面は高さを1つしか持てないので<strong>実部だけ</strong>を描いている（虚部は同じ形で t 方向に 1/4 周期ずれた曲面になる）。濃い青の線が「いま」の断面、薄い金の点線は比較用の「いま」の ψ の実部。ドラッグすると4つがいっしょに回る。<strong>t で微分</strong>：全部の針が 90° 回って長さが E/ℏ 倍になるだけで、形は同じ（＝ E ψ の ψ 倍という形）。<strong>x で1回微分</strong>：針の向きは変わらず、長さが形の傾き φ′ に変わる。<strong>x で2回微分</strong>：長さが曲がり具合 φ″ になる。山1つ・山2つの形では φ″ が φ の「同じ形で逆向き」になり、これがまさに −(ℏ²/2m)φ″＝Eφ を満たすということ。片寄った山では定数倍にならず、方程式を満たさない――どんな形でもよいわけではない、という次の話への入口</div>
+        <div class="diagram-caption">場所 x ごとに針が1本ずつ立っている。<strong>針の長さの並びが「形」φ(x)</strong>（金の輪郭）で、場所ごとに違っていてよい。エネルギー E が決まっているとは、<strong>すべての針が同じ向きのまま、同じペース E/ℏ でそろって回る</strong>こと――E を変えても回る速さが変わるだけで、形は変わらない。回っても長さの並びは崩れないので、波の「強さ」|ψ|² は時間がたっても同じ。実部だけを見ると（青い影）、形が上下に揺れているように見えるが、本体は回っているだけ。形が変わらないから、方程式から時間を追い出して「形だけの方程式」にできる。残りの3つも同じ描き方で、微分した結果を<strong>複素数のまま</strong>（高さ＝実部、手前＝虚部）針の列で描いたもの。4つの量（x・t・実部・虚部）のうち、<strong>t は軸ではなく時間の進み（アニメーション）</strong>で表している。薄いチューブは、時間がたつと針の先が通る跡――その太さ（＝各場所の |値|）は時間がたっても変わらず、針が中を回るだけ。ドラッグすると4つがいっしょに回る。<strong>t で微分</strong>：全部の針が 90° 回って長さが E/ℏ 倍になるだけで、形は同じ（＝ E ψ の ψ 倍という形）。<strong>x で1回微分</strong>：針の向きは変わらず、長さが形の傾き φ′ に変わる。<strong>x で2回微分</strong>：長さが曲がり具合 φ″ になる。山1つ・山2つの形では φ″ が φ の「同じ形で逆向き」になり、これがまさに −(ℏ²/2m)φ″＝Eφ を満たすということ。片寄った山では定数倍にならず、方程式を満たさない――どんな形でもよいわけではない、という次の話への入口</div>
 
         <div class="calc-head" style="margin-top:16px">方程式に入れて、時間を追い出す</div>
         <ol class="calc-steps" data-stepper="sep">
@@ -648,8 +648,8 @@
 })();
 </script>
 <script>
-/* 1枚の canvas に4つ：左上は ψ の針の列（いまの時刻）、残り3つは ∂ψ/∂t・∂ψ/∂x・∂²ψ/∂x² の実部を
-   横＝場所 x・奥＝時刻 t・高さ＝値 の曲面で描く（①量子力学の教室 STAGE6 の曲面と同じ方式。ℏ＝1） */
+/* 1枚の canvas に4つ：ψ・∂ψ/∂t・∂ψ/∂x・∂²ψ/∂x² を、横＝場所 x・高さ＝実部・手前＝虚部 の針の列で描く。
+   t は軸ではなくアニメーションで進む。薄いチューブは、時間がたつと針の先が通る跡（ℏ＝1） */
 (function(){
   var cv = document.getElementById('sep4c');
   if (!cv) return;
@@ -657,10 +657,10 @@
   var se = document.getElementById('sep-e'), sev = document.getElementById('sep-ev');
   var ss = document.getElementById('sep-s'), ssv = document.getElementById('sep-sv');
   var btn = document.getElementById('sep-play');
-  var XA = 0, XB = 1, XS = 22, N = 34, HZ = 5.2, DIM = 4.4, TD = 15;
-  var yaw = 0.45, pitch = -0.9, th = 0.6, W = 0, H = 0, sc = 1;
-  var C = { gold: '#a6742a', goldFaint: 'rgba(166,116,42,.45)', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f',
-            shadow: 'rgba(47,111,166,.85)', env: 'rgba(166,116,42,.55)', mesh: 'rgba(47,111,166,.32)' };
+  var XA = 0, XB = 1, XS = 22, N = 30, HZ = 5.2, DIM = 4.6;
+  var yaw = 0.32, pitch = -0.5, th = 0.6, W = 0, H = 0, sc = 1;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', red: '#c8433f',
+            tubeG: 'rgba(166,116,42,.22)', tubeB: 'rgba(47,111,166,.22)', envG: 'rgba(166,116,42,.6)', envB: 'rgba(47,111,166,.6)' };
   var NAMES = ['山1つ', '山2つ', '片寄った山'];
   var TITLE = '900 12px system-ui,sans-serif', SUB = '700 10.5px system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
 
@@ -691,89 +691,63 @@
     ctx.stroke(); ctx.setLineDash([]);
   }
 
-  /* 左上：いまの時刻の針の列（高さ＝実部、手前＝虚部） */
-  function comb(ax, ay, vec, color, envColor, wd, dotR) {
-    var i, x, env = [];
+  /* 1つぶん：チューブ（長さ |amp(x)| の針が回って通る跡）＋ いまの針の列 vec(x)＝[実部, 虚部] */
+  function panel(ax, ay, amp, vec, color, tubeColor, envColor) {
+    var i, j, x, pts;
     function P(xx, re, im) { var p = rot((xx - 0.5) * XS, HZ * re, -DIM * im); return [ax + p[0], ay + p[1]]; }
+    /* チューブ：x ごとの円と、位相ごとの縦線 */
+    for (i = 0; i <= 10; i++) {
+      x = XA + (XB - XA) * i / 10; var r = Math.abs(amp(x)); pts = [];
+      for (j = 0; j <= 24; j++) { var a = 2 * Math.PI * j / 24; pts.push(P(x, r * Math.cos(a), r * Math.sin(a))); }
+      poly(pts, tubeColor, 0.9);
+    }
+    for (j = 0; j < 8; j++) {
+      var a2 = 2 * Math.PI * j / 8; pts = [];
+      for (i = 0; i <= 40; i++) { x = XA + (XB - XA) * i / 40; var r2 = Math.abs(amp(x)); pts.push(P(x, r2 * Math.cos(a2), r2 * Math.sin(a2))); }
+      poly(pts, tubeColor, 0.9);
+    }
+    /* 軸線といまの針 */
+    poly([P(XA, 0, 0), P(XB, 0, 0)], C.muted, 1);
+    var env = [];
     for (i = 0; i <= N; i++) {
       x = XA + (XB - XA) * i / N; var v = vec(x);
       var b = P(x, 0, 0), t = P(x, v[0], v[1]);
-      ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(t[0], t[1]); ctx.stroke();
-      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(t[0], t[1], dotR, 0, 7); ctx.fill();
+      ctx.strokeStyle = color; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(b[0], b[1]); ctx.lineTo(t[0], t[1]); ctx.stroke();
+      ctx.fillStyle = color; ctx.beginPath(); ctx.arc(t[0], t[1], 1.9, 0, 7); ctx.fill();
     }
     for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var v2 = vec(x); env.push(P(x, v2[0], v2[1])); }
     poly(env, envColor, 1.6);
-    poly([P(XA, 0, 0), P(XB, 0, 0)], C.muted, 1);
-  }
-
-  /* 曲面：横 x・奥 t・高さ f(x,t)。tNow の断面を濃く描き、比較用の断面 g(x) を薄い金で重ねる */
-  function sheet(ax, ay, f, tNow, T, g) {
-    var i, j, pts;
-    function P(x, t, y) { var p = rot((x - 0.5) * XS, HZ * y, (t / T - 0.5) * TD); return [ax + p[0], ay + p[1]]; }
-    for (i = 0; i <= 12; i++) {
-      var t = T * i / 12; pts = [];
-      for (j = 0; j <= 40; j++) { var x = XA + (XB - XA) * j / 40; pts.push(P(x, t, f(x, t))); }
-      poly(pts, C.mesh, 0.9);
-    }
-    for (i = 0; i <= 12; i++) {
-      var x2 = XA + (XB - XA) * i / 12; pts = [];
-      for (j = 0; j <= 30; j++) { var t2 = T * j / 30; pts.push(P(x2, t2, f(x2, t2))); }
-      poly(pts, C.mesh, 0.9);
-    }
-    /* 床の枠 */
-    poly([P(XA, 0, 0), P(XB, 0, 0), P(XB, T, 0), P(XA, T, 0), P(XA, 0, 0)], 'rgba(138,122,92,.35)', 1);
-    /* いまの断面 */
-    pts = []; for (j = 0; j <= 60; j++) { var x3 = XA + (XB - XA) * j / 60; pts.push(P(x3, tNow, f(x3, tNow))); }
-    poly(pts, C.blue, 2.2);
-    if (g) { pts = []; for (j = 0; j <= 60; j++) { var x4 = XA + (XB - XA) * j / 60; pts.push(P(x4, tNow, g(x4))); } poly(pts, C.goldFaint, 1.6, [4, 3]); }
   }
 
   function draw() {
     var c = Math.cos(th), s = -Math.sin(th), E = +se.value, nar = W < 520;
-    var T = 2 * 2 * Math.PI / E;                 /* 2周期ぶんの時間 */
-    var tNow = (th / E) % T;
     ctx.clearRect(0, 0, W, H);
-    var ax1 = W * 0.26, ay1 = H * 0.30, ax2 = W * 0.75, ay2 = H * 0.27, ax3 = W * 0.26, ay3 = H * 0.75, ax4 = W * 0.75, ay4 = H * 0.75;
+    var ax1 = W * 0.26, ay1 = H * 0.30, ax2 = W * 0.75, ay2 = H * 0.30, ax3 = W * 0.26, ay3 = H * 0.78, ax4 = W * 0.75, ay4 = H * 0.78;
     var m1 = maxAbs(dphi), m2 = maxAbs(ddphi), ok = proportional();
-    var psiV = function(x){ var f = phi(x); return [f * c, f * s]; };
-    var psiRe = function(x){ return phi(x) * c; };                     /* いまの ψ の実部（比較用） */
-    /* 各量の実部（ℏ＝1、表示は最大値でそろえて縮小） */
-    var fDt = function(x, t){ return -phi(x) * Math.sin(E * t); };        /* Re ∂ψ/∂t ÷ E */
-    var fDx = function(x, t){ return dphi(x) / m1 * Math.cos(E * t); };
-    var fDxx = function(x, t){ return ddphi(x) / m2 * Math.cos(E * t); };
+    var g1 = function(x){ return dphi(x) / m1; }, g2 = function(x){ return ddphi(x) / m2; };
 
-    /* ① 針の列（影つき） */
-    var sh = [], i, x;
-    for (i = 0; i <= 80; i++) { x = XA + (XB - XA) * i / 80; var p = rot((x - 0.5) * XS, HZ * phi(x) * c, 0); sh.push([ax1 + p[0], ay1 + p[1]]); }
-    poly(sh, C.shadow, 1.5, [5, 4]);
-    comb(ax1, ay1, psiV, C.gold, C.env, 1.5, 1.9);
-    /* ②〜④ 曲面 */
-    sheet(ax2, ay2, fDt, tNow, T, psiRe);
-    sheet(ax3, ay3, fDx, tNow, T, psiRe);
-    sheet(ax4, ay4, fDxx, tNow, T, psiRe);
+    panel(ax1, ay1, phi, function(x){ var f = phi(x); return [f * c, f * s]; }, C.gold, C.tubeG, C.envG);
+    panel(ax2, ay2, phi, function(x){ var f = phi(x); return [f * s, -f * c]; }, C.blue, C.tubeB, C.envB);
+    panel(ax3, ay3, g1,  function(x){ var g = g1(x); return [g * c, g * s]; }, C.blue, C.tubeB, C.envB);
+    panel(ax4, ay4, g2,  function(x){ var g = g2(x); return [g * c, g * s]; }, C.blue, C.tubeB, C.envB);
 
-    /* 軸：左上は x・実部・虚部、右上は x・t・値 */
+    /* 軸（左上に1組） */
     var oC = rot((XA - 0.5) * XS - 1, 0, 0), aX = rot((XA - 0.5) * XS + 6, 0, 0), aY = rot((XA - 0.5) * XS - 1, HZ * 1.2, 0), aZ = rot((XA - 0.5) * XS - 1, 0, -DIM * 1.2);
     ctx.strokeStyle = C.muted; ctx.lineWidth = 1.5;
     [aX, aY, aZ].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax1 + oC[0], ay1 + oC[1]); ctx.lineTo(ax1 + a[0], ay1 + a[1]); ctx.stroke(); });
     text(ax1 + aX[0] + 6, ay1 + aX[1] + 2, 'x', C.muted, SUB, 'left');
     text(ax1 + aY[0], ay1 + aY[1] - 8, '実部', C.muted, SUB);
     text(ax1 + aZ[0] - 4, ay1 + aZ[1] + 8, '虚部', C.muted, SUB);
-    var o2 = rot((XA - 0.5) * XS - 1, 0, -TD / 2), bX = rot((XA - 0.5) * XS + 6, 0, -TD / 2), bT = rot((XA - 0.5) * XS - 1, 0, -TD / 2 + 7), bY = rot((XA - 0.5) * XS - 1, HZ * 1.2, -TD / 2);
-    [bX, bT, bY].forEach(function(a){ ctx.beginPath(); ctx.moveTo(ax2 + o2[0], ay2 + o2[1]); ctx.lineTo(ax2 + a[0], ay2 + a[1]); ctx.stroke(); });
-    text(ax2 + bX[0] + 6, ay2 + bX[1] + 2, 'x', C.muted, SUB, 'left');
-    text(ax2 + bT[0] - 4, ay2 + bT[1] - 6, 't', C.muted, SUB);
-    text(ax2 + bY[0], ay2 + bY[1] - 8, '実部', C.muted, SUB);
 
     /* 見出しと一言 */
-    text(ax1, H * 0.045, nar ? 'ψ（いまの針）' : 'ψ＝φ(x)e^(−iEt/ℏ)（いまの針の列）', C.ink, TITLE);
-    text(ax2, H * 0.045, nar ? '∂ψ/∂t（実部）' : '∂ψ/∂t（横 x・奥 t・高さ 実部）', C.ink, TITLE);
-    text(ax3, H * 0.525, '∂ψ/∂x（実部）', C.ink, TITLE);
-    text(ax4, H * 0.525, '∂²ψ/∂x²（実部）', C.ink, TITLE);
-    text(ax1, H * 0.475, nar ? '形 φ(x)。同じ向きで回る' : '長さの並び＝形 φ(x)。同じ向きで回る', C.gold, SUB);
-    text(ax2, H * 0.475, nar ? '形は同じ。t の波が 1/4 ずれる' : 'x の形は ψ と同じ。t 方向の波が 1/4 周期ずれるだけ', C.blue, SUB);
-    text(ax3, H * 0.955, nar ? 'x の形が傾き φ′ に' : 'x の形が傾き φ′ に変わる。t 方向は ψ と同じ', C.blue, SUB);
-    text(ax4, H * 0.955, ok ? (nar ? 'φ の逆向き×定数 → 満たす' : 'x の形が φ の逆向き×定数 → 方程式を満たす') : (nar ? 'φ の定数倍でない → 満たさない' : 'x の形が φ の定数倍でない → 方程式を満たさない'), ok ? C.blue : C.red, SUB);
+    text(ax1, H * 0.045, nar ? 'ψ' : 'ψ＝φ(x)e^(−iEt/ℏ)', C.ink, TITLE);
+    text(ax2, H * 0.045, '∂ψ/∂t', C.ink, TITLE);
+    text(ax3, H * 0.525, '∂ψ/∂x', C.ink, TITLE);
+    text(ax4, H * 0.525, '∂²ψ/∂x²', C.ink, TITLE);
+    text(ax1, H * 0.475, nar ? '針は回るだけ。跡の太さ＝|ψ|' : '針は回るだけ。跡（チューブ）の太さ＝|ψ| は変わらない', C.gold, SUB);
+    text(ax2, H * 0.475, nar ? '同じ跡。針が 90° 先を回る' : '跡は ψ と同じ形。針が 90° 先を回っている', C.blue, SUB);
+    text(ax3, H * 0.955, nar ? '跡の太さ＝|φ′|。頂上でくびれる' : '跡の太さ＝形の傾き |φ′|。頂上でくびれる', C.blue, SUB);
+    text(ax4, H * 0.955, ok ? (nar ? '跡は ψ と同じ形、針は逆向き → 満たす' : '跡は ψ と同じ形で、針は逆向き → 方程式を満たす') : (nar ? '跡の形が ψ と違う → 満たさない' : '跡の太さの分布が ψ と違う → 方程式を満たさない'), ok ? C.blue : C.red, SUB);
     sev.textContent = E.toFixed(2);
     ssv.textContent = NAMES[+ss.value];
   }
@@ -781,7 +755,7 @@
     var w = cv.clientWidth || 320, h = Math.round(Math.min(w * 1.02, 440)), d = window.devicePixelRatio || 1;
     cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.height = h + 'px';
     ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w; H = h; sc = w / 64;
+    W = w; H = h; sc = w / 62;
     draw();
   }
   var queued = false;
@@ -791,7 +765,7 @@
   function frame(now) {
     if (!playing) return;
     var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    th = (th + dt * 1.6 * (+se.value)) % (4 * Math.PI);
+    th = (th + dt * 1.6 * (+se.value)) % (2 * Math.PI);
     draw(); raf = requestAnimationFrame(frame);
   }
   function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
