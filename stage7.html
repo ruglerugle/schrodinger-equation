@@ -219,9 +219,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. ボルンの解釈で、|ψ(x)|² Δx が表すものは？</p>
         <div class="choice-list">
-          <button class="choice-btn">電子の電気が区間 Δx に塗り広げられている量</button>
+          <button class="choice-btn">電子の電気が区間 Δx に薄く塗り広げられている量</button>
           <button class="choice-btn">観測したとき、区間 Δx の中で電子が見つかる確率</button>
-          <button class="choice-btn">電子が区間 Δx を通過するのにかかる時間</button>
+          <button class="choice-btn">電子が区間 Δx を通り抜けるのにかかる時間の割合</button>
         </div>
         <div class="quiz-explain" hidden>正解！ |ψ|² は「見つかりやすさの濃さ（確率密度）」で、幅 Δx を掛けて初めて確率になる。選択肢1はシュレディンガー本人の解釈だが、「電子は必ず1個まるごと1点で見つかる」という実験事実と矛盾して敗れた。</div>
       </div>
@@ -229,8 +229,8 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. 箱の中の電子が n＝2 の状態にあるとき、箱のちょうど中央で電子が見つかる確率は？</p>
         <div class="choice-list">
-          <button class="choice-btn">どこよりも高い</button>
-          <button class="choice-btn">他の場所と同じ</button>
+          <button class="choice-btn">どこよりも高い（中央は箱の真ん中で一番安定だから）</button>
+          <button class="choice-btn">他の場所と同じ（箱の中では確率は一様だから）</button>
           <button class="choice-btn">ゼロ（中央は |ψ|²＝0 の節だから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ φ₂＝A sin(2πx/L) は中央 x＝L/2 で sin(π)＝0。確率密度もゼロで、箱の中にいるのに中央では決して見つからない。「どこを通るか」ではなく「どこで見つかるか」の台帳だからこそ許される、波ならではの分布だ。</div>
@@ -239,9 +239,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 規格化 ∫|ψ|²dx＝1 が要求される物理的な理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">電子は必ずどこかに1個いるので、全空間での発見確率の合計が100%でなければならないから</button>
-          <button class="choice-btn">波の速さを一定にするため</button>
-          <button class="choice-btn">エネルギーを最小にするため</button>
+          <button class="choice-btn">電子は必ずどこかに1個いて、全空間での発見確率の合計が100%であるべきだから</button>
+          <button class="choice-btn">波の速さを一定にするため（振幅が大きいままだと波が速く進みすぎてしまうから）</button>
+          <button class="choice-btn">エネルギーを最小にするため（振幅が大きいと運動エネルギーが増えてしまうから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 確率の合計は必ず1。この会計ルールから、波の振幅まで決まってしまう（箱の中なら A＝√(2/L)）。∫ は「細かく切って足す」＝曲線の下の面積を測る記号だ。</div>
       </div>

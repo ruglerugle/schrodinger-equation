@@ -267,9 +267,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q1. 関数 f(x) の微分 df/dx とは何を表す量？</p>
         <div class="choice-list">
-          <button class="choice-btn">グラフの高さの最大値</button>
-          <button class="choice-btn">その場所でグラフが持つ傾き（x を少し動かしたときの、幅あたりの高さの変化）</button>
-          <button class="choice-btn">グラフと横軸で囲まれた面積</button>
+          <button class="choice-btn">グラフの高さの最大値（x を動かしていって一番高くなったところの値）</button>
+          <button class="choice-btn">その場所でのグラフの傾き（x を少し動かしたときの、幅あたりの高さの変化）</button>
+          <button class="choice-btn">グラフと横軸で囲まれた面積（x を少し動かしたときに新しく増える面積の分）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ 微分は「その場所の局所的な傾き」を読む操作。(f(x+d)−f(x))/d で d を限りなく小さくした値だ。曲線では場所ごとに傾きが変わるから、df/dx 自体も x の関数になる。ちなみに面積を測るのは積分のほう。</div>
       </div>
@@ -277,9 +277,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q2. ψ＝A e<sup>i(kx−ωt)</sup> を x で微分（∂ψ/∂x）すると？</p>
         <div class="choice-list">
-          <button class="choice-btn">ik × ψ（肩にある x の係数 ik が前に飛び出し、ψ 自身は形を保つ）</button>
-          <button class="choice-btn">A cos(kx−ωt) に変わる</button>
-          <button class="choice-btn">0 になる</button>
+          <button class="choice-btn">ik × ψ（肩の x の係数 ik が前に飛び出し、ψ 自身は形を保つ）</button>
+          <button class="choice-btn">A cos(kx−ωt) に変わる（sin を微分すると cos になるのと同じ）</button>
+          <button class="choice-btn">0 になる（e の肩に x があっても、指数関数は微分しても変わらないから）</button>
         </div>
         <div class="quiz-explain" hidden>正解！ e の肩の係数がそのまま前に出る（d(e<sup>ax</sup>)/dx＝a e<sup>ax</sup>）のが指数関数の微分ルール。x の係数は ik だから ∂ψ/∂x＝ikψ。「自分自身×定数」の形で返ってくるからこそ、−iℏ を掛けて p ψ という値札が読める。sin だと cos に化けてしまい、この芸当ができない。</div>
       </div>
@@ -287,9 +287,9 @@
       <div class="quiz-card" data-quiz>
         <p class="quiz-q">Q3. 運動量の検出器が「−iℏ∂/∂x」と、−iℏ を掛ける形になっている理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">波の速さを遅くするため</button>
-          <button class="choice-btn">計算結果を必ずプラスにするため</button>
-          <button class="choice-btn">微分で前に出てくる ik のうち、邪魔な i を −i×i＝1 で消し、k を ℏk＝p に換算するため</button>
+          <button class="choice-btn">波の進む速さを ℏ 倍だけ遅くして、微分しても ψ の形が壊れないように調整するため</button>
+          <button class="choice-btn">計算結果を必ずプラスにするため（−i を2回掛けると符号がそろって正の値になる）</button>
+          <button class="choice-btn">微分で前に出る ik の i を −i×i＝1 で消し、k を ℏk＝p に換算するため</button>
         </div>
         <div class="quiz-explain" hidden>正解！ ∂ψ/∂x＝ikψ のままでは i が余計で、k はまだ波の言葉。−iℏ を掛けると (−iℏ)(ik)＝ℏk＝p となり、ちょうど「運動量 × ψ」が返る。−i は i の消去係、ℏ は辞書（p＝ℏk）の換算係というわけだ。</div>
       </div>
