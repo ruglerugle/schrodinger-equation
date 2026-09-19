@@ -15,6 +15,14 @@
   font-weight:100 900;
   unicode-range:U+0391-03A1,U+03A3-03A9,U+03B1-03C9;
 }
+/* プライム記号（′ ″）は日本語フォントに落ちると全角幅になり、|ψ′|² などで絶対値記号との間が空きすぎる。
+   欧文フォントの細い字形で描く（無ければ従来どおり後続のフォントへ） */
+@font-face{
+  font-family:"GreekNu";
+  src:local("Arial"),local("Helvetica Neue"),local("Helvetica"),local("Segoe UI"),local("Roboto");
+  font-weight:100 900;
+  unicode-range:U+2032-2033;
+}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
