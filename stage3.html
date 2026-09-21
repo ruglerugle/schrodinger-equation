@@ -12,14 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE3 光の粒と物質の波 ― シュレディンガー方程式を導く</title>
-<meta name="description" content="E=hν はアインシュタインが光電効果から見抜いた「光の粒」の式。p=h/λ をド・ブロイが電子へ裏返して「物質の波」が生まれた。ℏ=h/2π を使って E=ℏω・p=ℏk に書き換え、波の言葉と粒の言葉をつなぐ辞書を完成させる。">
+<title>STAGE3 微分という検出器 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="微分は「傾きを読む」操作。電子の波 ψ=Ae^i(px−Et)/ℏ を x で微分すると運動量 p が、t で微分するとエネルギー E が飛び出してくる。運動量演算子 −iℏ∂/∂x とエネルギー演算子 iℏ∂/∂t という2つの検出器を組み立てる、導出最大の山場。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage3">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="シュレディンガー方程式を導く">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE3 光の粒と物質の波 ― シュレディンガー方程式を導く">
-<meta property="og:description" content="E=hν と p=h/λ。粒の言葉と波の言葉をつなぐ2本の翻訳ルールを、発見の物語ごと手に入れる。">
+<meta property="og:title" content="STAGE3 微分という検出器 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="波を x で微分すると運動量が、t で微分するとエネルギーが飛び出す。「演算子」という検出器の発見。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage3">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -31,34 +31,28 @@
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
      （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
+  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
+  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
+  .sq-svg .arrowhead{fill:var(--muted)}
   .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
-  .sq-svg .boxL{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.2}
-  .sq-svg .boxR{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.2}
-  .sq-svg .bigarrow{stroke:var(--ink);stroke-width:2}
-  .sq-svg .bigarrowhead{fill:var(--ink)}
-  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
-  .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
-  .sq-svg .lamhead{fill:var(--gold-dark)}
-  .sq-svg .legM{stroke:var(--ink);stroke-width:2.4}
-  .sq-svg .legP{stroke:#2f6fa6;stroke-width:2.4}
-  .sq-svg .hypE{stroke:var(--gold-dark);stroke-width:2.4}
-  .sq-svg .arcE{fill:none;stroke:var(--gold-dark);stroke-width:1;stroke-dasharray:4 3}
-  .sq-svg .rangle{fill:none;stroke:var(--muted);stroke-width:1}
-  .sq-svg .gap{stroke:#b5504a;stroke-width:4}
-  .sq-svg .lbM{fill:var(--ink);font-size:11px;font-weight:900}
-  .sq-svg .lbE{fill:var(--gold-dark);font-size:12px;font-weight:900}
-  .sq-svg .lbG{fill:#b5504a;font-size:11px;font-weight:800}
-  .sq-svg .parrow{stroke:#b5504a;stroke-width:3}
-  .sq-svg .phead{fill:#b5504a}
-  .sq-svg .lbP{fill:#b5504a;font-size:11px;font-weight:900}
+  .sq-svg .tang{stroke:#b5504a;stroke-width:2.2}
+  .sq-svg .tdot{fill:#b5504a}
+  .sq-svg .machine{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.6}
+  .sq-svg .machineB{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.6}
+  .sq-svg .flow{stroke:var(--ink);stroke-width:1.8}
+  .sq-svg .flowhead{fill:var(--ink)}
+  .cv-wrap{width:100%}
+  #psi3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  #psi3d:active{cursor:move}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
-  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
   @media (max-width:560px){
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
@@ -73,11 +67,11 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
-      <div class="brand-sub">STAGE 3 ― 光の粒と物質の波 ―</div>
+      <div class="brand-sub">STAGE 3 ― 微分という検出器 ―</div>
     </div>
     <div class="head-progress-wrap">
-      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
-      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <div class="header-actions">
       <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="量子クエスト集（シリーズマップ）へ">🗺️ マップ</a>
@@ -98,13 +92,13 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 3</span><h1 class="chapter-title">光の粒と物質の波</h1>
-        <div class="chapter-sub">E=hν と p=h/λ</div>
+        <span class="chapter-badge">STAGE 3</span><h1 class="chapter-title">微分という検出器</h1>
+        <div class="chapter-sub">波から E と p を取り出す</div>
       </div>
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">E＝hν と p＝h/λ がどんな実験から生まれたかを説明できるようになり、ℏ＝h/2π を使って E＝ℏω・p＝ℏk という「波と粒の辞書」に書き換えよう。</div>
+        <div class="mission-text">微分を「傾きを読む操作」として理解し、電子の波 ψ に −iℏ∂/∂x を作用させると p×ψ が、iℏ∂/∂t を作用させると E×ψ が出てくることを、自分の手で計算できるようになろう。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -114,241 +108,178 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">現在地を確認しよう。私たちは電子の波を ψ＝A e<sup>i(kx−ωt)</sup> と書けるようになった。この式に入っているのは、波の細かさ k と、振動の速さ ω――どちらも<strong>波の言葉</strong>だ。ところが、私たちが最終的に知りたい電子の性質は、エネルギー E や運動量 p――<strong>粒の言葉</strong>だね。今日はこの2つの言葉をつなぐ<strong>辞書</strong>を用意する。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学の教室</a>で出会った、あの2本の式だ。まず1本目、<strong>E＝hν</strong>。どんな実験から生まれたのだったか、覚えているところまで話してごらん。</div>
+          <div class="dialog-bubble">前回の宿題はこうだった。電子の波 ψ＝A e<sup>i(px−Et)/ℏ</sup> の中には、運動量 p とエネルギー E が「位相の進むペース」として記録されている。ならば、<strong>式への操作でそれを取り出せないか</strong>。その道具が<strong>微分</strong>だ。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で「傾きを読む道具」として手に入れ、運動量を取り出す操作まで組み上げたね。今日はそれを<strong>時間の方向にも広げる</strong>。定義はあのときと同じ、グラフの傾きを読むことだ。記号の由来だけ足しておこう。df/dx の <strong>d</strong> は、記号を考えたライプニッツが <strong>differentia</strong>（ラテン語で「差」。英語の difference と同じ語源）の頭文字として使ったものでね。df/dx は「<strong>f の差 ÷ x の差</strong>」と読める形になっている。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">はい、<strong>光電効果</strong>ですね。金属に光を当てると、表面から電子が飛び出してくる、あの実験。復習を兼ねて、要点を自分の言葉で整理します。不思議だったのは、<strong>明るさを増やしても電子1個1個の勢いは変わらず、個数だけが増える</strong>こと。勢いを決めるのは<strong>色（振動数 ν）</strong>のほうで、青い光ほど電子1個が速くなり、ν がある限界より小さい赤い光では、どんなに明るくしても<strong>1個も</strong>出てこない。アインシュタインの読み解きはこうでした。<strong>光はエネルギーの粒（光子）の集まりで、粒1個のエネルギーが E＝hν</strong>。電子を叩き出すのは光子1個との衝突だから、明るさ＝粒の<strong>個数</strong>、色＝粒<strong>1個のエネルギー</strong>。そう考えると、謎が全部ほどけるのでした。</div>
+          <div class="dialog-bubble">不確定性原理の教室では、曲線でも1点のまわりをどんどん拡大すればまっすぐに見えてきて、そのまっすぐな線の傾きが微分でした。<strong>df/dx は「x のいまの場所での、局所的な傾き」</strong>で、d で割っているのは幅あたりに直すため、でしたね。</div>
         </div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り、それで十分だ。比例定数 h は<strong>プランク定数</strong>、約 6.6×10⁻³⁴ ジュール秒という、とてつもなく小さい数だったね。では、2本目の式に進む前に、<strong>運動量</strong>をもう一度そろえておこう。量子力学の教室で出会ったとおり、物体の運動量 p は<strong>質量 m × 速度 v</strong>――「動きの勢い」「止めにくさ」を表す量だったね。同じ速さでも、卓球の球よりボウリングの球のほうが止めにくい。質量のぶん勢いが大きいからだ。物理学者がこの量を特別扱いするのは、<strong>衝突の前後で全体の運動量が必ず保存される</strong>という、宇宙で例外の見つかっていない法則があるからなんだ。さて、光もぶつかった相手を押す。彗星の尾が太陽と反対側にたなびくのは、太陽の光が塵を押すからだ。つまり<strong>光も運動量を持つ</strong>。</div>
+          <div class="dialog-bubble">それで十分だ。ひとつだけ記号の注意をね。私たちの ψ は、場所 x と時刻 t の<strong>2つ</strong>を入力に取る関数だ。だから「傾き」も2種類ある。<strong>時刻 t を凍結して、x 方向の傾きを読む</strong>操作を ∂ψ/∂x、<strong>場所 x を凍結して、t 方向の変化の速さを読む</strong>操作を ∂ψ/∂t と書く。d の代わりに使う ∂（ラウンドディー）という丸い文字は、量子力学の教室でシュレディンガー方程式を読んだときに出てきたね。「他の入力は凍結していますよ」という目印で、この流儀の微分を<strong>偏微分</strong>と呼ぶのだった。読み方は d のときと同じで、∂ψ/∂x は「x を少し動かしたら ψ がどれだけ変わるか」だよ。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap">
+          <canvas id="psi3d" role="img" aria-label="ψ(x,t) の立体グラフ。床の2方向が場所xと時刻t、高さがψの値。時刻を凍結したx方向の断面（金）と、場所を凍結したt方向の断面（青）が交わる1点に、それぞれの接線が引かれている。ドラッグで視点を回せる"></canvas>
+        </div>
+        <div class="sim-ctrl">
+          <label for="p3-x">場所 x₀</label>
+          <input type="range" id="p3-x" min="0" max="8" step="0.02" value="4" aria-label="断面を取る場所 x">
+          <span class="val" id="p3-xv">4.00</span>
+          <label for="p3-t">時刻 t₀</label>
+          <input type="range" id="p3-t" min="0" max="8" step="0.02" value="2" aria-label="断面を取る時刻 t">
+          <span class="val" id="p3-tv">2.00</span>
+        </div>
+        <div class="readout">
+          <span style="color:#a6742a">━ t を凍結した断面 → ∂ψ/∂x ＝ <b id="p3-dx">+1.90</b></span>
+          <span style="color:#2f6fa6">━ x を凍結した断面 → ∂ψ/∂t ＝ <b id="p3-dt">−1.25</b></span>
+          <span class="sub">🖱️ 図をドラッグ（スマホは指でなぞる）すると視点を自由に回せます</span>
+        </div>
+        <div class="diagram-caption">ψ(x, t) の立体グラフ。床の2方向が<strong>場所 x</strong> と<strong>時刻 t</strong>、高さが ψ の値（本当は複素数なので、ここでは実部だけを高さにしている）。入力が2つあるとグラフは線ではなく<strong>面</strong>になり、「傾き」は<strong>どちらへ歩くか</strong>で変わる。金色の線は時刻 t を凍結して x 方向へ歩いた断面、青い線は場所 x を凍結して t 方向へ歩いた断面で、交点に引いた接線の傾きがそれぞれ <strong>∂ψ/∂x</strong> と <strong>∂ψ/∂t</strong>。∂ は「ほかの入力は凍結中」という目印だった。x₀・t₀ を動かすと交点が面の上を移動し、2つの傾きが別々に変わる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">さて、微分の計算規則で今日使うのは<strong>たった1つ</strong>。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で組み立てた「<strong>e の肩に式が乗っているときは、肩を微分したものが前に降りてきて、e はそのまま残る</strong>」という規則だ。肩が at（a は定数）なら、肩の微分は a。だから<br><strong>d(e<sup>at</sup>)/dt ＝ a e<sup>at</sup></strong><br>a が複素数（i を含む数）でも、この規則はそのまま成り立つ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">待ってください。そこが引っかかります。運動量は<strong>質量×速度</strong>でしたよね。でも、光の粒に重さがあるとは思えません。重さが 0 なら、どんなに速く飛んでも 0×速度 で、運動量も 0 になってしまいます。それなのに、押せるんですか。</div>
+          <div class="dialog-bubble">肩の係数が前に飛び出す……これは不確定性原理の教室で確かめた性質ですね。私たちの波は ψ＝A e<sup>i(kx−ωt)</sup>。<strong>肩に kx が乗っています</strong>から、x で微分すれば x の係数 <strong>ik が前に飛び出してくる</strong>はず。そして k は運動量の暗号（p＝ℏk）……。やってみます。t を凍結して x で微分：<br>∂ψ/∂x ＝ (ik) × A e<sup>i(kx−ωt)</sup> ＝ <strong>ik ψ</strong><br>出ました。<strong>波を x で微分すると、自分自身の ik 倍が返ってくる</strong>。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その通り。ここまでは、不確定性原理の教室で組み立てた運動量演算子そのものだね。ほしいのは ik ψ ではなく p ψ＝ℏk ψ。邪魔者は i だけだから、<strong>−iℏ を掛けて</strong>消す。−i×i＝−i²＝1 だからね。<br>(−iℏ) ∂ψ/∂x ＝ (−iℏ)(ik) ψ ＝ ℏk ψ ＝ <strong>p ψ</strong><br>今日の新しい一歩はここからだ。まったく同じことを時間方向にもやってごらん。肩の t の係数は −iω だ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">x を凍結して t で微分すると、−iω が前に出て ∂ψ/∂t ＝ −iω ψ。ほしいのは Eψ＝ℏω ψ だから、今度は <strong>iℏ を掛ければ</strong>――<br>(iℏ) ∂ψ/∂t ＝ (iℏ)(−iω) ψ ＝ ℏω ψ ＝ <strong>E ψ</strong><br>できました。<strong>x 方向の傾きを読んで −iℏ を掛けると運動量が、t 方向の変化を読んで iℏ を掛けるとエネルギーが、波の中から出てくる</strong>。まるで検出器ですね。波をこの機械に通すと、体内に記録されていた値が札になって出てくる。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 224" width="100%" role="img" aria-label="2つの検出器の図。波ψを運動量検出器−iℏ∂/∂xに通すとp×ψが出てくる。波ψをエネルギー検出器iℏ∂/∂tに通すとE×ψが出てくる">
+          <text class="strong" x="14" y="16">波に隠れた E と p を読み出す、2つの「検出器」</text>
+          <text class="lbA" x="14" y="46">ψ ＝ Ae<tspan baseline-shift="super" font-size="8">i(kx−ωt)</tspan></text>
+          <line class="flow" x1="110" y1="42" x2="140" y2="42"></line>
+          <polygon class="flowhead" points="146,42 137,38 137,46"></polygon>
+          <rect class="machine" x="152" y="24" width="102" height="36" rx="8"></rect>
+          <text class="strong" x="203" y="46" text-anchor="middle">−iℏ ∂/∂x</text>
+          <line class="flow" x1="258" y1="42" x2="288" y2="42"></line>
+          <polygon class="flowhead" points="294,42 285,38 285,46"></polygon>
+          <text class="lbA" x="300" y="46">p ψ</text>
+          <text class="label" x="203" y="76" text-anchor="middle">運動量の検出器（x 方向の傾き＝波の細かさを読む）</text>
+          <text class="lbB" x="14" y="122">ψ ＝ Ae<tspan baseline-shift="super" font-size="8">i(kx−ωt)</tspan></text>
+          <line class="flow" x1="110" y1="118" x2="140" y2="118"></line>
+          <polygon class="flowhead" points="146,118 137,114 137,122"></polygon>
+          <rect class="machineB" x="152" y="100" width="102" height="36" rx="8"></rect>
+          <text class="strong" x="203" y="122" text-anchor="middle">iℏ ∂/∂t</text>
+          <line class="flow" x1="258" y1="118" x2="288" y2="118"></line>
+          <polygon class="flowhead" points="294,118 285,114 285,122"></polygon>
+          <text class="lbB" x="300" y="122">E ψ</text>
+          <text class="label" x="203" y="152" text-anchor="middle">エネルギーの検出器（t 方向の変化＝振動の速さを読む）</text>
+          <text class="strong" x="14" y="186">どちらも「波それ自身 × 取り出したい値」を返す。</text>
+          <text class="label" x="14" y="208">波の形を壊さずに値だけ読める――e<tspan baseline-shift="super" font-size="8">iθ</tspan> が微分で形を崩さないおかげ</text>
+        </svg>
+        <div class="diagram-caption">2つの検出器。<strong>−iℏ∂/∂x</strong> は x 方向の傾き（波の細かさ）から運動量 p を、<strong>iℏ∂/∂t</strong> は時間変化の速さ（振動の速さ）からエネルギー E を読み出し、どちらも「ψ×その値」の形で返す。このような「関数への操作」が<strong>演算子</strong>――量子力学の教室では Ĥ という完成品として渡されるだけだったものを、ここでは部品から組み立てている</div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【2つの検出器（演算子）】</span>
+        <span class="step">運動量：　−iℏ ∂ψ/∂x ＝ p ψ　　　エネルギー：　iℏ ∂ψ/∂t ＝ E ψ</span>
+        <span class="step multi"><span class="item">∂/∂x：t を凍結して x 方向の傾きを読む</span>　<span class="item">∂/∂t：x を凍結して時間変化の速さを読む</span>　<span class="item">−i×i＝1 で邪魔な i を消す</span></span>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">こうした「関数を入れると、加工した関数が返ってくる操作」――量子力学の教室で<strong>演算子</strong>と呼んだ、あれだね。あのときは Ĥ という完成品を外から眺めるだけだったけれど、不確定性原理の教室で運動量の演算子を自分の手で組み上げ、今日はエネルギーの演算子まで加わった。運動量の演算子には p̂（ピーハット）という帽子つきの記号を使うのが習わしだよ。p̂＝−iℏ∂/∂x。ここで、きみに確かめてほしいことがある。もし前々回の忠告を無視して、波を<strong>実数の sin のまま</strong>にしていたら、この検出器はどうなっていたかな。sin の微分は cos になることが知られている（円の絵で言えば、縦の位置の変化の速さは横の位置になる、ということだ）。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">A sin(kx−ωt) を x で微分すると、Ak <strong>cos</strong>(kx−ωt)。……壊れますね。返ってきたのは<strong>別の形の波</strong>で、「自分自身 × 定数」になっていません。sin と cos は山の位置がずれた別物ですから、「ψ の何倍」とも言えない。<strong>検出器が値札を返してくれない</strong>。e<sup>iθ</sup> なら微分しても自分のままだから、きれいに「ψ × ik」と括れた……。ステージ1の「強みその2」は、このためだったんですね。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。伏線は回収された。……最後に、次回への仕込みをひとつだけ。この先で必要になるのは、実は p そのものよりも <strong>p²</strong>（運動量の2乗）なんだ。これも不確定性原理の教室で一度やったね――検出器を<strong>2回連続で</strong>通す。x で2回微分（∂²/∂x² と書く）すると (ik)²＝−k² が前に出て、−ℏ² を掛ければ ℏ²k²ψ＝<strong>p²ψ</strong>。<strong>p² の検出器は −ℏ²∂²/∂x²</strong> だった。ひとつだけ絵を足しておこう。2回微分は「傾きの傾き」、グラフの言葉で言えば<strong>曲がり具合（カーブのきつさ）</strong>を読む操作だよ。細かい波ほど鋭く曲がる――だから曲がり具合が p² の目盛りになる。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">道具箱がそろいました。E の検出器、p の検出器、p² の検出器。……ここまで来ると、次にやることが見える気がします。もし E と p をつなぐ関係式が物理の側にあるなら、<strong>その関係式に、検出器を代入する</strong>んじゃないですか？</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その引っかかりは正しいよ。しかも見立ても当たっていて、<strong>光子の質量はほんとうにゼロ</strong>だ。答えは順番のほうにある。<strong>p＝mv は、運動量の定義ではない</strong>んだ。あれは「重さのあるものが、光の速さに比べてゆっくり動いているとき」に成り立つ<strong>近似の式</strong>でね。運動量の正体は式ではなく、<strong>ぶつかったときに受け渡される量</strong>のほうにある。だから確かめ方も単純だ。<strong>当たったものが押されたなら、それは運動量を運んできた</strong>。……そして光が押すことは、計算の中の話ではなく<strong>測れる事実</strong>だよ。日本の探査機「IKAROS」は2010年、燃料を使わずに、太陽の光を大きな帆で受けるだけで加速してみせた。光が押さないなら、あの帆は1ミリも進まない。レーザー光で細胞や微粒子をつまんで運ぶ「光ピンセット」も、光が運動量を受け渡すことを利用した道具だよ。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">……つまり私は、<strong>特別な場合にだけ使える式を、一般の法則だと思い込んでいた</strong>わけですね。「重さがないから運動量もない」は、p＝mv を信じすぎた結論だった。では、重さがゼロのものの運動量は、何で決まるんですか。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">そこで相対性理論の出番だ。エネルギー・運動量・質量の関係は、ほんとうは1本の式にまとまっていてね。<br><strong>E²＝(pc)²＋(mc²)²</strong><br>読み下すと「エネルギーの2乗は、<strong>動きのぶん</strong>と<strong>質量のぶん</strong>の足し算」。この式に、3通りの場合を入れてみよう。<strong>止まっている重いもの</strong>（p＝0）なら、残るのは E＝mc²――あの有名な式だ。<strong>ゆっくり動く重いもの</strong>なら、見慣れた p＝mv が近似として戻ってくる。そして<strong>質量ゼロのもの</strong>（m＝0）を入れると、質量のぶんがまるごと消えて <strong>E＝pc</strong> だけが残る。p＝mv と E＝pc は別々の法則ではなく、<strong>同じ1本の式の両端</strong>なんだ。だから光は、質量ではなく<strong>エネルギーを持っていること</strong>によって運動量を持つ。この1本の式そのものの導出は相対性理論の仕事だから、今日は事実として借りておこう。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">その「戻ってくる」が引っかかります。E²＝(pc)²＋(mc²)² のどこをどういじったら、p＝mv が出てくるんですか。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">やってみせよう。使うのは<strong>因数分解</strong>だけだよ。まず (mc²)² を左辺に移す。<br>E²−(mc²)²＝(pc)²<br>左辺は「2乗ひく2乗」の形だから、<strong>和と差の積</strong>に分解できるね。<br>(E−mc²)(E＋mc²)＝(pc)²<br>ここで「ゆっくり」が効いてくる。ゆっくり動くものは、<strong>動きのぶん pc が、質量のぶん mc² に比べてうんと小さい</strong>。すると全エネルギー E は mc² とほとんど同じ大きさになるから、E＋mc² は <strong>2mc²</strong> とみなしていい。<br>(E−mc²)×2mc² ≒ p²c²<br>両辺を 2mc² で割ると、c² が約分されて<br><strong>E−mc² ≒ p²/(2m)</strong><br>この左辺 E−mc² は、止まっているときのエネルギー mc² を<strong>超えた分</strong>――つまり<strong>運動エネルギー</strong>だ。そしてニュートン力学では、運動エネルギーは <strong>½mv²</strong> と書ける。同じものを2通りに書いたのだから、等しいとおいてごらん。<br>p²/(2m) ＝ ½mv²　→　p²＝m²v²　→　<strong>p＝mv</strong><br>ほら、戻ってきた。効いたのは「E＋mc² ≒ 2mc²」の一手だけ。これが成り立つのは、pc が mc² に比べて小さいとき――つまり光速よりずっと遅いとき、という条件つきだよ。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="tri-svg" viewBox="0 0 340 178" width="100%" role="img" aria-label="E²=(pc)²+(mc²)² を直角三角形で表した図。横の辺が質量のぶん mc²、縦の辺が動きのぶん pc、斜辺が全エネルギー E。速さを上げると縦の辺が伸び、斜辺が底辺より長くなる。その差が運動エネルギー">
-          <text class="strong" x="14" y="16">E²＝(pc)²＋(mc²)² ＝ 直角三角形（三平方の定理）</text>
-          <path class="arcE" id="tri-arc"></path>
-          <line class="legM" x1="45" y1="125" x2="195" y2="125"></line>
-          <line class="legP" id="tri-p" x1="195" y1="125" x2="195" y2="78"></line>
-          <line class="hypE" id="tri-h" x1="45" y1="125" x2="195" y2="78"></line>
-          <path class="rangle" d="M183 125 L183 113 L195 113"></path>
-          <text class="lbM" x="120" y="141" text-anchor="middle">mc²（質量のぶん）</text>
-          <text class="lbP" id="tri-plb" x="201" y="104">pc（動きのぶん）</text>
-          <text class="lbE" id="tri-elb" x="111" y="96" text-anchor="end">E</text>
-          <line class="gap" id="tri-gap" x1="195" y1="125" x2="202" y2="125"></line>
-          <text class="lbG" x="236" y="158" text-anchor="middle">↑ E−mc²（運動エネルギー）</text>
-          <text class="label" x="14" y="174">ゆっくりのとき pc は短く、斜辺 E は底辺 mc² とほとんど同じ長さ</text>
-        </svg>
-        <div class="sim-ctrl">
-          <label for="tri-v">速さ v</label>
-          <input type="range" id="tri-v" min="0.02" max="0.5" step="0.005" value="0.3" aria-label="速さ v（光速 c に対する割合）">
-          <span class="val" id="tri-vv">0.30 c</span>
-        </div>
-        <div class="readout">
-          <span style="color:#2f6fa6">pc ÷ mc² ＝ <b id="tri-r1">0.314</b></span>
-          <span>E＋mc² ÷ 2mc² ＝ <b id="tri-r2">1.024</b></span>
-          <span style="color:#b5504a">p ÷ mv ＝ <b id="tri-r3">1.048</b></span>
-          <span class="sub">まん中が「E＋mc² ≒ 2mc²」の近似の精度。右がその結果として p＝mv がどれだけ合っているか</span>
-        </div>
-        <div class="diagram-caption">E²＝(pc)²＋(mc²)² は、<strong>直角をはさむ2辺が pc と mc²、斜辺が E</strong> の三角形と同じ形をしている（三平方の定理）。速さ v を上げると縦の辺 pc が伸び、斜辺 E が底辺より目に見えて長くなる。逆に<strong>ゆっくりのときは縦の辺がほとんど無く、E は mc² とほぼ同じ長さ</strong>――だから E＋mc² を 2mc² で置き換えてよく、そこから p＝mv が出てくる。音速（秒速340 m）でも v は光速の 0.0001 % ほどしかないので、p÷mv は 1.0000000000006 くらい。日常では p＝mv が完璧に見えるのは、このためだよ。光速の 50% まで動かせる</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">重さではなく、エネルギーを持っていることが運動量の源。そこは納得しました。……では、光子1個ではどうなりますか。エネルギーのほうは、さっき E＝hν を手に入れたばかりです。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">では、それを使って計算しよう。E＝pc を運動量について解くと p＝E/c。ここにきみの言う E＝hν を入れて、p＝hν/c。そして光の速さは c＝λν（1秒に ν 個ぶんの波長 λ が通過する）だから ν/c＝1/λ。代入すると――<strong>p＝h/λ</strong>。エネルギーの式と対になる、美しい式が出てくる。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="ph-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="光子1個について、波長λを変えるとエネルギーEと運動量pがどう変わるかを示す図。上は実際の波長で描いた波、下は運動量の大きさを表す矢印。波長が短いほど波は詰まり、運動量の矢印は長くなる">
-          <text class="strong" x="14" y="16">光子1個：波長 λ を変えると、E と p はどうなるか</text>
-          <line class="axis" x1="30" y1="58" x2="316" y2="58"></line>
-          <path id="ph-wave" fill="none" stroke="#888" stroke-width="2"></path>
-          <line class="lamarrow" id="ph-lam" y1="92" y2="92"></line>
-          <polygon class="lamhead" id="ph-lh1"></polygon>
-          <polygon class="lamhead" id="ph-lh2"></polygon>
-          <text class="strong" id="ph-lamtxt" y="87" text-anchor="middle">λ</text>
-          <text class="label" x="30" y="110">1500 nm ぶんの空間を切り取って描いている（<tspan id="ph-band">可視光</tspan>）</text>
-          <text class="lbP" x="30" y="134">運動量 p ＝ h/λ</text>
-          <line class="parrow" id="ph-p" x1="30" y1="150" x2="180" y2="150"></line>
-          <polygon class="phead" id="ph-ph"></polygon>
-          <text class="label" x="30" y="166">↑ 矢印の長さが p。λ を半分にすると p は2倍になる（反比例）</text>
-        </svg>
-        <div class="sim-ctrl">
-          <label for="ph-l">波長 λ</label>
-          <input type="range" id="ph-l" min="100" max="1000" step="1" value="500" aria-label="光子の波長 λ（ナノメートル）">
-          <span class="val" id="ph-lv">500 nm</span>
-        </div>
-        <div class="readout">
-          <span>ν ＝ c/λ ＝ <b id="ph-nu">6.0×10<sup>14</sup></b> Hz</span>
-          <span style="color:#a6742a">E ＝ hν ＝ <b id="ph-e">4.0×10<sup>−19</sup></b> J</span>
-          <span style="color:#b5504a">p ＝ h/λ ＝ <b id="ph-p-val">1.3×10<sup>−27</sup></b> kg·m/s</span>
-          <span class="sub">この運動量は、145 g の野球ボールが秒速 <b id="ph-ball">9×10<sup>−27</sup></b> m で進むのと同じ大きさ</span>
-        </div>
-        <div class="diagram-caption">上の波は、1500 nm ぶんの空間に<strong>実際の波長で</strong>描いたもの（可視光の範囲では波長に対応する色をつけている）。λ を短くすると波は詰まり、同時に下の運動量の矢印が伸びる――<strong>p＝h/λ</strong> の反比例がそのまま見える。ν＝c/λ、E＝hν、p＝E/c の3本が連動して動くので、どれか1つを決めれば残りは全部決まる。h＝6.63×10<sup>−34</sup> J·s、c＝3.00×10<sup>8</sup> m/s を使用</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">ここまでは<strong>光</strong>の話ですね。波だと思われていた光が、実は粒の性質（E と p）も持っていた。E＝hν と p＝h/λ は、<strong>波の量（ν, λ）から粒の量（E, p）への翻訳ルール</strong>になっている。……そして量子力学の教室で習ったのは、1924年にド・ブロイがこれを<strong>裏返した</strong>ことでした。「光が『波なのに粒』なら、電子は『粒なのに波』ではないのか。翻訳ルールは同じ式のはずだ」。つまり運動量 p の電子は、波長 <strong>λ＝h/p</strong>（※ p＝h/λ と同じ式）の波として振る舞う。そしてこの予言は、のちに本物の実験で確かめられて、物質波は仮説から事実になった――と教わりました。ただ、どんな実験だったのかまでは聞いていません。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">そう。確かめたのは1924年の予言から3年後、1927年のデイヴィソンとガーマーの実験だよ。電子をニッケルの結晶に当てると、波にしかできない縞模様が現れた――こういう波の縞模様の作り方を<strong>回折</strong>と呼ぶ。発表当時は審査する側も判断に困ったほど大胆な類推が、こうして実験事実になった。ド・ブロイは1929年にノーベル賞を受けた。……これで役者がそろったよ。<strong>電子は、E＝hν と p＝h/λ という翻訳ルールを持つ波である</strong>。実験が保証してくれた、これが私たちの出発点だ。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="ド・ブロイの裏返しの図。左の箱：光は波だと思われていたが粒の性質E=hνとp=h/λを持っていた。右の箱：電子は粒だと思われていたが、同じ式で波の性質λ=h/pを持つはず。下に電子回折の実験で確認と記す">
-          <text class="strong" x="14" y="16">ド・ブロイの「裏返し」（1924年）</text>
-          <rect class="boxL" x="14" y="30" width="148" height="92" rx="8"></rect>
-          <text class="lbB" x="88" y="50" text-anchor="middle">光</text>
-          <text class="label" x="88" y="70" text-anchor="middle">「波」だと思っていたら</text>
-          <text class="label" x="88" y="86" text-anchor="middle">粒でもあった</text>
-          <text class="strong" x="88" y="110" text-anchor="middle">E＝hν　p＝h/λ</text>
-          <rect class="boxR" x="178" y="30" width="148" height="92" rx="8"></rect>
-          <text class="lbA" x="252" y="50" text-anchor="middle">電子</text>
-          <text class="label" x="252" y="70" text-anchor="middle">「粒」だと思っていたら</text>
-          <text class="label" x="252" y="86" text-anchor="middle">波でもあるはず</text>
-          <text class="strong" x="252" y="110" text-anchor="middle">λ＝h/p　ν＝E/h</text>
-          <line class="bigarrow" x1="162" y1="76" x2="172" y2="76"></line>
-          <polygon class="bigarrowhead" points="178,76 169,72 169,80"></polygon>
-          <text class="strong" x="14" y="152">同じ翻訳ルールを、逆向きに使う。</text>
-          <text class="label" x="14" y="172">→ 1927年、電子の回折実験（デイヴィソン＝ガーマー）で</text>
-          <text class="label" x="14" y="186">　 本当に波長 h/p の波だと確認された</text>
-        </svg>
-        <div class="diagram-caption">光で見つかった「波の量↔粒の量」の翻訳ルールを、ド・ブロイは電子に裏返して適用した。運動量 p で飛ぶ電子は波長 λ＝h/p の波として振る舞う――3年後、結晶での回折実験が縞模様を映し出し、この類推は実験事実になった</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">仕上げに、この辞書を<strong>私たちの波の式の言葉</strong>に合わせて磨いておこう。ステージ1で、波は λ や ν よりも、k＝2π/λ と ω＝2πν で書くのがきれいだと学んだね。運動量のほうは、<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>ですでに翻訳済みだ――p＝h/λ を k で書き直して <strong>p＝ℏk</strong>、<strong>ℏ（エイチバー）＝ h/2π ≈ 1.05×10⁻³⁴ J·s</strong> だったね。今日はエネルギーのほうを、同じ手で翻訳する。<br>E ＝ hν ＝ h × (ω/2π) ＝ <strong>(h/2π) ω ＝ ℏω</strong><br>同じ ℏ が現れて、辞書はたった2本、しかも美しく対称な形になる。</div>
-        </div>
-      </div>
-
-      <div class="formula-box">
-        <span class="step">【波と粒の辞書】　E ＝ ℏω　　p ＝ ℏk</span>
-        <span class="step multi"><span class="item">E：エネルギー（粒の言葉）↔ ω：角振動数（波の言葉）</span>　<span class="item">p：運動量 ↔ k：波数</span>　<span class="item">ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s</span></span>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">読み下してみます。<strong>E＝ℏω：速く振動する波ほど、エネルギーが大きい。p＝ℏk：細かい波ほど、運動量が大きい</strong>。橋渡し役はどちらも同じ定数 ℏ。……そうすると、電子の波はこう書き直せますね。ψ＝A e<sup>i(kx−ωt)</sup> の k に p/ℏ を、ω に E/ℏ を代入して――ψ＝A e<sup>i(px−Et)/ℏ</sup>。<strong>波の式の中に、運動量とエネルギーが直接入った</strong>。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">その書き換えが、今日の到達点だよ。眺めてごらん。<strong>電子の波そのものが、E と p を「位相の進むペース」として体内に記録している</strong>。空間方向に p のペースでねじれ、時間方向に E のペースで回る。……そこで、次の問いが自然に生まれる。波の中に記録されているなら、<strong>取り出せる</strong>はずだ。式 ψ から、掛け算や足し算のような操作で、p や E を引きずり出す方法はないか？　その道具が<strong>微分</strong>――次のステージの主役だ。</div>
+          <div class="dialog-bubble">……先に言われてしまったね。そう、次回はいよいよ最終組み立てだ。エネルギー保存則という物理の背骨に、今日の検出器たちをはめ込む。そこに現れるのが、シュレディンガー方程式そのものだよ。</div>
         </div>
       </div>
 
       <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q1. 光電効果で、当てる光の「色」を赤から青に変える（振動数 ν を上げる）と何が起きる？</p>
+        <p class="quiz-q">Q1. 関数 f(x) の微分 df/dx とは何を表す量？</p>
         <div class="choice-list">
-          <button class="choice-btn">飛び出す電子1個1個の勢いが増す</button>
-          <button class="choice-btn">飛び出す電子の個数だけが増え、1個1個の勢いは変わらない</button>
-          <button class="choice-btn">光が強くならない限り何も変わらない</button>
+          <button class="choice-btn">グラフの高さの最大値（x を動かしていって一番高くなったところの値）</button>
+          <button class="choice-btn">その場所でのグラフの傾き（x を少し動かしたときの、幅あたりの高さの変化）</button>
+          <button class="choice-btn">グラフと横軸で囲まれた面積（x を少し動かしたときに新しく増える面積の分）</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 色（振動数）は光子1個のエネルギー E＝hν を決める。青いほど1個が強く、叩き出される電子1個の勢いが増す。個数を決めるのは明るさ（光子の数）のほう。この「明るさと色の役割分担」こそ、光が粒であることの動かぬ証拠だった。</div>
+        <div class="quiz-explain" hidden>正解！ 微分は「その場所の局所的な傾き」を読む操作。(f(x+d)−f(x))/d で d を限りなく小さくした値だ。曲線では場所ごとに傾きが変わるから、df/dx 自体も x の関数になる。ちなみに面積を測るのは積分のほう。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q2. ド・ブロイが1924年にやったことは？</p>
+        <p class="quiz-q">Q2. ψ＝A e<sup>i(kx−ωt)</sup> を x で微分（∂ψ/∂x）すると？</p>
         <div class="choice-list">
-          <button class="choice-btn">電子のビームを結晶に当てて回折の縞模様を観測し、電子が波であることを実験で初めて確かめた</button>
-          <button class="choice-btn">光電効果の実験結果から E＝hν を発見し、光が粒であることを示した</button>
-          <button class="choice-btn">光で見つかった波↔粒の翻訳ルールを裏返し「電子も波長 h/p の波だ」と予言した</button>
+          <button class="choice-btn">ik × ψ（肩の x の係数 ik が前に飛び出し、ψ 自身は形を保つ）</button>
+          <button class="choice-btn">A cos(kx−ωt) に変わる（sin を微分すると cos になるのと同じ）</button>
+          <button class="choice-btn">0 になる（e の肩に x があっても、指数関数は微分しても変わらないから）</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ ド・ブロイの仕事は理論的な「裏返し」の予言。実験で確認したのは1927年のデイヴィソンとガーマー（選択肢1）、E＝hν の発見はアインシュタイン（選択肢2）。類推→予言→実験による確認、という科学の王道リレーだ。</div>
+        <div class="quiz-explain" hidden>正解！ e の肩の係数がそのまま前に出る（d(e<sup>ax</sup>)/dx＝a e<sup>ax</sup>）のが指数関数の微分ルール。x の係数は ik だから ∂ψ/∂x＝ikψ。「自分自身×定数」の形で返ってくるからこそ、−iℏ を掛けて p ψ という値札が読める。sin だと cos に化けてしまい、この芸当ができない。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q3. ℏ（エイチバー）とは何？</p>
+        <p class="quiz-q">Q3. 運動量の検出器が「−iℏ∂/∂x」と、−iℏ を掛ける形になっている理由は？</p>
         <div class="choice-list">
-          <button class="choice-btn">プランク定数 h を 2 で割ったもの（E＝hν/2・p＝h/2λ と半分にした形の定数）</button>
-          <button class="choice-btn">プランク定数 h を 2π で割ったもの（E＝ℏω・p＝ℏk と対称な形になる）</button>
-          <button class="choice-btn">光の速さ c をプランク定数 h で割ったもので、光と電子をつなぐ定数</button>
+          <button class="choice-btn">波の進む速さを ℏ 倍だけ遅くして、微分しても ψ の形が壊れないように調整するため</button>
+          <button class="choice-btn">計算結果を必ずプラスにするため（−i を2回掛けると符号がそろって正の値になる）</button>
+          <button class="choice-btn">微分で前に出る ik の i を −i×i＝1 で消し、k を ℏk＝p に換算するため</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s。波の言葉を ν・λ から ω・k に乗り換えたとき、換算で必ず 2π が現れるので、h/2π をひとまとめにした。以後、量子力学の式にはほぼ ℏ の顔しか出てこない。</div>
+        <div class="quiz-explain" hidden>正解！ ∂ψ/∂x＝ikψ のままでは i が余計で、k はまだ波の言葉。−iℏ を掛けると (−iℏ)(ik)＝ℏk＝p となり、ちょうど「運動量 × ψ」が返る。−i は i の消去係、ℏ は辞書（p＝ℏk）の換算係というわけだ。</div>
       </div>
 
       <div class="stage-nav">
@@ -365,118 +296,148 @@
 <script>SQ.initStagePage(3);</script>
 
 <script>
+/* ψ(x,t) の立体グラフ：ドラッグで自由に回せる3Dワイヤーフレーム。
+   同じ1点でも「x方向へ歩くか、t方向へ歩くか」で傾きが変わる＝偏微分の絵 */
 (function(){
-  var svg = document.getElementById('ph-svg');
-  if (!svg) return;
-  var H = 6.626e-34, C = 2.998e8, BALL = 0.145;
-  var X0 = 30, X1 = 316, SPAN = 1500, PXNM = (X1 - X0) / SPAN;
-  var wave = document.getElementById('ph-wave'), band = document.getElementById('ph-band');
-  var lam = document.getElementById('ph-lam'), lh1 = document.getElementById('ph-lh1'), lh2 = document.getElementById('ph-lh2'),
-      lamtxt = document.getElementById('ph-lamtxt');
-  var parrow = document.getElementById('ph-p'), phead = document.getElementById('ph-ph');
-  var sl = document.getElementById('ph-l'), slv = document.getElementById('ph-lv');
-  var oNu = document.getElementById('ph-nu'), oE = document.getElementById('ph-e'),
-      oP = document.getElementById('ph-p-val'), oB = document.getElementById('ph-ball');
+  var cv = document.getElementById('psi3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var yaw = 0.45, pitch = -1.02;                 /* 視点の向き（ラジアン） */
+  var XM = 8, TM = 8, K = 1.0, OM = 0.62, AMP = 1.1;
+  var C = { mesh:'#cfc2a0', meshX:'rgba(166,116,42,.34)', meshT:'rgba(47,111,166,.34)',
+            gold:'#a6742a', blue:'#2f6fa6', red:'#c8433f', muted:'#8a7a5c',
+            tanX:'#8a5518', tanT:'#1d5a8f' };
+  var W = 0, H = 0, sc = 1, cx = 0, cy = 0;
+  var sx = document.getElementById('p3-x'), stt = document.getElementById('p3-t');
+  var vx = document.getElementById('p3-xv'), vt = document.getElementById('p3-tv');
+  var rdx = document.getElementById('p3-dx'), rdt = document.getElementById('p3-dt');
 
-  /* 数値を「仮数×10のべき乗」の形のHTMLにする（上付き文字つき） */
-  function sci(v, d) {
-    var e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
-    if (m >= 9.995) { m /= 10; e += 1; }
-    return m.toFixed(d) + '×10<sup>' + String(e).replace('-', '−') + '</sup>';
+  function f(x, t) { return AMP * Math.sin(K * x - OM * t); }
+  function dfdx(x, t) { return AMP * K * Math.cos(K * x - OM * t); }
+  function dfdt(x, t) { return -AMP * OM * Math.cos(K * x - OM * t); }
+
+  /* (場所, 高さ, 時刻) を回して画面座標へ */
+  function proj(x, y, z) {
+    var cw = Math.cos(yaw), sw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = x * cw + z * sw, Z1 = -x * sw + z * cw;
+    var Y2 = y * cp - Z1 * sp;
+    return [cx + sc * X1, cy - sc * Y2];
   }
+  function pw(x, t, h) { return proj(x - XM / 2, h === undefined ? f(x, t) : h, t - TM / 2); }
 
-  /* 可視光（380〜780nm）のおおよその色。範囲外は灰色 */
-  function color(nm) {
-    var r = 0, g = 0, b = 0;
-    if (nm < 380 || nm > 780) return '#8a7a5c';
-    if (nm < 440) { r = (440 - nm) / 60; b = 1; }
-    else if (nm < 490) { g = (nm - 440) / 50; b = 1; }
-    else if (nm < 510) { g = 1; b = (510 - nm) / 20; }
-    else if (nm < 580) { r = (nm - 510) / 70; g = 1; }
-    else if (nm < 645) { r = 1; g = (645 - nm) / 65; }
-    else { r = 1; }
-    var f = nm > 700 ? 0.3 + 0.7 * (780 - nm) / 80 : (nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : 1);
-    var q = function(v){ return Math.round(255 * Math.pow(Math.max(v, 0) * f, 0.8)); };
-    return 'rgb(' + q(r) + ',' + q(g) + ',' + q(b) + ')';
+  function line(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []);
+    ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function curveT(tv) { var a = [], j; for (j = 0; j <= 48; j++) a.push(pw(XM * j / 48, tv)); return a; }
+  function curveX(xv) { var a = [], j; for (j = 0; j <= 48; j++) a.push(pw(xv, TM * j / 48)); return a; }
+  function dotAt(p, color) {
+    ctx.fillStyle = color; ctx.beginPath(); ctx.arc(p[0], p[1], 4.5, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+  function arrow(p1, p2, label, dxl, dyl) {
+    line([p1, p2], C.muted, 1.5);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    ctx.fillStyle = C.muted; ctx.beginPath();
+    ctx.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
+    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
+    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
+    ctx.closePath(); ctx.fill();
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif';
+    ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
 
   function draw() {
-    var nm = +sl.value, m = nm * 1e-9;
-    var nu = C / m, E = H * nu, p = H / m;
+    var x0 = +sx.value, t0 = +stt.value;
+    var z0 = f(x0, t0), gx = dfdx(x0, t0), gt = dfdt(x0, t0), i;
 
-    var per = nm * PXNM, d = '', first = true;
-    for (var x = X0; x <= X1; x += 2) {
-      var y = 58 - 18 * Math.sin(2 * Math.PI * (x - X0) / per);
-      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
-      first = false;
-    }
-    wave.setAttribute('d', d);
-    wave.setAttribute('stroke', color(nm));
+    ctx.clearRect(0, 0, W, H);
+    for (i = 0; i <= 16; i++) line(curveT(TM * i / 16), C.meshX, 0.8);
+    for (i = 0; i <= 16; i++) line(curveX(XM * i / 16), C.meshT, 0.8);
+    line(curveT(t0), C.gold, 2.8);
+    line(curveX(x0), C.blue, 2.8);
 
-    var xe = X0 + per;
-    lam.setAttribute('x1', X0); lam.setAttribute('x2', xe.toFixed(1));
-    lh1.setAttribute('points', X0 + ',92 ' + (X0 + 7) + ',88.5 ' + (X0 + 7) + ',95.5');
-    lh2.setAttribute('points', xe.toFixed(1) + ',92 ' + (xe - 7).toFixed(1) + ',88.5 ' + (xe - 7).toFixed(1) + ',95.5');
-    if (per < 78) {                      /* 矢印が短いときは、ラベルを右横に逃がす */
-      lamtxt.setAttribute('x', (xe + 8).toFixed(1));
-      lamtxt.setAttribute('y', '96');
-      lamtxt.setAttribute('text-anchor', 'start');
-    } else {
-      lamtxt.setAttribute('x', ((X0 + xe) / 2).toFixed(1));
-      lamtxt.setAttribute('y', '87');
-      lamtxt.setAttribute('text-anchor', 'middle');
-    }
-    lamtxt.textContent = 'λ＝' + nm + ' nm';
+    /* 交点に立てた2本の接線 */
+    var L = 1.1;
+    line([pw(x0 - L, t0, z0 - gx * L), pw(x0 + L, t0, z0 + gx * L)], C.tanX, 2.6);
+    line([pw(x0, t0 - L, z0 - gt * L), pw(x0, t0 + L, z0 + gt * L)], C.tanT, 2.6);
 
-    band.textContent = nm < 380 ? '紫外線' : (nm > 780 ? '赤外線' : '可視光');
+    var o = proj(-XM / 2, 0, -TM / 2);
+    arrow(o, proj(XM / 2 + 1.2, 0, -TM / 2), 'x（場所）', -50, 18);
+    arrow(o, proj(-XM / 2, 0, TM / 2 + 1.2), 't（時刻）', 8, -6);
+    arrow(o, proj(-XM / 2, 2.4, -TM / 2), 'ψ', 8, 2);
 
-    var L = 240 * 100 / nm, xp = X0 + L;
-    parrow.setAttribute('x2', xp.toFixed(1));
-    phead.setAttribute('points', (xp + 9).toFixed(1) + ',150 ' + xp.toFixed(1) + ',144 ' + xp.toFixed(1) + ',156');
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif';
+    ctx.fillStyle = C.blue;
+    var pX = proj(x0 - XM / 2, 0, -TM / 2); ctx.fillText('x₀', pX[0] - 6, pX[1] + 17);
+    ctx.fillStyle = C.gold;
+    var pT = proj(-XM / 2, 0, t0 - TM / 2); ctx.fillText('t₀', pT[0] - 20, pT[1] + 4);
 
-    slv.textContent = nm + ' nm';
-    oNu.innerHTML = sci(nu, 1);
-    oE.innerHTML = sci(E, 1);
-    oP.innerHTML = sci(p, 1);
-    oB.innerHTML = sci(p / BALL, 1);
+    var cr = pw(x0, t0);
+    line([pw(x0, t0, 0), cr], C.red, 1, [3, 3]);
+    dotAt(cr, C.red);
+
+    vx.textContent = x0.toFixed(2);
+    vt.textContent = t0.toFixed(2);
+    rdx.textContent = (gx >= 0 ? '＋' : '−') + Math.abs(gx).toFixed(2);
+    rdt.textContent = (gt >= 0 ? '＋' : '−') + Math.abs(gt).toFixed(2);
   }
-  sl.addEventListener('input', draw);
-  draw();
+
+  function resize() {
+    var w = cv.clientWidth || 320, h = Math.round(w * 0.88);
+    var dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cv.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    W = w; H = h; sc = w / 16; cx = w / 2; cy = h / 2;
+    draw();
+  }
+
+  /* 描画は requestAnimationFrame に1回だけ束ねる（ドラッグ中もなめらかに） */
+  var queued = false;
+  function invalidate() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(function(){ queued = false; draw(); });
+  }
+
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) {
+    dragging = true;
+    var p = e.touches ? e.touches[0] : e;
+    lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move';
+    if (e.cancelable) e.preventDefault();
+  }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01;              /* 手前をつかんで回す感覚 */
+    pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5;
+    if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY;
+    invalidate();
+    if (e.cancelable) e.preventDefault();
+  }
+  function up() { dragging = false; cv.style.cursor = 'move'; }
+
+  cv.addEventListener('mousedown', down);
+  window.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false });
+  cv.addEventListener('touchmove', move, { passive: false });
+  window.addEventListener('touchend', up);
+  sx.addEventListener('input', invalidate);
+  stt.addEventListener('input', invalidate);
+  window.addEventListener('resize', resize);
+  resize();
 })();
 </script>
-
 <script>
-(function(){
-  var svg = document.getElementById('tri-svg');
-  if (!svg) return;
-  var LX = 45, RX = 195, BY = 125, BASE = RX - LX;   /* 底辺＝mc² */
-  var legP = document.getElementById('tri-p'), hyp = document.getElementById('tri-h'),
-      arc = document.getElementById('tri-arc'), gap = document.getElementById('tri-gap'),
-      plb = document.getElementById('tri-plb'), elb = document.getElementById('tri-elb');
-  var sl = document.getElementById('tri-v'), slv = document.getElementById('tri-vv');
-  var r1 = document.getElementById('tri-r1'), r2 = document.getElementById('tri-r2'), r3 = document.getElementById('tri-r3');
-
-  function draw() {
-    var b = +sl.value, g = 1 / Math.sqrt(1 - b * b);
-    var lp = BASE * g * b, le = BASE * g;            /* pc と E の長さ（mc²＝BASE として） */
-    var ty = BY - lp, ex = LX + le;
-
-    legP.setAttribute('y2', ty.toFixed(1));
-    hyp.setAttribute('x2', RX); hyp.setAttribute('y2', ty.toFixed(1));
-    arc.setAttribute('d', 'M' + RX + ' ' + ty.toFixed(1) + ' A ' + le.toFixed(1) + ' ' + le.toFixed(1) + ' 0 0 1 ' + ex.toFixed(1) + ' ' + BY);
-    gap.setAttribute('x1', RX); gap.setAttribute('x2', ex.toFixed(1));
-    plb.setAttribute('y', ((BY + ty) / 2 + 4).toFixed(1));
-    elb.setAttribute('y', (BY - lp * 0.52 - 6).toFixed(1));
-    elb.setAttribute('x', (LX + BASE * 0.44).toFixed(1));
-
-    slv.textContent = b.toFixed(2) + ' c';
-    r1.textContent = (g * b).toFixed(3);
-    r2.textContent = ((g + 1) / 2).toFixed(3);
-    r3.textContent = g.toFixed(3);
-  }
-  sl.addEventListener('input', draw);
-  draw();
-})();
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
 </script>
 </body>
 </html>

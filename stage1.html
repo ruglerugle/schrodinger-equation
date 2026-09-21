@@ -12,14 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE1 波を数式で書く ― シュレディンガー方程式を導く</title>
-<meta name="description" content="シュレディンガー方程式の主役は波。ならばまず波を数式にする。sin の定義（円を回る点の高さ）から始めて、振幅・波長・周期・振動数を一つずつ定義し、動く波の式 y=A sin(kx−ωt) を自分の手で組み立てる第一歩。">
+<title>STAGE1 回る針に時間を入れる ― シュレディンガー方程式を導く</title>
+<meta name="description" content="不確定性原理の教室で手に入れた回る針の列 e^ikx に時間を入れ、走る電子の波 ψ＝Ae^i(kx−ωt) を組み立てる。本体は針、sin は影――複素数の波の2つの強みが、時間を入れても崩れないことを確かめる。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="シュレディンガー方程式を導く">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE1 波を数式で書く ― シュレディンガー方程式を導く">
-<meta property="og:description" content="sin の定義から動く波の式 y=A sin(kx−ωt) まで、波を数式にする道具を一気に組み立てる。">
+<meta property="og:title" content="STAGE1 回る針に時間を入れる ― シュレディンガー方程式を導く">
+<meta property="og:description" content="回る針の列 e^ikx に時間を入れて、走る電子の波 ψ＝Ae^i(kx−ωt) を組み立てる。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage1">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -31,39 +31,6 @@
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
      （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
-  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
-  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
-  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
-  .sq-svg .arrowhead{fill:var(--muted)}
-  .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
-  .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
-  .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
-  .sq-svg .circle{fill:none;stroke:var(--muted);stroke-width:1.5}
-  .sq-svg .spoke{stroke:var(--gold-dark);stroke-width:2}
-  .sq-svg .dot{fill:var(--gold-dark)}
-  .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
-  .sq-svg .hline{stroke:#2f6fa6;stroke-width:1.4;stroke-dasharray:5 4}
-  .sq-svg .buoy{fill:#b5504a}
-  .sq-svg .gharrow{stroke:var(--gold-dark);stroke-width:1.5}
-  .sq-svg .gharrowhead{fill:var(--gold-dark)}
-  .sq-svg .zero{stroke:var(--muted);stroke-width:1}
-  .sq-svg .env{stroke:#2f6fa6;stroke-width:1;stroke-dasharray:5 4;opacity:.75}
-  .sq-svg .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
-  .sq-svg .tick{stroke:var(--muted);stroke-width:1}
-  .sq-svg .drop{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
-  .sq-svg .conn{stroke:#b5504a;stroke-width:1.6;stroke-dasharray:6 4}
-  .sq-svg .lbO{fill:#b5504a;font-size:10.5px;font-weight:900}
-  .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
-  .sq-svg .mkP{fill:var(--gold-dark)}
-  .sq-svg .mkQ{fill:#2f6fa6}
-  .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
-  .sq-svg .lamhead{fill:var(--gold-dark)}
-  .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
-  .sq-svg .bandS{fill:rgba(197,154,58,.16);stroke:var(--gold-dark);stroke-width:1}
-  .sq-svg .bandT{fill:rgba(47,111,166,.12);stroke:#2f6fa6;stroke-width:1}
-  .sq-svg .mkNow{fill:#b5504a}
-  .sq-svg .mkS{fill:var(--gold-dark)}
-  .sq-svg .mkT{fill:#2f6fa6}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
@@ -73,7 +40,13 @@
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
+  .cv-wrap{width:100%}
+  #hands3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
+  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
+  .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
   .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
 </style>
 </head>
@@ -82,11 +55,11 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
-      <div class="brand-sub">STAGE 1 ― 波を数式で書く ―</div>
+      <div class="brand-sub">STAGE 1 ― 回る針に時間を入れる ―</div>
     </div>
     <div class="head-progress-wrap">
-      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
-      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <div class="header-actions">
       <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="量子クエスト集（シリーズマップ）へ">🗺️ マップ</a>
@@ -107,13 +80,13 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 1</span><h1 class="chapter-title">波を数式で書く</h1>
-        <div class="chapter-sub">sin で波を描く</div>
+        <span class="chapter-badge">STAGE 1</span><h1 class="chapter-title">回る針に時間を入れる</h1>
+        <div class="chapter-sub">電子の波 ψ＝A e<sup>i(kx−ωt)</sup></div>
       </div>
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">sin の定義から出発して、右に走る波を一つの式 y＝A sin(kx−ωt) で書けるようになろう。振幅・波長・周期・振動数・波数・角振動数を、自分の言葉で説明できれば合格。</div>
+        <div class="mission-text">不確定性原理の教室で手に入れた回る針の列 e<sup>ikx</sup> に時間を入れて、走る電子の波 ψ＝A e<sup>i(kx−ωt)</sup> を組み立てよう。針が回ると影の sin が走って見える理由と、複素数の波の2つの強みが時間を入れても崩れない理由を説明できれば合格。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -123,321 +96,143 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">今回の旅の目的地を、最初に見せておこうね。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学の教室</a>で、電子は波動関数 ψ（プサイ）という<strong>波</strong>で表されることを学んだ。二重スリットの縞模様も、原子がつぶれずにいられる理由も、ぜんぶ ψ の仕業だった。……ところがあの教室では、いちばん大事な質問をまだしていないんだ。<strong>その波 ψ は、どんな法則にしたがって動くのか？</strong> ニュートンの力学には F＝ma という大黒柱があるね。力 F が分かれば、質量 m の物体がどう加速するか（a）が計算できて、未来の運動が予言できる。じゃあ、波 ψ にとっての「F＝ma」は何なのか。その答えが、1926年にシュレディンガーが見つけた<strong>シュレディンガー方程式</strong>だよ。このクエストでは、あの方程式を、いきなり完成品として覚えるのではなく、<strong>シュレディンガーがやった発見を、自分の手でもう一度やり直す</strong>。</div>
+          <div class="dialog-bubble">現在地を確認しよう。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で、運動量がぴったり決まった電子の波を <strong>e<sup>ikx</sup></strong> と書いたね。数直線の各地点に長さ1の針が立ち、x が進むごとに角度が k ずつ進む――向きだけがくるくる回って、絶対値はどこでも1。あれが今日の出発点だ。ただ、あの針の列は<strong>写真</strong>だった。時間が止まっている。実際の波は走る。今日はその針に<strong>時間を入れて</strong>、走る電子の波の式を組み立てる。まず点検から。e<sup>ikx</sup> が何だったか、自分の言葉で整理してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">整理させてください。電子が波だということは、二重スリットの実験で納得しました。1個ずつ発射した電子が、たくさん集まると縞模様を作る。でも言われてみれば、あの波が<strong>どんな規則で伝わって、どんな形に変わっていくのか</strong>は、一度も教わっていません。規則の式がなければ、予言もできない。物理として半分しか完成していないわけですね。……ただ、方程式を探す前に、もっと手前でつまずいています。<strong>そもそも「波」を数式でどう書くんですか？</strong> 波の絵なら描けますけど、絵は計算できません。</div>
+          <div class="dialog-bubble">はい。<a href="https://complex-number.habatakijuku.com/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">複素数の教室</a>のオイラーの公式 e<sup>iθ</sup>＝cosθ＋i sinθ で、e<sup>iθ</sup> は<strong>長さ1で角度 θ を向いた矢印</strong>でした。θ を kx にすれば、場所 x に立つ針の角度が kx。k は波数で、<strong>1メートル進むごとに角度が何ラジアン進むか</strong>。波長は λ＝2π/k、運動量は p＝ℏk。針は回るだけで長さを変えないので |e<sup>ikx</sup>|＝1、見つかる確率はどの場所でも同じ――実数の波 sin だと高さ 0 の場所が等間隔に並んでしまう不都合が、これで消えるんでした。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい順序で考えているよ。波の方程式を探すには、まず波を式にする道具が要る。そして道具は、実はたった一つでいいんだ。<strong>sin（サイン）</strong>――<a href="https://complex-number.habatakijuku.com/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">複素数の教室</a>で、複素数を「長さと角度」で書くときに使ったあれだね。今日の使い方に合わせて、定義をそろえ直しておこう。<strong>半径1の円</strong>を描いて、円の上を反時計回りに動く点を考える。スタート地点は真横（時計の3時の位置）。中心から見てスタートから測った角度を θ（シータ）とするとき、<strong>その点の高さ（中心の高さから測った縦の位置）を sinθ と呼ぶ</strong>。あの教室で言った「角度 θ へ長さ1進んだときの、縦の距離」と同じものだよ。</div>
+          <div class="dialog-bubble">そう。では時間を入れよう。波が走るというのは、<strong>各地点の針が時間とともに回る</strong>ことだ。1秒あたりに進む角度が<strong>角振動数 ω</strong>――不確定性原理の教室で「時間の顔」として出会った、1秒あたりのラジアン角度だね。すると場所 x、時刻 t での針の角度は <strong>kx−ωt</strong>。針の長さは、この波をどれくらいの強さにするかを決める定数 <strong>A</strong> にしておこう。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>マイナスの意味を確かめておこう。ある瞬間に角度が 0 だった地点は kx−ωt＝0、つまり x＝(ω/k)t。時間が進むほど、この地点は右へ動く。<strong>同じ角度の場所が右へ流れていくから、波は右へ走る</strong>。速さは ω/k だ。絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針が1本ずつ立っている</strong>。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
+        </div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="cv-wrap"><canvas id="hands3d" role="img" aria-label="数直線の各地点に立つ針の列の3Dアニメーション。高さが針の縦成分（虚部）、手前が横成分（実部）。針は場所とともに向きがねじれてらせんになり、時間とともに全部がいっせいに回る。針の高さだけを結んだ青い点線が sin の波で、針が回ると波が走る。波数k・角振動数ω・振幅A・時刻tをスライダーで変えられ、ドラッグで視点を回せる"></canvas></div>
+        <div class="sim-ctrl">
+          <label for="h-k">波数 k</label>
+          <input type="range" id="h-k" min="0.3" max="2.4" step="0.01" value="1.57" aria-label="波数 k（ラジアン毎メートル）">
+          <span class="val" id="h-kv">1.57</span>
+          <label for="h-w">角振動数 ω</label>
+          <input type="range" id="h-w" min="0" max="3" step="0.01" value="1" aria-label="角振動数 ω（ラジアン毎秒）">
+          <span class="val" id="h-wv">1.00</span>
+          <label for="h-a">振幅 A</label>
+          <input type="range" id="h-a" min="0.4" max="1.3" step="0.01" value="1" aria-label="振幅 A">
+          <span class="val" id="h-av">1.00</span>
+          <label for="h-t">時刻 t</label>
+          <input type="range" id="h-t" min="0" max="6.28" step="0.01" value="0" aria-label="時刻 t（秒）">
+          <span class="val" id="h-tv">0.00 s</span>
+        </div>
+        <button class="sim-play" id="h-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
+        <div class="readout">
+          <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="h-ro-lam">4.00</b> m（1波長の長さ）</span>
+          <span style="color:#2f6fa6">T ＝ 2π/ω ＝ <b id="h-ro-t">6.28</b> s（針が1回転する時間）</span>
+          <span class="sub">🖱️ 図をドラッグ（スマホは指でなぞる）すると視点を回せます</span>
+        </div>
+        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の先の<strong>高さ</strong>だけを拾って結んだのが青い sin の波――<strong>本体は針、sin は影</strong>。針は回り続けて長さが変わらないのに、影は 0 を通る。<strong>k</strong> を上げるとねじれが細かくなり（＝波長が短くなり）、<strong>ω</strong> を上げると針が速く回る（＝波が速く走る）。<strong>A</strong> は針の長さ。時間を止めて <strong>t</strong> を手で動かすと、1周期ぶんをコマ送りできる</div>
+      </div>
+
+      <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">針の縦成分（虚部）だけを取り出せば A sin(kx−ωt)、横成分（実部）なら A cos(kx−ωt)。海の波や音の波のような実数の波は、この回る針の「<strong>影</strong>」なんですね。針ぜんぶが回ると、影の波形が横に走って見える。……本体は針で、sin は影。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。海の波や音では影のほう、つまり実数の波 A sin(kx−ωt) をそのまま式にする。電子では本体を書く。理由は2つあって、どちらも不確定性原理の教室で e<sup>ikx</sup> について確かめたものだ。今日は、時間の因子 e<sup>−iωt</sup> が加わっても崩れないことを見ておこう。<strong>強みその1</strong>は、あの不都合の解消。影（sin）の高さは、場所を右へたどるだけで A→0→−A→0 と上下に暴れる。では、回っている針そのものの長さは、場所や時刻でどう変わるかな。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">変わりません。回転は向きを変えるだけで、長さは変えない。ψ＝A e<sup>i(kx−ωt)</sup> なら、どの場所でもどの瞬間でも<strong>矢印の長さは A のまま</strong>です。A を大きく取れば針は全部そろって長くなりますが、それは<strong>この波をどれくらいの強さにするか</strong>という最初の選び方で、場所や時刻のせいで伸び縮みするわけではありません。「波の強さ」が場所によって消えたり現れたりしない。<strong>見つかる確率に縞ができる、あの不都合が消える</strong>――時間を入れても、この性質は保たれるんですね。影（sin）だけ見ていたから 0 に見えたんだ。本体の針は、影が 0 になった瞬間も横を向いて堂々と存在している。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">そのとおり。|e<sup>iθ</sup>|＝1 だから |ψ|＝A で一定――時間が加わっても、針は回るだけで長さは変えない。<strong>強みその2</strong>は<strong>微分</strong>だ。不確定性原理の教室で見たとおり、e<sup>ikx</sup> は微分しても ik が前に出るだけで<strong>自分自身のまま</strong>。sin は微分すると cos に化け、cos は −sin に化けて<strong>形がころころ変わる</strong>のに対して、e の波は形が崩れない。この性質が、次の次のステージで方程式を組むときの生命線になる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">高さ、ですか。それなら自分で値を求められそうです。θ＝0 なら点は真横だから高さ 0。θ＝90° なら真上だから高さ 1。θ＝180° で反対側の真横に来て高さ 0。<strong>θ が 180° を超えると円の下半分に入るから、高さはマイナス</strong>。270° で −1、360° で一周して元の場所、高さ 0。……ということは、θ をさらに増やし続けても、<strong>同じ高さの列が延々と繰り返される</strong>んですね。sin は「繰り返す数」だ。</div>
+          <div class="dialog-bubble">1つ確認させてください。海の波や音の波も、同じ理由で複素数で書くべきなんですか？ 水面の高さが複素数というのは、さすがに変な気がします。水面の高さは、メジャーで測れる普通の数のはずです。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。では、横軸に θ、縦軸に sinθ をとってグラフにしてごらん。円を回る点の高さを、そのまま横に写していくんだ。出てくる曲線こそ――<strong>波の形</strong>そのものなんだ。円運動の「影」が波。これが、波と sin がつながる理由だよ。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="circ-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="左に半径1の円があり、円周上を点が反時計回りに動く。点の高さを右のグラフに横軸θで写していくと、サインカーブという波の形が現れる">
-          <text class="strong" x="14" y="16">円を回る点の「高さ」を、横に並べると波になる</text>
-          <circle class="circle" cx="62" cy="105" r="42"></circle>
-          <line class="axis" x1="12" y1="105" x2="112" y2="105"></line>
-          <line class="axis" x1="62" y1="55" x2="62" y2="155"></line>
-          <line class="spoke" id="c-spoke" x1="62" y1="105" x2="104" y2="105"></line>
-          <circle class="dot" id="c-dot" cx="104" cy="105" r="4.5"></circle>
-          <line class="tie" id="c-tie" x1="104" y1="105" x2="140" y2="105"></line>
-          <text class="label" x="62" y="170" text-anchor="middle">半径1の円</text>
-          <text class="lbA" id="c-theta" x="80" y="93">θ</text>
-          <line class="axis" x1="140" y1="105" x2="330" y2="105"></line>
-          <line class="axis" x1="140" y1="55" x2="140" y2="155"></line>
-          <text class="label" x="330" y="120" text-anchor="end">角度 θ →</text>
-          <text class="label" x="146" y="52">高さ（sinθ）</text>
-          <path class="wave" id="c-trace"></path>
-          <circle class="dot" id="c-head" cx="140" cy="105" r="4"></circle>
-        </svg>
-        <div class="diagram-caption">sin の定義。半径1の円の上を反時計回りに動く点の<strong>高さ</strong>が sinθ。角度 θ を横軸にして高さを並べていくと、上がって下がってを繰り返す曲線――<strong>サインカーブ</strong>が現れる。波の形の正体は、円運動の影だった</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">角度の測り方も、ここでそろえておこう。これからは「度」ではなく<strong>ラジアン</strong>――複素数の教室で e を導く前に約束した、あの単位を使う。決め方は<strong>半径1の円の上を、点が実際に歩いた道のり（弧の長さ）で角度を測る</strong>、だったね。半径1の円の一周の長さは、円周の公式から 2π（パイ）＝約6.28。だから<strong>一周＝360°＝2π ラジアン</strong>、半周＝π、直角＝π/2。なぜわざわざ乗り換えるかというと、「角度＝歩いた距離」になっていると、この先の式から換算の係数が消えて、驚くほどきれいになるからなんだ。</div>
+          <div class="dialog-bubble">とても大事な区別だよ。海の波や音では、複素数は<strong>計算を楽にするための便利な道具</strong>にすぎない。計算の最後に「実部だけ取り出す」と約束して、本当の答えはあくまで実数だ。ところが量子力学では事情がまったく違う。教室で「複素数は便利なのではなく<strong>必須</strong>だった」と聞いたのは、この違いのことだよ。<strong>ψ そのものが本質的に複素数</strong>で、実部だけ取り出しても正しい物理にならないんだ。なぜそう言い切れるかは、方程式が完成したステージ4で、方程式自身が教えてくれる。式の中に <strong>i が堂々と居座る</strong>のを、きみは目撃することになる。……ここでは伏線として、こう覚えておいてほしい。<strong>ψ は観測にかかる「高さ」ではない</strong>。じゃあ観測にかかるのは何か――それはステージ6で、|ψ| が主役になって答えてくれる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">円周率 π＝3.14…… の2倍だから 2π＝6.28……ですね。つまり sin は <strong>2π ごとに同じ値を繰り返す</strong>。式で書けば sin(θ＋2π)＝sinθ。この「2πで一周」が、繰り返しの基本単位になるわけですか。</div>
+          <div class="dialog-bubble">伏線が2本になりましたね。「i が方程式に居座る」と「観測にかかるのは |ψ|」。……道具はそろってきました。波の式 ψ＝A e<sup>i(kx−ωt)</sup> の中には、波の細かさ k と、振動の速さ ω が入っています。でもこれはまだ<strong>波の言葉</strong>だけの式です。電子は粒でもあって、エネルギー E や運動量 p という<strong>粒の言葉</strong>を持っているはず。次は、この2つの言葉をつなぐんですね。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それが今日いちばん働く事実だよ。では本番。<strong>写真のように時間を止めた波</strong>を式にしてみよう。海の波をパシャリと撮ったところを想像してごらん。横軸はもう角度ではなく、<strong>場所 x</strong>（単位はメートル）だ。波の山から次の山までの距離――<strong>繰り返しのひと区切りの長さ</strong>を<strong>波長</strong>と呼んで、λ（ラムダ）と書く。そして波の高さの最大値を<strong>振幅 A</strong> と呼ぶ。ほしいのは「x が λ 進むごとに、同じ高さが繰り返される」式。sin は中身が 2π 増えるごとに繰り返すのだから、<strong>x が λ 進んだとき、sin の中身がちょうど 2π 増えるように</strong>仕組めばいい。そこで x を λ で割って 2π を掛ける。つまり――</div>
+          <div class="dialog-bubble">その接続こそ、次のステージの仕事だよ。翻訳ルールはたった2本。しかもどちらも、量子力学の教室ですでに出会っている式だ。プランクとアインシュタインが光に見つけ、ド・ブロイが電子へ裏返した、あの2本――E＝hν と p＝h/λ。次回、この「辞書」を丁寧に読み直そう。</div>
         </div>
       </div>
 
       <div class="formula-box">
-        <span class="step">【止まった波のスナップショット】　y ＝ A sin(2πx／λ)</span>
-        <span class="step multi"><span class="item">A：振幅（波の高さの最大値）</span>　<span class="item">λ：波長（山から次の山までの距離）</span>　<span class="item">x：場所〔m〕</span></span>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">検算してみます。x の場所の高さは A sin(2πx/λ)。そこから波長ぶん進んだ x＋λ では、sin の中身が 2π(x＋λ)/λ ＝ 2πx/λ <strong>＋ 2π</strong>。sin は 2π 増えても同じ値だから、高さはまったく同じ。……確かに、<strong>λ ごとに景色が繰り返す波</strong>になっています。x/λ は「波長何個ぶん進んだか」という個数で、それに「1個あたり2π」を掛けている、と読めばいいんですね。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="snap-svg" viewBox="0 0 340 266" width="100%" role="img" aria-label="止まった波 y＝A sin(2πx/λ) のグラフ。波長λ・振幅A・場所xを3つのスライダーで変えられる。金の点が場所x、青の点が波長1個ぶん進んだx＋λで、どこへ動かしても2点の高さは必ず一致する">
-          <text class="strong" x="14" y="16">動かしてみよう： y ＝ A sin(2πx／λ)</text>
-          <g id="sn-grid"></g>
-          <line class="zero" x1="30" y1="120" x2="306" y2="120"></line>
-          <line class="env" id="sn-envp" x1="30" y1="82" x2="306" y2="82"></line>
-          <line class="env" id="sn-envm" x1="30" y1="158" x2="306" y2="158"></line>
-          <text class="lbB" id="sn-lbp" x="310" y="86">＋A</text>
-          <text class="lbB" id="sn-lbm" x="310" y="162">−A</text>
-          <path class="wave" id="sn-wave"></path>
-          <line class="drop" id="sn-dp"></line>
-          <line class="drop" id="sn-dq"></line>
-          <line class="conn" id="sn-conn"></line>
-          <text class="lbO" id="sn-conntxt" text-anchor="middle">同じ高さ</text>
-          <circle class="mkP" id="sn-p" r="4.5"></circle>
-          <circle class="mkQ" id="sn-q" r="4.5"></circle>
-          <line class="lamarrow" id="sn-lam" y1="214" y2="214"></line>
-          <polygon class="lamhead" id="sn-lh1"></polygon>
-          <polygon class="lamhead" id="sn-lh2"></polygon>
-          <text class="strong" id="sn-lamtxt" y="209" text-anchor="middle">λ</text>
-          <line class="axis" x1="30" y1="232" x2="306" y2="232"></line>
-          <g id="sn-ticks"></g>
-          <text class="label" x="14" y="258">場所 x〔m〕</text>
-        </svg>
-        <div class="sim-ctrl">
-          <label for="sn-l">波長 λ</label>
-          <input type="range" id="sn-l" min="0.5" max="10" step="0.1" value="3" aria-label="波長 λ（メートル）">
-          <span class="val" id="sn-lv">3.0 m</span>
-          <label for="sn-a">振幅 A</label>
-          <input type="range" id="sn-a" min="0.1" max="2" step="0.05" value="1" aria-label="振幅 A（メートル）">
-          <span class="val" id="sn-av">1.00 m</span>
-          <label for="sn-x">場所 x</label>
-          <input type="range" id="sn-x" min="0" max="9" step="0.1" value="1" aria-label="観測する場所 x（メートル）">
-          <span class="val" id="sn-xv">1.0 m</span>
-        </div>
-        <div class="readout">
-          <span style="color:#a6742a">2πx／λ ＝ <b id="sn-ph1">2.09</b></span>
-          <span style="color:#2f6fa6">2π(x＋λ)／λ ＝ <b id="sn-ph2">8.38</b></span>
-          <span>差 ＝ <b id="sn-phd">6.28</b>（＝2π）</span>
-        </div>
-        <div class="readout">
-          <span style="color:#a6742a">高さ y(x) ＝ <b id="sn-y1">0.87</b> m</span>
-          <span style="color:#2f6fa6">高さ y(x＋λ) ＝ <b id="sn-y2">0.87</b> m</span>
-          <span style="color:#b5504a">← 必ず一致</span>
-        </div>
-        <div class="diagram-caption">3つのスライダーを動かせる。金の点が場所 <strong>x</strong>、青の点がそこから波長1個ぶん進んだ <strong>x＋λ</strong>。λ を変えれば波の細かさが、A を変えれば高さが変わるが、<strong>x をどこへ動かしても2つの点の高さは必ず一致する</strong>。数値欄を見ると、sin の中身（位相）はいつもちょうど <strong>2π＝6.28…</strong> だけ増えている――これが「λ ごとに同じ景色が戻ってくる」ことの正体。薄い縦線は λ ごとの区切りで、その1区間が波1個ぶんの「タイル」にあたる（波長を短くしすぎると線が混み合うので、その場合は省かれる）</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">いい読み下しだね。さて、本物の波は写真のように止まってはいない。<strong>走る</strong>。次はこの式を動かそう。そのための道具が、グラフの<strong>平行移動</strong>の技だ。関数 f(x) のグラフに対して、<strong>f(x−d) のグラフは、元のグラフを右に d だけずらしたもの</strong>になる。少し不思議に感じるかもしれないね。マイナスなのに右へ動く。理由を確かめよう。f(x−d) に x＝d を入れると f(0)。つまり<strong>元のグラフが x＝0 で見せていた景色が、新しいグラフでは x＝d の位置に現れる</strong>。景色がそっくり右へ d 引っ越したわけだ。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">なるほど、「引く」のは<strong>入力を昔に巻き戻す</strong>操作だから、出力の景色は逆に前へ進むんですね。……ということは、です。ずらす量 d を<strong>時間とともに増やせば</strong>、グラフは右へ走り続ける。速さ v で走らせたいなら、t 秒後のずれは d＝vt。さっきの波の式の x を x−vt に置き換えて――y ＝ A sin(2π(x−vt)/λ)。<strong>速さ v で右に走る波の式</strong>、できました！</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">いいね。この式をいろいろな目で眺めてみよう。まず、<strong>1か所に立って波を見張る</strong>とどうなるかな。海に浮かんだブイを想像するといい。ブイは横には流されず、波が通り過ぎるたびに<strong>その場で上下する</strong>。1回の上下（山が来て、谷が来て、次の山が来るまで）にかかる時間を<strong>周期 T</strong> と呼ぶ。波は速さ v で走っていて、山と山の間隔は λ だから、次の山が来るまでの時間は T＝λ/v。そして<strong>1秒間に何回上下するか</strong>を<strong>振動数 ν（ニュー）</strong>と呼ぶ。1回に T 秒かかるなら、1秒には 1/T 回できるから ν＝1/T だ。単位はヘルツ（Hz）。ラジオの「81.3メガヘルツ」は、電波が1秒に8130万回振動しているという意味だよ。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="run-svg" viewBox="0 0 340 200" width="100%" role="img" aria-label="速さvで右に走る波。振幅Aは波の高さ、波長λは山から山までの距離。固定された赤いブイは波が通過するたびにその場で上下する">
-          <text class="strong" x="14" y="16">走る波と、その場で上下するブイ</text>
-          <line class="axis" x1="14" y1="110" x2="326" y2="110"></line>
-          <path class="wave" id="r-wave"></path>
-          <circle class="buoy" id="r-buoy" cx="170" cy="110" r="6"></circle>
-          <line class="tie" x1="170" y1="45" x2="170" y2="175"></line>
-          <text class="label" x="176" y="180">ブイ（場所は固定）</text>
-          <line class="gharrow" x1="60" y1="36" x2="88" y2="36"></line>
-          <polygon class="gharrowhead" points="94,36 85,32 85,40"></polygon>
-          <text class="lbA" x="50" y="40" text-anchor="end">速さ v →</text>
-          <line class="hline" x1="14" y1="70" x2="326" y2="70"></line>
-          <line class="arrow" x1="286" y1="110" x2="286" y2="74"></line>
-          <polygon class="arrowhead" points="286,70 282,79 290,79"></polygon>
-          <text class="strong" x="292" y="94">A</text>
-          <text class="label" x="252" y="62">山の高さ＝振幅 A</text>
-          <g id="r-lamgrp">
-            <line class="arrow" id="r-lam" x1="98" y1="150" x2="206" y2="150"></line>
-            <polygon class="arrowhead" id="r-lam-h1" points="98,150 104,147 104,153"></polygon>
-            <polygon class="arrowhead" id="r-lam-h2" points="206,150 200,147 200,153"></polygon>
-            <line class="tie" id="r-lam-t1" x1="98" y1="70" x2="98" y2="150"></line>
-            <line class="tie" id="r-lam-t2" x1="206" y1="70" x2="206" y2="150"></line>
-            <text class="strong" id="r-lam-txt" x="152" y="166" text-anchor="middle">λ（波長）＝山から山まで</text>
-          </g>
-        </svg>
-        <div class="diagram-caption">速さ v で右に走る波 y＝A sin(2π(x−vt)/λ)。<strong>振幅 A</strong> は波の高さの最大値、<strong>波長 λ</strong> は山から次の山までの距離。場所を固定して見張ると（赤いブイ）、波が通り過ぎるたびに<strong>その場で上下</strong>し、1回の上下にかかる時間が<strong>周期 T＝λ/v</strong>、1秒あたりの上下の回数が<strong>振動数 ν＝1/T</strong></div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">仕上げに、記号を整理しておこう。これから何度も出てくる組み合わせには、専用の名前があったね。まず sin の中身を展開すると 2πx/λ − 2πvt/λ。ここで v/λ＝1/T＝ν を使うと、第2項は 2πνt になるね。そこで――<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で手に入れた <strong>k ＝ 2π/λ</strong>（<strong>波数</strong>）と <strong>ω（オメガ）＝ 2πν</strong>（<strong>角振動数</strong>）の出番だ。すると波の式は <strong>y ＝ A sin(kx − ωt)</strong>。すっきりしたね。読み方を確かめ直しておくと、k は「<strong>1メートル進むと、sin の中身（位相）が何ラジアン進むか</strong>」――つまり<strong>波の細かさ</strong>。λ が短い（細かい波）ほど k は大きい。ω は「<strong>1秒たつと、位相が何ラジアン進むか</strong>」――つまり<strong>振動の速さ</strong>だ。円の絵で言えば、1秒に何ラジアンぶん円を回るか、だね。</div>
-        </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">「位相」というのは、sin の中身のことですね。円の絵でいう<strong>いま何度のところにいるか</strong>。k は空間方向の回転ペース、ω は時間方向の回転ペース――不確定性原理の教室で「時間版と空間版の兄弟」と呼んだ対ですね。……ひとつ気づいたことが。<strong>新しい式には v が出てきません</strong>。でも λ＝2π/k、ν＝ω/2π と読み替えられるので、さっきの v/λ＝ν――つまり v＝λν に入れてみます。v＝(2π/k)×(ω/2π)＝<strong>ω/k</strong>。消えたのではなくて、<strong>k と ω に分けて持たせた</strong>んですね。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">そう。だから式に v を書く必要がないんだ。……裏を返すと、波を1本書くのに本当に要るのは <strong>A と k と ω の3つだけ</strong>。速さはその3つから後で出てくる。……さあ、これで「波を数式で書く」道具はそろった。y＝A sin(kx−ωt)。この一本が、海の波も、音も、ギターの弦も、光さえも記述する万能の型だ。次はいよいよ、これを電子の波 ψ につないでいく。</div>
-        </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="kw-svg" viewBox="0 0 340 262" width="100%" role="img" aria-label="y＝A sin(kx−ωt) の図。上段は空間の写真で、1メートル進むと位相がkだけ進むことを示す。下段は1か所を見張った記録で、1秒たつと位相がωだけ進むことを示す。波数kと角振動数ω、時刻tをスライダーで変えられる">
-          <text class="strong" x="14" y="16">① 空間の写真 ― 1 m 進むと、位相は k だけ進む</text>
-          <rect class="bandS" id="kw-bandS" y="40" height="68"></rect>
-          <line class="zero" x1="34" y1="72" x2="306" y2="72"></line>
-          <path class="wave" id="kw-wave"></path>
-          <circle class="mkNow" id="kw-p1" r="4.5"></circle>
-          <circle class="mkS" id="kw-q1" r="4.5"></circle>
-          <line class="axis" x1="34" y1="108" x2="306" y2="108"></line>
-          <g id="kw-ticksS"></g>
-          <text class="strong" x="14" y="150">② その場の記録 ― 1 秒たつと、位相は ω だけ進む</text>
-          <rect class="bandT" id="kw-bandT" y="174" height="64"></rect>
-          <line class="zero" x1="34" y1="206" x2="306" y2="206"></line>
-          <path class="wave2" id="kw-curve"></path>
-          <circle class="mkNow" id="kw-p2" r="4.5"></circle>
-          <circle class="mkT" id="kw-q2" r="4.5"></circle>
-          <line class="axis" x1="34" y1="238" x2="306" y2="238"></line>
-          <g id="kw-ticksT"></g>
-        </svg>
-        <div class="sim-ctrl">
-          <label for="kw-k">波数 k</label>
-          <input type="range" id="kw-k" min="0.1" max="30" step="0.05" value="2.09" aria-label="波数 k（ラジアン毎メートル）">
-          <span class="val" id="kw-kv">2.09</span>
-          <label for="kw-w">角振動数 ω</label>
-          <input type="range" id="kw-w" min="0.1" max="20" step="0.05" value="3.14" aria-label="角振動数 ω（ラジアン毎秒）">
-          <span class="val" id="kw-wv">3.14</span>
-          <label for="kw-t">時刻 t</label>
-          <input type="range" id="kw-t" min="0" max="2" step="0.02" value="0" aria-label="時刻 t（秒）">
-          <span class="val" id="kw-tv">0.00 s</span>
-        </div>
-        <div class="readout">
-          <span style="color:#a6742a">空間：k ＝ <b id="kw-ro-k">2.09</b> rad/m</span>
-          <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="kw-ro-lam">3.01</b> m</span>
-          <span style="color:#a6742a">1 m で位相 ＋<b id="kw-ro-pk">2.09</b> rad</span>
-        </div>
-        <div class="readout">
-          <span style="color:#2f6fa6">時間：ω ＝ <b id="kw-ro-w">3.14</b> rad/s</span>
-          <span style="color:#2f6fa6">ν ＝ ω/2π ＝ <b id="kw-ro-nu">0.50</b> Hz</span>
-          <span style="color:#2f6fa6">T ＝ 1/ν ＝ <b id="kw-ro-T">2.00</b> 秒</span>
-          <span style="color:#2f6fa6">1 秒で位相 ＋<b id="kw-ro-pw">3.14</b> rad</span>
-        </div>
-        <div class="readout">
-          <span>波の速さ v ＝ ω/k ＝ <b id="kw-ro-v">1.50</b> m/s</span>
-        </div>
-        <div class="diagram-caption">同じ波 y＝A sin(kx−ωt) を、2つの見方で並べたもの。<strong>①</strong> は時間を止めた写真で、横軸は場所。金の帯は<strong>1 m ぶんの区間</strong>で、赤い点から金の点へ進む間に位相が <strong>k</strong> だけ増える――<strong>k を大きくすると波が細かくなる</strong>（λ＝2π/k が縮む）。<strong>②</strong> は場所を <strong>x＝1 m</strong> に固定して、そこの高さを時間の流れに沿って記録したもの。青の帯は<strong>1 秒ぶん</strong>で、その間に位相が <strong>ω</strong> だけ増える――<strong>ω を大きくすると速く上下する</strong>（T＝2π/ω が縮む）。<strong>赤い点は①と②で同じ点</strong>（時刻 t の x＝1 m）なので、2つのグラフで高さが一致する。t を動かすと、①の波形は右へ流れ、②の赤い点は記録の上を右へ進む</div>
-      </div>
-
-      <div class="dialogue-scene">
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">楽しみです。……あ、思い出しました。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学の教室</a>で、<strong>実数の波では困る</strong>という話がありましたよね。sin の波は必ずどこかで高さが 0 になるから、見つかる確率にも縞ができてしまう――運動量だけが決まった電子に「いてはいけない場所」が等間隔に並ぶのはおかしい、と。今日組み立てたこの形、まさにその sin です。たしか教室では、その先で<strong>複素数の波</strong>が出てきました。今日の式も、あれに書き換えることになるんでしょうか。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">よく覚えていたね。そのとおり、sin だけで電子の波を書こうとすると、あのときの<strong>不都合</strong>がそのまま起きる。そして答えの名前も、きみはもう知っているわけだ――<strong>複素数の波 e<sup>iθ</sup></strong>。ただ、教室で見たのは完成した絵だけで、その波がどういう式なのかは置いてきたね。次のステージでやるのは、それを今日の式から<strong>自分の手で組み立てる</strong>ことだよ。きみが<a href="https://complex-number.habatakijuku.com/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">複素数の教室</a>で鍛えた「回る矢印」が、ここで物理の表舞台に立つ。</div>
-        </div>
-      </div>
-
-      <div class="formula-box">
-        <span class="step">【このステージの成果】　右に走る波：　y ＝ A sin(kx − ωt)</span>
-        <span class="step multi"><span class="item">k＝2π/λ：波数（1mあたり位相が進むラジアン数＝波の細かさ）</span>　<span class="item">ω＝2πν：角振動数（1秒あたり位相が進むラジアン数）</span></span>
-        <span class="step multi"><span class="item">T＝1/ν：周期</span>　<span class="item">v＝ω/k：波の速さ</span></span>
+        <span class="step">【このステージの成果】　電子の波：　ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup>　（各地点 x に立つ針の角度が kx−ωt、長さが A）</span>
+        <span class="step multi"><span class="item">k＝2π/λ：1 m あたりに進むラジアン角度（波数）</span>　<span class="item">ω＝2πν：1 秒あたりに進むラジアン角度（角振動数）</span>　<span class="item">波の速さ v＝ω/k</span></span>
+        <span class="step multi"><span class="item">強み①：|ψ|＝A で一定（波の強さが場所や時間で消えない）</span>　<span class="item">強み②：微分しても形が崩れない（i が前に出るだけ・詳細はSTAGE3）</span></span>
       </div>
 
       <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q1. 波長 λ とは何の長さ？</p>
+        <p class="quiz-q">Q1. ψ＝A e<sup>i(kx−ωt)</sup> で、時間 t が進むと各地点の針はどうなる？</p>
         <div class="choice-list">
-          <button class="choice-btn">波が1秒間に進む距離のことで、速さ v と同じもの</button>
-          <button class="choice-btn">波の山から次の山までの、繰り返しひと区切りの距離</button>
-          <button class="choice-btn">波の山の高さ（最大値）のことで、振幅 A と同じもの</button>
+          <button class="choice-btn">右端の針から順に、1本ずつ倒れていく</button>
+          <button class="choice-btn">すべての針が同じ速さ ω でいっせいに回り、長さは変わらない</button>
+          <button class="choice-btn">針の長さが時間とともに伸びていき、向きは変わらない</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 波長 λ は「景色が繰り返すひと区切りの長さ」。1秒間に進む距離は速さ v、高さの最大値は振幅 A だ。式 y＝A sin(2πx/λ) では、x が λ 進むと sin の中身がちょうど 2π 増えて同じ高さに戻る。</div>
+        <div class="quiz-explain" hidden>正解！ 角度 kx−ωt の t が進むと、どの地点の針も ω のペースで回る。回転は向きを変えるだけなので、長さ A は変わらない。この「全部がいっせいに回る」動きが、影の sin を横に走らせる。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q2. 止まった波の式の x を x−vt に置き換えると、波が右に走り出すのはなぜ？</p>
+        <p class="quiz-q">Q2. 位相 kx−ωt のマイナスは、何を表している？</p>
         <div class="choice-list">
-          <button class="choice-btn">マイナスを付けると sin の値の符号が反転し、波が左右にひっくり返って進むように見えるから</button>
-          <button class="choice-btn">vt を引くと波の高さが時間とともに増えていき、高くなった山が右へ倒れ込んでいくように見えるから</button>
-          <button class="choice-btn">f(x−d) は f(x) を右に d ずらしたグラフで、ずれ d＝vt が時間とともに増えるから</button>
+          <button class="choice-btn">同じ角度の地点が時間とともに右へ動く、つまり波が右へ走ること</button>
+          <button class="choice-btn">波の高さが時間とともに減っていくこと</button>
+          <button class="choice-btn">針が時計回りではなく反時計回りに回ること</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ f(x−d) に x＝d を入れると f(0)、つまり元のグラフの原点の景色が x＝d に現れる。グラフ全体が右へ d 引っ越すわけだ。d＝vt と置けば、ずれが毎秒 v ずつ増える＝速さ v で走る波になる。</div>
+        <div class="quiz-explain" hidden>正解！ 角度 0 の地点は kx−ωt＝0、つまり x＝(ω/k)t にあり、t が進むほど右へ移る。同じ角度の場所が右へ流れていくので、波は右へ走る。その速さが ω/k だ。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q3. 波数 k＝2π/λ が「大きい」波とは、どんな波？</p>
+        <p class="quiz-q">Q3. 実数の波 A sin(kx−ωt) と、複素数の波 ψ＝A e<sup>i(kx−ωt)</sup> の関係は？</p>
         <div class="choice-list">
-          <button class="choice-btn">波長が短い、目の細かい波</button>
-          <button class="choice-btn">振幅が大きい、背の高い波</button>
-          <button class="choice-btn">速く進む波</button>
+          <button class="choice-btn">sin の波は、針の長さ A を時間の関数として書いたもの</button>
+          <button class="choice-btn">sin の波は、針が1回転するのにかかる時間を書いたもの</button>
+          <button class="choice-btn">sin の波は、回る針の縦成分（虚部）だけを拾った「影」</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ k は「1メートル進むあいだに位相が何ラジアン進むか」。λ が分母にあるから、波長が短い（細かい）波ほど k は大きい。この「細かさ」が、次のステージ以降で運動量と結びつくことになる。</div>
+        <div class="quiz-explain" hidden>正解！ 針の縦成分が A sin(kx−ωt)、横成分が A cos(kx−ωt)。実数の波は回る針の影で、本体は針のほう。影は 0 を通るが、本体の針の長さはいつも A のままだ。</div>
       </div>
 
       <div class="stage-nav">
@@ -454,314 +249,143 @@
 <script>SQ.initStagePage(1);</script>
 
 <script>
+/* ψ＝Ae^{i(kx−ωt)}：場所ごとに立つ針の列（3D）。高さ＝虚部、手前＝実部。針の高さを結んだ影が sin の波 */
 (function(){
-  var svg = document.getElementById('snap-svg');
-  if (!svg) return;
-  var NS = 'http://www.w3.org/2000/svg';
-  var PX0 = 30, PX1 = 306, ZY = 120, XM = 12, AS = 38, PPM = (PX1 - PX0) / XM;
-  function $(id){ return document.getElementById(id); }
-  var wave = $('sn-wave'), grid = $('sn-grid'), ticks = $('sn-ticks');
-  var envp = $('sn-envp'), envm = $('sn-envm'), lbp = $('sn-lbp'), lbm = $('sn-lbm');
-  var mkP = $('sn-p'), mkQ = $('sn-q'), conn = $('sn-conn'), connT = $('sn-conntxt');
-  var dp = $('sn-dp'), dq = $('sn-dq');
-  var lam = $('sn-lam'), lh1 = $('sn-lh1'), lh2 = $('sn-lh2'), lamT = $('sn-lamtxt');
-  var iA = $('sn-a'), iL = $('sn-l'), iX = $('sn-x');
-  var vA = $('sn-av'), vL = $('sn-lv'), vX = $('sn-xv');
-  var oP1 = $('sn-ph1'), oP2 = $('sn-ph2'), oPD = $('sn-phd'), oY1 = $('sn-y1'), oY2 = $('sn-y2');
+  var cv = document.getElementById('hands3d');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var sk = document.getElementById('h-k'), sw = document.getElementById('h-w'),
+      sa = document.getElementById('h-a'), stt = document.getElementById('h-t');
+  var vk = document.getElementById('h-kv'), vw = document.getElementById('h-wv'),
+      va = document.getElementById('h-av'), vt = document.getElementById('h-tv');
+  var roLam = document.getElementById('h-ro-lam'), roT = document.getElementById('h-ro-t');
+  var btn = document.getElementById('h-play');
+  var XM = 8, XS = 3.4, N = 44, HZ = 4.2, DIM = 3.6;
+  var yaw = 0.3, pitch = -0.55, W = 0, H = 0, sc = 1, cx = 0, cy = 0, t = 0;
+  var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', shadow: 'rgba(47,111,166,.9)', env: 'rgba(166,116,42,.5)' };
+  var F = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
 
-  function mx(m){ return PX0 + m * PPM; }
-  function my(v){ return ZY - v * AS; }
-  function fmt(v){ var s = v.toFixed(2); return s === '-0.00' ? '0.00' : s; }
+  function k() { return +sk.value; }
+  function w() { return +sw.value; }
+  function amp() { return +sa.value; }
+  function period() { return w() > 0.02 ? 2 * Math.PI / w() : 6.28; }
 
-  // x軸の目盛りは固定なので一度だけ作る
-  for (var m = 0; m <= XM; m += 2) {
-    var tx = mx(m);
-    var tk = document.createElementNS(NS, 'line');
-    tk.setAttribute('class', 'tick');
-    tk.setAttribute('x1', tx); tk.setAttribute('y1', 232);
-    tk.setAttribute('x2', tx); tk.setAttribute('y2', 237);
-    ticks.appendChild(tk);
-    var tl = document.createElementNS(NS, 'text');
-    tl.setAttribute('class', 'label');
-    tl.setAttribute('x', tx); tl.setAttribute('y', 244);
-    tl.setAttribute('text-anchor', 'middle');
-    tl.textContent = m;
-    ticks.appendChild(tl);
+  function proj(X, Y, Z) {
+    var cw = Math.cos(yaw), swy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var X1 = X * cw + Z * swy, Z1 = -X * swy + Z * cw;
+    var Y2 = Y * cp - Z1 * sp;
+    return [cx + sc * X1, cy - sc * Y2];
+  }
+  /* 場所 x、虚部（高さ）、実部（手前） */
+  function P(x, im, re) { return proj((x - XM / 2) * XS, HZ * im, -DIM * re); }
+  function line(pts, color, wd, dash) {
+    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  function arrow(p1, p2, label, dxl, dyl) {
+    line([p1, p2], C.muted, 1.5);
+    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
+    ctx.fillStyle = C.muted; ctx.beginPath();
+    ctx.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
+    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
+    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
+    ctx.closePath(); ctx.fill();
+    ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
   }
 
-  function draw(){
-    var A = parseFloat(iA.value), L = parseFloat(iL.value);
-    // x＋λ が図の右端を越えないよう、xの上限を波長に合わせて絞る
-    var xmax = Math.round((XM - L) * 10) / 10;
-    iX.max = xmax;
-    if (parseFloat(iX.value) > xmax) iX.value = xmax;
-    var X = parseFloat(iX.value);
-
-    var d = '', first = true;
-    for (var px = PX0; px <= PX1 + 0.001; px += 0.5) {
-      var mm = (px - PX0) / PPM;
-      d += (first ? 'M' : 'L') + px.toFixed(1) + ' ' + my(A * Math.sin(2 * Math.PI * mm / L)).toFixed(1);
-      first = false;
+  function draw() {
+    var kk = k(), ww = w(), aa = amp(), i, x;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = C.ink; ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('横：場所 x　高さ：針の縦成分（虚部）　手前：横成分（実部）', 14, 12);
+    var o = proj((0 - XM / 2) * XS - 1, 0, 0);
+    arrow(o, proj((XM - XM / 2) * XS + 2.5, 0, 0), 'x（場所）', -56, 16);
+    arrow(o, proj((0 - XM / 2) * XS - 1, HZ * 1.5, 0), '虚部', 6, 2);
+    arrow(o, proj((0 - XM / 2) * XS - 1, 0, -DIM * 1.4), '実部', 6, 10);
+    line([P(0, 0, 0), P(XM, 0, 0)], C.muted, 1);
+    /* 影：針の高さ（虚部）だけを結ぶ＝A sin(kx−ωt) */
+    var sh = [], env = [];
+    for (i = 0; i <= 120; i++) { x = XM * i / 120; var th = kk * x - ww * t; sh.push(P(x, aa * Math.sin(th), 0)); env.push(P(x, aa * Math.sin(th), aa * Math.cos(th))); }
+    line(sh, C.shadow, 1.8, [5, 4]);
+    /* 針の列：角度 kx−ωt、長さ A */
+    for (i = 0; i <= N; i++) {
+      x = XM * i / N; var th2 = kk * x - ww * t;
+      var base = P(x, 0, 0), tip = P(x, aa * Math.sin(th2), aa * Math.cos(th2));
+      line([base, tip], C.gold, 1.6);
+      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tip[0], tip[1], 2.2, 0, 7); ctx.fill();
     }
-    wave.setAttribute('d', d);
-
-    envp.setAttribute('y1', my(A)); envp.setAttribute('y2', my(A));
-    envm.setAttribute('y1', my(-A)); envm.setAttribute('y2', my(-A));
-    lbp.setAttribute('y', (my(A) + 4).toFixed(1));
-    lbm.setAttribute('y', (my(-A) + 4).toFixed(1));
-    var lbHide = (A * AS) < 11 ? 'none' : '';
-    lbp.style.display = lbHide; lbm.style.display = lbHide;
-
-    while (grid.firstChild) grid.removeChild(grid.firstChild);
-    for (var n = 0; L * PPM >= 14 && n * L <= XM + 1e-9; n++) {
-      var gx = mx(n * L);
-      var g = document.createElementNS(NS, 'line');
-      g.setAttribute('class', 'grid');
-      g.setAttribute('x1', gx.toFixed(1)); g.setAttribute('y1', 40);
-      g.setAttribute('x2', gx.toFixed(1)); g.setAttribute('y2', 200);
-      grid.appendChild(g);
+    line(env, C.env, 1.6);
+    /* 1波長の目盛り */
+    var lam = 2 * Math.PI / kk;
+    if (lam <= XM) {
+      var a0 = P(0, 0, 0), a1 = P(lam, 0, 0);
+      line([a0, a1], C.gold, 2);
+      ctx.fillStyle = C.gold; ctx.font = F; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText('λ＝' + lam.toFixed(2) + ' m', (a0[0] + a1[0]) / 2, Math.max(a0[1], a1[1]) + 6);
     }
+    ctx.font = F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = C.gold; ctx.fillText('金の針：本体 ψ。場所とともに向きがねじれ（らせん）、時間とともに全部が回る', 14, H - 26);
+    ctx.fillStyle = C.blue; ctx.fillText('青の点線：針の高さだけを結んだ影＝sin の波。針が回ると波が走る', 14, H - 12);
 
-    var p1 = 2 * Math.PI * X / L, p2 = p1 + 2 * Math.PI;
-    var yy = A * Math.sin(p1);
-    var pxP = mx(X), pxQ = mx(X + L), pyy = my(yy);
-
-    mkP.setAttribute('cx', pxP.toFixed(1)); mkP.setAttribute('cy', pyy.toFixed(1));
-    mkQ.setAttribute('cx', pxQ.toFixed(1)); mkQ.setAttribute('cy', pyy.toFixed(1));
-    conn.setAttribute('x1', pxP.toFixed(1)); conn.setAttribute('y1', pyy.toFixed(1));
-    conn.setAttribute('x2', pxQ.toFixed(1)); conn.setAttribute('y2', pyy.toFixed(1));
-    connT.setAttribute('x', ((pxP + pxQ) / 2).toFixed(1));
-    connT.setAttribute('y', Math.max(pyy - 8, 34).toFixed(1));
-    dp.setAttribute('x1', pxP.toFixed(1)); dp.setAttribute('y1', pyy.toFixed(1));
-    dp.setAttribute('x2', pxP.toFixed(1)); dp.setAttribute('y2', 218);
-    dq.setAttribute('x1', pxQ.toFixed(1)); dq.setAttribute('y1', pyy.toFixed(1));
-    dq.setAttribute('x2', pxQ.toFixed(1)); dq.setAttribute('y2', 218);
-    lam.setAttribute('x1', pxP.toFixed(1)); lam.setAttribute('x2', pxQ.toFixed(1));
-    lh1.setAttribute('points', pxP.toFixed(1) + ',214 ' + (pxP + 7).toFixed(1) + ',211 ' + (pxP + 7).toFixed(1) + ',217');
-    lh2.setAttribute('points', pxQ.toFixed(1) + ',214 ' + (pxQ - 7).toFixed(1) + ',211 ' + (pxQ - 7).toFixed(1) + ',217');
-    var narrow = (pxQ - pxP) < 20 ? 'none' : '';
-    lh1.style.display = narrow; lh2.style.display = narrow;
-    lamT.setAttribute('x', ((pxP + pxQ) / 2).toFixed(1));
-
-    vA.textContent = A.toFixed(2) + ' m';
-    vL.textContent = L.toFixed(1) + ' m';
-    vX.textContent = X.toFixed(1) + ' m';
-    oP1.textContent = fmt(p1);
-    oP2.textContent = fmt(p2);
-    oPD.textContent = fmt(2 * Math.PI);
-    oY1.textContent = fmt(yy);
-    oY2.textContent = fmt(A * Math.sin(p2));
+    vk.textContent = kk.toFixed(2); vw.textContent = ww.toFixed(2); va.textContent = aa.toFixed(2);
+    vt.textContent = t.toFixed(2) + ' s';
+    roLam.textContent = lam.toFixed(2);
+    roT.textContent = ww > 0.02 ? period().toFixed(2) : '∞';
   }
-
-  [iA, iL, iX].forEach(function(el){ el.addEventListener('input', draw); });
-  draw();
-})();
-</script>
-
-<script>
-(function(){
-  var svg = document.getElementById('kw-svg');
-  if (!svg) return;
-  var NS = 'http://www.w3.org/2000/svg';
-  // ①空間（0〜6 m）と②時間（0〜3 秒）で、同じ描画領域の幅を使う
-  var X0 = 34, X1 = 306, XM = 6, TM = 3, AMP = 26;
-  var PPM = (X1 - X0) / XM, PPS = (X1 - X0) / TM;
-  var ZY1 = 72, ZY2 = 206, AXIS1 = 108, AXIS2 = 238;
-  var XFIX = 1; // ②で見張る場所（m）。①の赤い点と同じ地点
-  function $(id){ return document.getElementById(id); }
-  var wave = $('kw-wave'), curve = $('kw-curve');
-  var bandS = $('kw-bandS'), bandT = $('kw-bandT');
-  var p1 = $('kw-p1'), q1 = $('kw-q1'), p2 = $('kw-p2'), q2 = $('kw-q2');
-  var iK = $('kw-k'), iW = $('kw-w'), iT = $('kw-t');
-
-  function mx(m){ return X0 + m * PPM; }
-  function tx(s){ return X0 + s * PPS; }
-
-  function makeTicks(gid, count, unit, toPx){
-    var g = $(gid);
-    for (var i = 0; i <= count; i++) {
-      var px = toPx(i);
-      var tk = document.createElementNS(NS, 'line');
-      tk.setAttribute('class', 'tick');
-      tk.setAttribute('x1', px); tk.setAttribute('x2', px);
-      tk.setAttribute('y1', gid === 'kw-ticksS' ? AXIS1 : AXIS2);
-      tk.setAttribute('y2', (gid === 'kw-ticksS' ? AXIS1 : AXIS2) + 5);
-      g.appendChild(tk);
-      var tl = document.createElementNS(NS, 'text');
-      tl.setAttribute('class', 'label');
-      tl.setAttribute('x', px);
-      tl.setAttribute('y', (gid === 'kw-ticksS' ? AXIS1 : AXIS2) + 18);
-      tl.setAttribute('text-anchor', i === count ? 'end' : 'middle');
-      tl.textContent = i === count ? (i + ' ' + unit) : i;
-      g.appendChild(tl);
-    }
+  function resize() {
+    var w0 = cv.clientWidth || 320, h0 = Math.round(Math.max(w0 * 0.66, 280)), d = window.devicePixelRatio || 1;
+    cv.width = Math.round(w0 * d); cv.height = Math.round(h0 * d); cv.style.height = h0 + 'px';
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    W = w0; H = h0; sc = w0 / 36; cx = w0 / 2 + 6; cy = h0 / 2 + 4;
+    draw();
   }
-  makeTicks('kw-ticksS', XM, 'm', mx);
-  makeTicks('kw-ticksT', TM, '秒', tx);
+  function syncTimeRange() { var T = period(); stt.max = T.toFixed(2); if (t > T) t = t % T; stt.value = t.toFixed(2); }
+  var queued = false;
+  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
 
-  function draw(){
-    var k = parseFloat(iK.value), w = parseFloat(iW.value), t = parseFloat(iT.value);
-
-    // ① 時間を止めた写真：y＝A sin(kx−ωt)
-    var d = '', first = true;
-    for (var px = X0; px <= X1 + 0.001; px += 0.5) {
-      var m = (px - X0) / PPM;
-      d += (first ? 'M' : 'L') + px.toFixed(1) + ' ' + (ZY1 - AMP * Math.sin(k * m - w * t)).toFixed(1);
-      first = false;
-    }
-    wave.setAttribute('d', d);
-
-    // ② x＝XFIX に居座って高さを記録：h(t')＝A sin(k·XFIX−ωt')
-    var d2 = '', f2 = true;
-    for (var px2 = X0; px2 <= X1 + 0.001; px2 += 0.5) {
-      var s = (px2 - X0) / PPS;
-      d2 += (f2 ? 'M' : 'L') + px2.toFixed(1) + ' ' + (ZY2 - AMP * Math.sin(k * XFIX - w * s)).toFixed(1);
-      f2 = false;
-    }
-    curve.setAttribute('d', d2);
-
-    var xs0 = mx(XFIX), xs1 = mx(XFIX + 1);
-    bandS.setAttribute('x', xs0.toFixed(1));
-    bandS.setAttribute('width', (xs1 - xs0).toFixed(1));
-    var xt0 = tx(t), xt1 = tx(t + 1);
-    bandT.setAttribute('x', xt0.toFixed(1));
-    bandT.setAttribute('width', (xt1 - xt0).toFixed(1));
-
-    var yNow = ZY1 - AMP * Math.sin(k * XFIX - w * t);
-    p1.setAttribute('cx', xs0.toFixed(1)); p1.setAttribute('cy', yNow.toFixed(1));
-    q1.setAttribute('cx', xs1.toFixed(1));
-    q1.setAttribute('cy', (ZY1 - AMP * Math.sin(k * (XFIX + 1) - w * t)).toFixed(1));
-    p2.setAttribute('cx', xt0.toFixed(1));
-    p2.setAttribute('cy', (ZY2 - AMP * Math.sin(k * XFIX - w * t)).toFixed(1));
-    q2.setAttribute('cx', xt1.toFixed(1));
-    q2.setAttribute('cy', (ZY2 - AMP * Math.sin(k * XFIX - w * (t + 1))).toFixed(1));
-
-    $('kw-kv').textContent = k.toFixed(2);
-    $('kw-wv').textContent = w.toFixed(2);
-    $('kw-tv').textContent = t.toFixed(2) + ' s';
-    $('kw-ro-k').textContent = k.toFixed(2);
-    $('kw-ro-lam').textContent = (2 * Math.PI / k).toFixed(2);
-    $('kw-ro-pk').textContent = k.toFixed(2);
-    $('kw-ro-w').textContent = w.toFixed(2);
-    $('kw-ro-nu').textContent = (w / (2 * Math.PI)).toFixed(2);
-    $('kw-ro-T').textContent = (2 * Math.PI / w).toFixed(2);
-    $('kw-ro-pw').textContent = w.toFixed(2);
-    var v = w / k;
-    $('kw-ro-v').textContent = v.toFixed(v < 1 ? 3 : 2);
+  var playing = false, userPaused = false, raf = null, last = 0;
+  function frame(now) {
+    if (!playing) return;
+    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
+    var T = period(); t += dt; if (t >= T) t -= T;
+    stt.value = t.toFixed(2);
+    draw(); raf = requestAnimationFrame(frame);
   }
+  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
+  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
+  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
+  sk.addEventListener('input', invalidate);
+  sa.addEventListener('input', invalidate);
+  sw.addEventListener('input', function(){ syncTimeRange(); invalidate(); });
+  stt.addEventListener('input', function(){ userPaused = true; pause(); t = +stt.value; draw(); });
 
-  [iK, iW, iT].forEach(function(el){ el.addEventListener('input', draw); });
-  draw();
-})();
-</script>
-
-<script>
-(function(){
-  var svg = document.getElementById('circ-svg');
-  if (!svg) return;
-  var spoke = document.getElementById('c-spoke'), dot = document.getElementById('c-dot'),
-      tie = document.getElementById('c-tie'), trace = document.getElementById('c-trace'),
-      head = document.getElementById('c-head');
-  var CX = 62, CY = 105, R = 42, GX0 = 140, GX1 = 330, SPAN = 4 * Math.PI;
-
-  function draw(theta) {
-    var px = CX + R * Math.cos(theta), py = CY - R * Math.sin(theta);
-    spoke.setAttribute('x2', px.toFixed(1)); spoke.setAttribute('y2', py.toFixed(1));
-    dot.setAttribute('cx', px.toFixed(1)); dot.setAttribute('cy', py.toFixed(1));
-    var hx = GX0 + (GX1 - GX0) * Math.min(theta, SPAN) / SPAN;
-    tie.setAttribute('x1', px.toFixed(1)); tie.setAttribute('y1', py.toFixed(1));
-    tie.setAttribute('x2', hx.toFixed(1)); tie.setAttribute('y2', py.toFixed(1));
-    head.setAttribute('cx', hx.toFixed(1)); head.setAttribute('cy', py.toFixed(1));
-    var d = '', first = true;
-    for (var th = 0; th <= Math.min(theta, SPAN) + 0.001; th += 0.08) {
-      var x = GX0 + (GX1 - GX0) * th / SPAN;
-      var y = CY - R * Math.sin(th);
-      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
-      first = false;
-    }
-    trace.setAttribute('d', d);
+  var dragging = false, lx = 0, ly = 0;
+  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move'; if (e.cancelable) e.preventDefault(); }
+  function move(e) {
+    if (!dragging) return;
+    var p = e.touches ? e.touches[0] : e;
+    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
+    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
+    lx = p.clientX; ly = p.clientY; invalidate();
+    if (e.cancelable) e.preventDefault();
   }
+  function up() { dragging = false; cv.style.cursor = 'move'; }
+  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  window.addEventListener('resize', resize);
+  syncTimeRange(); resize();
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    draw(SPAN); draw(Math.PI / 3);
-    // 静止時は全カーブ＋θ=60°の位置を表示
-    var d = '', first = true;
-    for (var th = 0; th <= SPAN + 0.001; th += 0.08) {
-      var x = GX0 + (GX1 - GX0) * th / SPAN, y = CY - R * Math.sin(th);
-      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
-      first = false;
-    }
-    trace.setAttribute('d', d);
-    return;
-  }
-
-  var t = 0, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.028;
-    if (t > SPAN + 1.2) t = 0;
-    draw(Math.min(t, SPAN));
-    raf = requestAnimationFrame(loop);
-  }
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
   if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
+    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
+  } else { play(); }
 })();
 </script>
-
 <script>
-(function(){
-  var svg = document.getElementById('run-svg');
-  if (!svg) return;
-  var wave = document.getElementById('r-wave'), buoy = document.getElementById('r-buoy');
-  var X0 = 14, X1 = 326, AXIS = 110, AMP = 40, LAM = 108, BX = 170;
-
-  var lam = document.getElementById('r-lam'),
-      lamH1 = document.getElementById('r-lam-h1'), lamH2 = document.getElementById('r-lam-h2'),
-      lamT1 = document.getElementById('r-lam-t1'), lamT2 = document.getElementById('r-lam-t2'),
-      lamTxt = document.getElementById('r-lam-txt');
-
-  function yAt(x, t) { return AXIS - AMP * Math.sin(2 * Math.PI * (x - t) / LAM); }
-  function draw(t) {
-    var d = '', first = true;
-    for (var x = X0; x <= X1 + 0.001; x += 3) {
-      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + yAt(x, t).toFixed(1);
-      first = false;
-    }
-    wave.setAttribute('d', d);
-    buoy.setAttribute('cy', yAt(BX, t).toFixed(1));
-    // λ の矢印は、画面内の山から次の山までを追いかける
-    var c0 = ((t + LAM / 4 - 40) % LAM + LAM) % LAM + 40, c1 = c0 + LAM;
-    lam.setAttribute('x1', c0.toFixed(1)); lam.setAttribute('x2', c1.toFixed(1));
-    lamH1.setAttribute('points', c0.toFixed(1) + ',150 ' + (c0 + 6).toFixed(1) + ',147 ' + (c0 + 6).toFixed(1) + ',153');
-    lamH2.setAttribute('points', c1.toFixed(1) + ',150 ' + (c1 - 6).toFixed(1) + ',147 ' + (c1 - 6).toFixed(1) + ',153');
-    lamT1.setAttribute('x1', c0.toFixed(1)); lamT1.setAttribute('x2', c0.toFixed(1));
-    lamT2.setAttribute('x1', c1.toFixed(1)); lamT2.setAttribute('x2', c1.toFixed(1));
-    lamTxt.setAttribute('x', ((c0 + c1) / 2).toFixed(1));
-  }
-  var T0 = 0;
-  draw(T0);
-
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var t = T0, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.9;
-    if (t > T0 + LAM) t -= LAM;
-    draw(t);
-    raf = requestAnimationFrame(loop);
-  }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
-})();
+/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
+if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
 </script>
 </body>
 </html>

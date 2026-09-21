@@ -12,14 +12,14 @@
   gtag('js', new Date());
   gtag('config', 'G-9RTQCP2HXM');
 </script>
-<title>STAGE2 回る矢印 e^iθ ― シュレディンガー方程式を導く</title>
-<meta name="description" content="なぜ量子力学は複素数を使うのか。オイラーの公式 e^iθ＝cosθ＋i sinθ を「回る矢印」として理解し、電子の波を ψ＝Ae^i(kx−ωt) に書き換える。大きさが消えず、微分しても形が崩れない――複素数の波の2つの強みを手に入れる。">
+<title>STAGE2 光の粒と物質の波 ― シュレディンガー方程式を導く</title>
+<meta name="description" content="E=hν はアインシュタインが光電効果から見抜いた「光の粒」の式。p=h/λ をド・ブロイが電子へ裏返して「物質の波」が生まれた。ℏ=h/2π を使って E=ℏω・p=ℏk に書き換え、波の言葉と粒の言葉をつなぐ辞書を完成させる。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage2">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="シュレディンガー方程式を導く">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:title" content="STAGE2 回る矢印 e^iθ ― シュレディンガー方程式を導く">
-<meta property="og:description" content="オイラーの公式を「回る矢印」として理解し、電子の波を複素数の波 ψ＝Ae^i(kx−ωt) に書き換える。">
+<meta property="og:title" content="STAGE2 光の粒と物質の波 ― シュレディンガー方程式を導く">
+<meta property="og:description" content="E=hν と p=h/λ。粒の言葉と波の言葉をつなぐ2本の翻訳ルールを、発見の物語ごと手に入れる。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage2">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -31,43 +31,41 @@
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
      （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
-  .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
-  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
-  .sq-svg .arrow{stroke:var(--muted);stroke-width:1.5}
-  .sq-svg .arrowhead{fill:var(--muted)}
   .sq-svg .label{fill:var(--muted);font-size:11px;font-weight:700}
   .sq-svg .strong{fill:var(--ink);font-size:12px;font-weight:900}
   .sq-svg .lbA{fill:var(--gold-dark);font-size:11px;font-weight:900}
   .sq-svg .lbB{fill:#2f6fa6;font-size:11px;font-weight:900}
-  .sq-svg .circle{fill:none;stroke:var(--line);stroke-width:1.2}
-  .sq-svg .vecA{stroke:var(--gold-dark);stroke-width:2.4}
-  .sq-svg .vecAh{fill:var(--gold-dark)}
-  .sq-svg .tie{stroke:var(--line);stroke-width:1;stroke-dasharray:4 3}
-  .sq-svg .ra{fill:none;stroke:var(--muted);stroke-width:1}
-  .sq-svg .hand{stroke:var(--gold-dark);stroke-width:2}
-  .sq-svg .handdot{fill:var(--gold-dark)}
-  .sq-svg .wave2{fill:none;stroke:#2f6fa6;stroke-width:2}
-  .sq-svg .shadowdot{fill:#2f6fa6}
-  .sq-svg .tieH{stroke:#2f6fa6;stroke-width:1;stroke-dasharray:3 3;opacity:.5}
+  .sq-svg .boxL{fill:rgba(47,111,166,.07);stroke:#2f6fa6;stroke-width:1.2}
+  .sq-svg .boxR{fill:rgba(197,154,58,.10);stroke:var(--gold-dark);stroke-width:1.2}
+  .sq-svg .bigarrow{stroke:var(--ink);stroke-width:2}
+  .sq-svg .bigarrowhead{fill:var(--ink)}
+  .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
   .sq-svg .lamarrow{stroke:var(--gold-dark);stroke-width:1.6}
   .sq-svg .lamhead{fill:var(--gold-dark)}
+  .sq-svg .legM{stroke:var(--ink);stroke-width:2.4}
+  .sq-svg .legP{stroke:#2f6fa6;stroke-width:2.4}
+  .sq-svg .hypE{stroke:var(--gold-dark);stroke-width:2.4}
+  .sq-svg .arcE{fill:none;stroke:var(--gold-dark);stroke-width:1;stroke-dasharray:4 3}
+  .sq-svg .rangle{fill:none;stroke:var(--muted);stroke-width:1}
+  .sq-svg .gap{stroke:#b5504a;stroke-width:4}
+  .sq-svg .lbM{fill:var(--ink);font-size:11px;font-weight:900}
+  .sq-svg .lbE{fill:var(--gold-dark);font-size:12px;font-weight:900}
+  .sq-svg .lbG{fill:#b5504a;font-size:11px;font-weight:800}
+  .sq-svg .parrow{stroke:#b5504a;stroke-width:3}
+  .sq-svg .phead{fill:#b5504a}
+  .sq-svg .lbP{fill:#b5504a;font-size:11px;font-weight:900}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
   .sim-ctrl label{font-size:11.5px;font-weight:800;color:var(--muted);white-space:nowrap}
   .sim-ctrl input[type=range]{width:100%;accent-color:#a6742a}
-  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:58px;text-align:right}
+  .sim-ctrl .val{font-size:12px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
   @media (max-width:560px){
     .sim-ctrl{grid-template-columns:minmax(0,1fr) auto}
     .sim-ctrl label{grid-column:1 / -1;white-space:normal}
   }
-  .cv-wrap{width:100%}
-  #hands3d{display:block;width:100%;height:auto;touch-action:none;cursor:move}
-  .sim-play{display:block;margin:10px auto 0;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
-    background:var(--paper2);color:var(--ink);font-size:12px;font-weight:800;cursor:pointer}
-  .sim-play:hover{background:#fff}
   .readout{display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:center;margin-top:8px;font-size:12px;font-weight:700;color:var(--ink)}
-  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
   .readout b{font-weight:900;font-variant-numeric:tabular-nums;color:inherit}
+  .readout .sub{flex-basis:100%;text-align:center;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -75,11 +73,11 @@
   <header class="game-header">
     <div class="brand">
       <div class="brand-title"><a class="head-reset home-badge" href="index.html" title="トップへ" aria-label="トップへ">🌊</a> <span>シュレディンガー方程式を導く</span></div>
-      <div class="brand-sub">STAGE 2 ― 回る矢印 e<sup>iθ</sup> ―</div>
+      <div class="brand-sub">STAGE 2 ― 光の粒と物質の波 ―</div>
     </div>
     <div class="head-progress-wrap">
-      <div class="head-progress-label" id="progress-label">クリア 0 / 8</div>
-      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="8" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="head-progress-label" id="progress-label">クリア 0 / 7</div>
+      <div class="head-progress" role="progressbar" aria-label="クリア済みステージ数" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><div class="head-progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
     <div class="header-actions">
       <a class="head-reset" href="https://quantum-mechanics.habatakijuku.com/" title="量子クエスト集（シリーズマップ）へ">🗺️ マップ</a>
@@ -100,13 +98,13 @@
 
     <main class="main-area">
       <div class="chapter-head">
-        <span class="chapter-badge">STAGE 2</span><h1 class="chapter-title">回る矢印 e<sup>iθ</sup></h1>
-        <div class="chapter-sub">複素数の波</div>
+        <span class="chapter-badge">STAGE 2</span><h1 class="chapter-title">光の粒と物質の波</h1>
+        <div class="chapter-sub">E=hν と p=h/λ</div>
       </div>
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">オイラーの公式 e<sup>iθ</sup>＝cosθ＋i sinθ を「回る矢印」として説明できるようになり、電子の波を ψ＝A e<sup>i(kx−ωt)</sup> に書き換えよう。複素数の波が sin より優れている理由を2つ言えれば合格。</div>
+        <div class="mission-text">E＝hν と p＝h/λ がどんな実験から生まれたかを説明できるようになり、ℏ＝h/2π を使って E＝ℏω・p＝ℏk という「波と粒の辞書」に書き換えよう。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -116,106 +114,139 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">前回きみは、量子力学の教室で聞いた不都合を思い出してくれたね。「sin の波は必ずどこかで高さが 0 になるから、見つかる確率にも縞ができてしまう。運動量だけが決まった電子に『いてはいけない場所』が等間隔に並ぶのはおかしい」。そして、それを救うのが<strong>複素数の波</strong>だということも、きみはもう聞いている。教室で渡されたのはそこまで――回る矢印の絵と、結論だけだった。今日はその波を、前回の sin から<strong>式として組み立てる</strong>。きみが複素数の教室で鍛えた道具が、ここで物理の主役になるよ。まずは道具の点検からだ。要点を自分の言葉で整理してごらん。</div>
+          <div class="dialog-bubble">現在地を確認しよう。私たちは電子の波を ψ＝A e<sup>i(kx−ωt)</sup> と書けるようになった。この式に入っているのは、波の細かさ k と、振動の速さ ω――どちらも<strong>波の言葉</strong>だ。ところが、私たちが最終的に知りたい電子の性質は、エネルギー E や運動量 p――<strong>粒の言葉</strong>だね。今日はこの2つの言葉をつなぐ<strong>辞書</strong>を用意する。<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学の教室</a>で出会った、あの2本の式だ。まず1本目、<strong>E＝hν</strong>。どんな実験から生まれたのだったか、覚えているところまで話してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">はい。<strong>複素数</strong>は、2乗すると −1 になる数 i（i²＝−1）を認めて、a＋bi の形に広げた数でした。ただの記号遊びではなくて、<strong>平面の点（あるいは原点から伸びる矢印）</strong>だと思うのがいちばん分かりやすかったです。横軸が普通の数（実部 a）、縦軸が i の個数（虚部 b）。そして掛け算がきれいでした。<strong>i を掛けると、矢印が反時計回りに90°回る</strong>。実際、1 に i を掛けると i（真上）、もう一度掛けると i²＝−1（真横の逆）、もう一度で −i（真下）、4回で 1 に戻る。90°回転を4回で一周、辻褄が合っています。</div>
+          <div class="dialog-bubble">はい、<strong>光電効果</strong>ですね。金属に光を当てると、表面から電子が飛び出してくる、あの実験。復習を兼ねて、要点を自分の言葉で整理します。不思議だったのは、<strong>明るさを増やしても電子1個1個の勢いは変わらず、個数だけが増える</strong>こと。勢いを決めるのは<strong>色（振動数 ν）</strong>のほうで、青い光ほど電子1個が速くなり、ν がある限界より小さい赤い光では、どんなに明るくしても<strong>1個も</strong>出てこない。アインシュタインの読み解きはこうでした。<strong>光はエネルギーの粒（光子）の集まりで、粒1個のエネルギーが E＝hν</strong>。電子を叩き出すのは光子1個との衝突だから、明るさ＝粒の<strong>個数</strong>、色＝粒<strong>1個のエネルギー</strong>。そう考えると、謎が全部ほどけるのでした。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい復習だね。では、その道具箱からもう一つ取り出そう。きみが複素数の教室の最後にたどり着いた<strong>オイラーの公式</strong>だ。<br><strong>e<sup>iθ</sup> ＝ cosθ ＋ i sinθ</strong><br>今日はこれを、物理の表舞台に立たせる。使う前に、要点だけ確かめ直しておこうね。まず記号から。cos（コサイン）は sin の相棒で、前回の円の絵で言えば、円を回る点の<strong>横の位置</strong>のこと（sin は縦の位置だったね）。そして e は約 2.718 という定数。<a href="https://complex-number.habatakijuku.com/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">複素数の教室</a>では「1円を年利100%で、利息を無限に細かく分けて複利にすると1年後に e 円になる」という<strong>成長の極限</strong>として出会った数だね。そしてこの公式が言っていたのは、こういうことだ。<strong>e の肩に「i×角度」を乗せると、単位円の上の、角度 θ の位置の点になる</strong>――つまり e<sup>iθ</sup> は<strong>長さ1の、角度 θ を向いた矢印</strong>そのものだ、と。何度見ても驚く主張だよ。</div>
+          <div class="dialog-bubble">その通り、それで十分だ。比例定数 h は<strong>プランク定数</strong>、約 6.6×10⁻³⁴ ジュール秒という、とてつもなく小さい数だったね。では、2本目の式に進む前に、<strong>運動量</strong>をもう一度そろえておこう。量子力学の教室で出会ったとおり、物体の運動量 p は<strong>質量 m × 速度 v</strong>――「動きの勢い」「止めにくさ」を表す量だったね。同じ速さでも、卓球の球よりボウリングの球のほうが止めにくい。質量のぶん勢いが大きいからだ。物理学者がこの量を特別扱いするのは、<strong>衝突の前後で全体の運動量が必ず保存される</strong>という、宇宙で例外の見つかっていない法則があるからなんだ。さて、光もぶつかった相手を押す。彗星の尾が太陽と反対側にたなびくのは、太陽の光が塵を押すからだ。つまり<strong>光も運動量を持つ</strong>。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">横の位置が cosθ、縦の位置が sinθ の点だから、複素数として書けば cosθ＋i sinθ。<strong>右辺が「単位円上の角度θの点」を表す</strong>ことは、定義そのままです。左辺とのつながりも――<strong>複素数の教室でたどった筋を思い出しました</strong>。e<sup>t</sup> という関数は「<strong>増える速さが、いまの量そのもの</strong>」でした。預金の複利と同じで、残高が多いほど利息も多い。その肩に i を乗せると、変化の速さに i が掛かって <strong>i × いまの値</strong>。i を掛けるのは90°回転ですから、動く向きはいつも<strong>いま向いている向きと直角</strong>になります。ひもの先に石をつけて振り回すのと同じで、<strong>進む向きがいつも直角なら、軌跡は円</strong>。だから e<sup>iθ</sup> は単位円の上を回る矢印になる――そういう話でした。</div>
+          <div class="dialog-bubble">待ってください。そこが引っかかります。運動量は<strong>質量×速度</strong>でしたよね。でも、光の粒に重さがあるとは思えません。重さが 0 なら、どんなに速く飛んでも 0×速度 で、運動量も 0 になってしまいます。それなのに、押せるんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/catThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">その引っかかりは正しいよ。しかも見立ても当たっていて、<strong>光子の質量はほんとうにゼロ</strong>だ。答えは順番のほうにある。<strong>p＝mv は、運動量の定義ではない</strong>んだ。あれは「重さのあるものが、光の速さに比べてゆっくり動いているとき」に成り立つ<strong>近似の式</strong>でね。運動量の正体は式ではなく、<strong>ぶつかったときに受け渡される量</strong>のほうにある。だから確かめ方も単純だ。<strong>当たったものが押されたなら、それは運動量を運んできた</strong>。……そして光が押すことは、計算の中の話ではなく<strong>測れる事実</strong>だよ。日本の探査機「IKAROS」は2010年、燃料を使わずに、太陽の光を大きな帆で受けるだけで加速してみせた。光が押さないなら、あの帆は1ミリも進まない。レーザー光で細胞や微粒子をつまんで運ぶ「光ピンセット」も、光が運動量を受け渡すことを利用した道具だよ。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">……つまり私は、<strong>特別な場合にだけ使える式を、一般の法則だと思い込んでいた</strong>わけですね。「重さがないから運動量もない」は、p＝mv を信じすぎた結論だった。では、重さがゼロのものの運動量は、何で決まるんですか。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">よく覚えていたね。そこに、ひとつだけ足しておこう。<strong>なぜ θ がそのまま「角度」になるのか</strong>だ。スタートは θ＝0 で e<sup>0</sup>＝1、つまり<strong>単位円の真横（3時の位置）</strong>。矢印の長さは1で、変化の速さも |i×1|＝1 だから、θ が 1 進むあいだに<strong>円周の上をちょうど 1 だけ歩く</strong>ことになる。前回ラジアンを「半径1の円で歩いた道のり＝角度」と決めたから、θ はそのまま角度になるわけだ。まとめると――e<sup>iθ</sup> は<strong>単位円上を反時計回りに、角度 θ まで回った矢印</strong>。横の位置（実部）が cosθ、縦の位置（虚部）が sinθ。オイラーの公式は、この観察を1行に書いたものだよ。</div>
+          <div class="dialog-bubble">そこで相対性理論の出番だ。エネルギー・運動量・質量の関係は、ほんとうは1本の式にまとまっていてね。<br><strong>E²＝(pc)²＋(mc²)²</strong><br>読み下すと「エネルギーの2乗は、<strong>動きのぶん</strong>と<strong>質量のぶん</strong>の足し算」。この式に、3通りの場合を入れてみよう。<strong>止まっている重いもの</strong>（p＝0）なら、残るのは E＝mc²――あの有名な式だ。<strong>ゆっくり動く重いもの</strong>なら、見慣れた p＝mv が近似として戻ってくる。そして<strong>質量ゼロのもの</strong>（m＝0）を入れると、質量のぶんがまるごと消えて <strong>E＝pc</strong> だけが残る。p＝mv と E＝pc は別々の法則ではなく、<strong>同じ1本の式の両端</strong>なんだ。だから光は、質量ではなく<strong>エネルギーを持っていること</strong>によって運動量を持つ。この1本の式そのものの導出は相対性理論の仕事だから、今日は事実として借りておこう。</div>
+        </div>
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">その「戻ってくる」が引っかかります。E²＝(pc)²＋(mc²)² のどこをどういじったら、p＝mv が出てくるんですか。</div>
+        </div>
+        <div class="dialog-row">
+          <div class="dialog-character">
+            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name mentor">ねこ博士</div>
+          </div>
+          <div class="dialog-bubble">やってみせよう。使うのは<strong>因数分解</strong>だけだよ。まず (mc²)² を左辺に移す。<br>E²−(mc²)²＝(pc)²<br>左辺は「2乗ひく2乗」の形だから、<strong>和と差の積</strong>に分解できるね。<br>(E−mc²)(E＋mc²)＝(pc)²<br>ここで「ゆっくり」が効いてくる。ゆっくり動くものは、<strong>動きのぶん pc が、質量のぶん mc² に比べてうんと小さい</strong>。すると全エネルギー E は mc² とほとんど同じ大きさになるから、E＋mc² は <strong>2mc²</strong> とみなしていい。<br>(E−mc²)×2mc² ≒ p²c²<br>両辺を 2mc² で割ると、c² が約分されて<br><strong>E−mc² ≒ p²/(2m)</strong><br>この左辺 E−mc² は、止まっているときのエネルギー mc² を<strong>超えた分</strong>――つまり<strong>運動エネルギー</strong>だ。そしてニュートン力学では、運動エネルギーは <strong>½mv²</strong> と書ける。同じものを2通りに書いたのだから、等しいとおいてごらん。<br>p²/(2m) ＝ ½mv²　→　p²＝m²v²　→　<strong>p＝mv</strong><br>ほら、戻ってきた。効いたのは「E＋mc² ≒ 2mc²」の一手だけ。これが成り立つのは、pc が mc² に比べて小さいとき――つまり光速よりずっと遅いとき、という条件つきだよ。</div>
         </div>
       </div>
 
       <div class="diagram-box">
-        <svg class="sq-svg" id="euler-svg" viewBox="0 0 340 210" width="100%" role="img" aria-label="複素数平面の単位円上を反時計回りに回る矢印e^iθ。横の位置がcosθ、縦の位置がsinθ。iを掛けるたびに90°回転し、1→i→−1→−iと巡る">
-          <text class="strong" x="14" y="16">e<tspan baseline-shift="super" font-size="9">iθ</tspan> ＝ 単位円上を回る、長さ1の矢印</text>
-          <line class="axis" x1="20" y1="115" x2="220" y2="115"></line>
-          <line class="axis" x1="120" y1="30" x2="120" y2="200"></line>
-          <text class="label" x="216" y="128" text-anchor="end">実部</text>
-          <text class="label" x="126" y="34">虚部</text>
-          <circle class="circle" cx="120" cy="115" r="62"></circle>
-          <line class="vecA" id="e-vec" x1="120" y1="115" x2="182" y2="115"></line>
-          <polygon class="vecAh" id="e-vech" points="182,115 174,111 174,119"></polygon>
-          <line class="tie" id="e-tx" x1="182" y1="115" x2="182" y2="115"></line>
-          <line class="tie" id="e-ty" x1="182" y1="115" x2="120" y2="115"></line>
-          <text class="lbA" id="e-lb" x="190" y="110">e<tspan baseline-shift="super" font-size="8">iθ</tspan></text>
-          <text class="lbB" id="e-cos" x="150" y="130">cosθ</text>
-          <text class="lbB" id="e-sin" x="128" y="80">sinθ</text>
-          <text class="label" x="186" y="132">1</text>
-          <text class="label" x="112" y="46" text-anchor="end">i</text>
-          <text class="label" x="48" y="132">−1</text>
-          <text class="label" x="112" y="192" text-anchor="end">−i</text>
-          <text class="strong" x="240" y="70">i を掛ける＝90°回転</text>
-          <text class="label" x="228" y="92">1 → i → −1 → −i → 1</text>
-          <text class="label" x="240" y="112">（4回で一周）</text>
-          <text class="strong" x="232" y="148">矢印が回る向き</text>
-          <text class="label" x="232" y="165">（θが増える）</text>
-          <path class="ra" d="M283.8 173.1 A 18 18 0 1 0 296.2 173.1"></path>
-          <polygon class="arrowhead" points="290.6,171.0 299.8,169.1 296.4,178.5"></polygon>
+        <svg class="sq-svg" id="tri-svg" viewBox="0 0 340 178" width="100%" role="img" aria-label="E²=(pc)²+(mc²)² を直角三角形で表した図。横の辺が質量のぶん mc²、縦の辺が動きのぶん pc、斜辺が全エネルギー E。速さを上げると縦の辺が伸び、斜辺が底辺より長くなる。その差が運動エネルギー">
+          <text class="strong" x="14" y="16">E²＝(pc)²＋(mc²)² ＝ 直角三角形（三平方の定理）</text>
+          <path class="arcE" id="tri-arc"></path>
+          <line class="legM" x1="45" y1="125" x2="195" y2="125"></line>
+          <line class="legP" id="tri-p" x1="195" y1="125" x2="195" y2="78"></line>
+          <line class="hypE" id="tri-h" x1="45" y1="125" x2="195" y2="78"></line>
+          <path class="rangle" d="M183 125 L183 113 L195 113"></path>
+          <text class="lbM" x="120" y="141" text-anchor="middle">mc²（質量のぶん）</text>
+          <text class="lbP" id="tri-plb" x="201" y="104">pc（動きのぶん）</text>
+          <text class="lbE" id="tri-elb" x="111" y="96" text-anchor="end">E</text>
+          <line class="gap" id="tri-gap" x1="195" y1="125" x2="202" y2="125"></line>
+          <text class="lbG" x="236" y="158" text-anchor="middle">↑ E−mc²（運動エネルギー）</text>
+          <text class="label" x="14" y="174">ゆっくりのとき pc は短く、斜辺 E は底辺 mc² とほとんど同じ長さ</text>
         </svg>
-        <div class="diagram-caption">オイラーの公式の絵解き。e<sup>iθ</sup> は複素数平面（横軸＝実部、縦軸＝虚部）の<strong>単位円上を反時計回りに回る長さ1の矢印</strong>で、横の位置が cosθ、縦の位置が sinθ。「変化の速さ＝i×いまの値」＝いつも進行方向と直角、だから円を描く。ひもの先で振り回した石と同じ理屈</div>
-      </div>
-
-      <div class="formula-box">
-        <span class="step">【オイラーの公式】　e<sup>iθ</sup> ＝ cosθ ＋ i sinθ</span>
-        <span class="step multi"><span class="item">e<sup>iθ</sup>＝長さ1・角度θの矢印</span>　<span class="item">実部＝cosθ（横の位置）</span>　<span class="item">虚部＝sinθ（縦の位置）</span></span>
+        <div class="sim-ctrl">
+          <label for="tri-v">速さ v</label>
+          <input type="range" id="tri-v" min="0.02" max="0.5" step="0.005" value="0.3" aria-label="速さ v（光速 c に対する割合）">
+          <span class="val" id="tri-vv">0.30 c</span>
+        </div>
+        <div class="readout">
+          <span style="color:#2f6fa6">pc ÷ mc² ＝ <b id="tri-r1">0.314</b></span>
+          <span>E＋mc² ÷ 2mc² ＝ <b id="tri-r2">1.024</b></span>
+          <span style="color:#b5504a">p ÷ mv ＝ <b id="tri-r3">1.048</b></span>
+          <span class="sub">まん中が「E＋mc² ≒ 2mc²」の近似の精度。右がその結果として p＝mv がどれだけ合っているか</span>
+        </div>
+        <div class="diagram-caption">E²＝(pc)²＋(mc²)² は、<strong>直角をはさむ2辺が pc と mc²、斜辺が E</strong> の三角形と同じ形をしている（三平方の定理）。速さ v を上げると縦の辺 pc が伸び、斜辺 E が底辺より目に見えて長くなる。逆に<strong>ゆっくりのときは縦の辺がほとんど無く、E は mc² とほぼ同じ長さ</strong>――だから E＋mc² を 2mc² で置き換えてよく、そこから p＝mv が出てくる。音速（秒速340 m）でも v は光速の 0.0001 % ほどしかないので、p÷mv は 1.0000000000006 くらい。日常では p＝mv が完璧に見えるのは、このためだよ。光速の 50% まで動かせる</div>
       </div>
 
       <div class="dialogue-scene">
+        <div class="dialog-row right">
+          <div class="dialog-character">
+            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
+            <div class="dialog-name student">うさ美</div>
+          </div>
+          <div class="dialog-bubble">重さではなく、エネルギーを持っていることが運動量の源。そこは納得しました。……では、光子1個ではどうなりますか。エネルギーのほうは、さっき E＝hν を手に入れたばかりです。</div>
+        </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">では、この矢印で<strong>波</strong>を作ろう。前回の波 y＝A sin(kx−ωt) の心臓部は、位相 kx−ωt だった。この位相を、sin の中身ではなく<strong>矢印の角度</strong>として使うんだ。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針（矢印）が1本ずつ立っている</strong>。x の地点の針の角度が kx−ωt だ。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
+          <div class="dialog-bubble">では、それを使って計算しよう。E＝pc を運動量について解くと p＝E/c。ここにきみの言う E＝hν を入れて、p＝hν/c。そして光の速さは c＝λν（1秒に ν 個ぶんの波長 λ が通過する）だから ν/c＝1/λ。代入すると――<strong>p＝h/λ</strong>。エネルギーの式と対になる、美しい式が出てくる。</div>
         </div>
       </div>
 
       <div class="diagram-box">
-        <div class="cv-wrap"><canvas id="hands3d" role="img" aria-label="数直線の各地点に立つ針の列の3Dアニメーション。高さが針の縦成分（虚部）、手前が横成分（実部）。針は場所とともに向きがねじれてらせんになり、時間とともに全部がいっせいに回る。針の高さだけを結んだ青い点線が sin の波で、針が回ると波が走る。波数k・角振動数ω・振幅A・時刻tをスライダーで変えられ、ドラッグで視点を回せる"></canvas></div>
+        <svg class="sq-svg" id="ph-svg" viewBox="0 0 340 170" width="100%" role="img" aria-label="光子1個について、波長λを変えるとエネルギーEと運動量pがどう変わるかを示す図。上は実際の波長で描いた波、下は運動量の大きさを表す矢印。波長が短いほど波は詰まり、運動量の矢印は長くなる">
+          <text class="strong" x="14" y="16">光子1個：波長 λ を変えると、E と p はどうなるか</text>
+          <line class="axis" x1="30" y1="58" x2="316" y2="58"></line>
+          <path id="ph-wave" fill="none" stroke="#888" stroke-width="2"></path>
+          <line class="lamarrow" id="ph-lam" y1="92" y2="92"></line>
+          <polygon class="lamhead" id="ph-lh1"></polygon>
+          <polygon class="lamhead" id="ph-lh2"></polygon>
+          <text class="strong" id="ph-lamtxt" y="87" text-anchor="middle">λ</text>
+          <text class="label" x="30" y="110">1500 nm ぶんの空間を切り取って描いている（<tspan id="ph-band">可視光</tspan>）</text>
+          <text class="lbP" x="30" y="134">運動量 p ＝ h/λ</text>
+          <line class="parrow" id="ph-p" x1="30" y1="150" x2="180" y2="150"></line>
+          <polygon class="phead" id="ph-ph"></polygon>
+          <text class="label" x="30" y="166">↑ 矢印の長さが p。λ を半分にすると p は2倍になる（反比例）</text>
+        </svg>
         <div class="sim-ctrl">
-          <label for="h-k">波数 k</label>
-          <input type="range" id="h-k" min="0.3" max="2.4" step="0.01" value="1.57" aria-label="波数 k（ラジアン毎メートル）">
-          <span class="val" id="h-kv">1.57</span>
-          <label for="h-w">角振動数 ω</label>
-          <input type="range" id="h-w" min="0" max="3" step="0.01" value="1" aria-label="角振動数 ω（ラジアン毎秒）">
-          <span class="val" id="h-wv">1.00</span>
-          <label for="h-a">振幅 A</label>
-          <input type="range" id="h-a" min="0.4" max="1.3" step="0.01" value="1" aria-label="振幅 A">
-          <span class="val" id="h-av">1.00</span>
-          <label for="h-t">時刻 t</label>
-          <input type="range" id="h-t" min="0" max="6.28" step="0.01" value="0" aria-label="時刻 t（秒）">
-          <span class="val" id="h-tv">0.00 s</span>
+          <label for="ph-l">波長 λ</label>
+          <input type="range" id="ph-l" min="100" max="1000" step="1" value="500" aria-label="光子の波長 λ（ナノメートル）">
+          <span class="val" id="ph-lv">500 nm</span>
         </div>
-        <button class="sim-play" id="h-play" type="button" aria-pressed="true">⏸ 時間を止める</button>
         <div class="readout">
-          <span style="color:#a6742a">λ ＝ 2π/k ＝ <b id="h-ro-lam">4.00</b> m（1波長の長さ）</span>
-          <span style="color:#2f6fa6">T ＝ 2π/ω ＝ <b id="h-ro-t">6.28</b> s（針が1回転する時間）</span>
-          <span class="sub">🖱️ 図をドラッグ（スマホは指でなぞる）すると視点を回せます</span>
+          <span>ν ＝ c/λ ＝ <b id="ph-nu">6.0×10<sup>14</sup></b> Hz</span>
+          <span style="color:#a6742a">E ＝ hν ＝ <b id="ph-e">4.0×10<sup>−19</sup></b> J</span>
+          <span style="color:#b5504a">p ＝ h/λ ＝ <b id="ph-p-val">1.3×10<sup>−27</sup></b> kg·m/s</span>
+          <span class="sub">この運動量は、145 g の野球ボールが秒速 <b id="ph-ball">9×10<sup>−27</sup></b> m で進むのと同じ大きさ</span>
         </div>
-        <div class="diagram-caption">複素数の波の想像図。<strong>各地点 x に矢印（針）が1本ずつ立ち</strong>、その角度は kx−ωt。ある瞬間には右の地点ほど角度が進んでいて（らせんのねじれ）、時間が経つと全部の針がいっせいに回る。針の先の<strong>高さ</strong>だけを拾って結んだのが青い sin の波――<strong>本体は針、sin は影</strong>。針は回り続けて長さが変わらないのに、影は 0 を通る。<strong>k</strong> を上げるとねじれが細かくなり（＝波長が短くなり）、<strong>ω</strong> を上げると針が速く回る（＝波が速く走る）。<strong>A</strong> は針の長さ。時間を止めて <strong>t</strong> を手で動かすと、1周期ぶんをコマ送りできる</div>
+        <div class="diagram-caption">上の波は、1500 nm ぶんの空間に<strong>実際の波長で</strong>描いたもの（可視光の範囲では波長に対応する色をつけている）。λ を短くすると波は詰まり、同時に下の運動量の矢印が伸びる――<strong>p＝h/λ</strong> の反比例がそのまま見える。ν＝c/λ、E＝hν、p＝E/c の3本が連動して動くので、どれか1つを決めれば残りは全部決まる。h＝6.63×10<sup>−34</sup> J·s、c＝3.00×10<sup>8</sup> m/s を使用</div>
       </div>
 
       <div class="dialogue-scene">
@@ -224,93 +255,100 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">針の縦成分（虚部）だけを取り出せば A sin(kx−ωt)、横成分（実部）なら A cos(kx−ωt)。つまり<strong>前回の波は、この回る針の「影」だった</strong>んですね。針ぜんぶが回ると、影の波形が横に走って見える。……本体は針で、sin は影。</div>
+          <div class="dialog-bubble">ここまでは<strong>光</strong>の話ですね。波だと思われていた光が、実は粒の性質（E と p）も持っていた。E＝hν と p＝h/λ は、<strong>波の量（ν, λ）から粒の量（E, p）への翻訳ルール</strong>になっている。……そして量子力学の教室で習ったのは、1924年にド・ブロイがこれを<strong>裏返した</strong>ことでした。「光が『波なのに粒』なら、電子は『粒なのに波』ではないのか。翻訳ルールは同じ式のはずだ」。つまり運動量 p の電子は、波長 <strong>λ＝h/p</strong>（※ p＝h/λ と同じ式）の波として振る舞う。そしてこの予言は、のちに本物の実験で確かめられて、物質波は仮説から事実になった――と教わりました。ただ、どんな実験だったのかまでは聞いていません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ物理学者はわざわざ本体（複素数）で書くのか。強みは2つあって、どちらも<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で e<sup>ikx</sup> について確かめたものだ。今日は、時間の因子 e<sup>−iωt</sup> が加わっても崩れないことを見ておこう。<strong>強みその1</strong>は、あの不都合の解消。矢印の<strong>長さ</strong>を考えてごらん。影（sin）の高さは、場所を右へたどるだけで A→0→−A→0 と上下に暴れる。では、回っている矢印そのものの長さは、場所や時刻でどう変わるかな。</div>
+          <div class="dialog-bubble">そう。確かめたのは1924年の予言から3年後、1927年のデイヴィソンとガーマーの実験だよ。電子をニッケルの結晶に当てると、波にしかできない縞模様が現れた――こういう波の縞模様の作り方を<strong>回折</strong>と呼ぶ。発表当時は審査する側も判断に困ったほど大胆な類推が、こうして実験事実になった。ド・ブロイは1929年にノーベル賞を受けた。……これで役者がそろったよ。<strong>電子は、E＝hν と p＝h/λ という翻訳ルールを持つ波である</strong>。実験が保証してくれた、これが私たちの出発点だ。</div>
         </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">変わりません。回転は向きを変えるだけで、長さは変えない。ψ＝A e<sup>i(kx−ωt)</sup> なら、どの場所でもどの瞬間でも<strong>矢印の長さは A のまま</strong>です。A を大きく取れば針は全部そろって長くなりますが、それは<strong>この波をどれくらいの強さにするか</strong>という最初の選び方で、場所や時刻のせいで伸び縮みするわけではありません。「波の強さ」が場所によって消えたり現れたりしない。<strong>見つかる確率に縞ができる、あの不都合が消える</strong>――教室で見せられた絵は、式にするとこれだったんですね。……そうか、いま分かりました。影（sin）だけ見ていたから 0 に見えたんだ。本体の針は、影が 0 になった瞬間も横を向いて堂々と存在していた。</div>
-        </div>
+      </div>
+
+      <div class="diagram-box">
+        <svg class="sq-svg" viewBox="0 0 340 190" width="100%" role="img" aria-label="ド・ブロイの裏返しの図。左の箱：光は波だと思われていたが粒の性質E=hνとp=h/λを持っていた。右の箱：電子は粒だと思われていたが、同じ式で波の性質λ=h/pを持つはず。下に電子回折の実験で確認と記す">
+          <text class="strong" x="14" y="16">ド・ブロイの「裏返し」（1924年）</text>
+          <rect class="boxL" x="14" y="30" width="148" height="92" rx="8"></rect>
+          <text class="lbB" x="88" y="50" text-anchor="middle">光</text>
+          <text class="label" x="88" y="70" text-anchor="middle">「波」だと思っていたら</text>
+          <text class="label" x="88" y="86" text-anchor="middle">粒でもあった</text>
+          <text class="strong" x="88" y="110" text-anchor="middle">E＝hν　p＝h/λ</text>
+          <rect class="boxR" x="178" y="30" width="148" height="92" rx="8"></rect>
+          <text class="lbA" x="252" y="50" text-anchor="middle">電子</text>
+          <text class="label" x="252" y="70" text-anchor="middle">「粒」だと思っていたら</text>
+          <text class="label" x="252" y="86" text-anchor="middle">波でもあるはず</text>
+          <text class="strong" x="252" y="110" text-anchor="middle">λ＝h/p　ν＝E/h</text>
+          <line class="bigarrow" x1="162" y1="76" x2="172" y2="76"></line>
+          <polygon class="bigarrowhead" points="178,76 169,72 169,80"></polygon>
+          <text class="strong" x="14" y="152">同じ翻訳ルールを、逆向きに使う。</text>
+          <text class="label" x="14" y="172">→ 1927年、電子の回折実験（デイヴィソン＝ガーマー）で</text>
+          <text class="label" x="14" y="186">　 本当に波長 h/p の波だと確認された</text>
+        </svg>
+        <div class="diagram-caption">光で見つかった「波の量↔粒の量」の翻訳ルールを、ド・ブロイは電子に裏返して適用した。運動量 p で飛ぶ電子は波長 λ＝h/p の波として振る舞う――3年後、結晶での回折実験が縞模様を映し出し、この類推は実験事実になった</div>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。|e<sup>iθ</sup>|＝1 だから |ψ|＝A で一定――時間が加わっても、針は回るだけで長さは変えない。<strong>強みその2</strong>は<strong>微分</strong>だ。不確定性原理の教室で見たとおり、e<sup>ikx</sup> は微分しても ik が前に出るだけで<strong>自分自身のまま</strong>。sin は微分すると cos に化け、cos は −sin に化けて<strong>形がころころ変わる</strong>のに対して、e の波は形が崩れない。この性質が、次の次のステージで方程式を組むときの生命線になる。</div>
+          <div class="dialog-bubble">仕上げに、この辞書を<strong>私たちの波の式の言葉</strong>に合わせて磨いておこう。ステージ1で、波は k＝2π/λ と ω＝2πν で書いたね。運動量のほうは、<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>ですでに翻訳済みだ――p＝h/λ を k で書き直して <strong>p＝ℏk</strong>、<strong>ℏ（エイチバー）＝ h/2π ≈ 1.05×10⁻³⁴ J·s</strong> だったね。今日はエネルギーのほうを、同じ手で翻訳する。<br>E ＝ hν ＝ h × (ω/2π) ＝ <strong>(h/2π) ω ＝ ℏω</strong><br>同じ ℏ が現れて、辞書はたった2本、しかも美しく対称な形になる。</div>
         </div>
+      </div>
+
+      <div class="formula-box">
+        <span class="step">【波と粒の辞書】　E ＝ ℏω　　p ＝ ℏk</span>
+        <span class="step multi"><span class="item">E：エネルギー（粒の言葉）↔ ω：角振動数（波の言葉）</span>　<span class="item">p：運動量 ↔ k：波数</span>　<span class="item">ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s</span></span>
+      </div>
+
+      <div class="dialogue-scene">
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">1つ確認させてください。海の波や音の波も、同じ理由で複素数で書くべきなんですか？ 水面の高さが複素数というのは、さすがに変な気がします。水面の高さは、メジャーで測れる普通の数のはずです。</div>
+          <div class="dialog-bubble">読み下してみます。<strong>E＝ℏω：速く振動する波ほど、エネルギーが大きい。p＝ℏk：細かい波ほど、運動量が大きい</strong>。橋渡し役はどちらも同じ定数 ℏ。……そうすると、電子の波はこう書き直せますね。ψ＝A e<sup>i(kx−ωt)</sup> の k に p/ℏ を、ω に E/ℏ を代入して――ψ＝A e<sup>i(px−Et)/ℏ</sup>。<strong>波の式の中に、運動量とエネルギーが直接入った</strong>。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">とても大事な区別だよ。海の波や音では、複素数は<strong>計算を楽にするための便利な道具</strong>にすぎない。計算の最後に「実部だけ取り出す」と約束して、本当の答えはあくまで実数だ。ところが量子力学では事情がまったく違う。教室で「複素数は便利なのではなく<strong>必須</strong>だった」と聞いたのは、この違いのことだよ。<strong>ψ そのものが本質的に複素数</strong>で、実部だけ取り出しても正しい物理にならないんだ。なぜそう言い切れるかは、方程式が完成したステージ5で、方程式自身が教えてくれる。式の中に <strong>i が堂々と居座る</strong>のを、きみは目撃することになる。……ここでは伏線として、こう覚えておいてほしい。<strong>ψ は観測にかかる「高さ」ではない</strong>。じゃあ観測にかかるのは何か――それはステージ7で、|ψ| が主役になって答えてくれる。</div>
+          <div class="dialog-bubble">その書き換えが、今日の到達点だよ。眺めてごらん。<strong>電子の波そのものが、E と p を「位相の進むペース」として体内に記録している</strong>。空間方向に p のペースでねじれ、時間方向に E のペースで回る。……そこで、次の問いが自然に生まれる。波の中に記録されているなら、<strong>取り出せる</strong>はずだ。式 ψ から、掛け算や足し算のような操作で、p や E を引きずり出す方法はないか？　その道具が<strong>微分</strong>――次のステージの主役だ。</div>
         </div>
-        <div class="dialog-row right">
-          <div class="dialog-character">
-            <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name student">うさ美</div>
-          </div>
-          <div class="dialog-bubble">伏線が2本になりましたね。「i が方程式に居座る」と「観測にかかるのは |ψ|」。……道具はそろってきました。波の式 ψ＝A e<sup>i(kx−ωt)</sup> の中には、波の細かさ k と、振動の速さ ω が入っています。でもこれはまだ<strong>波の言葉</strong>だけの式です。電子は粒でもあって、エネルギー E や運動量 p という<strong>粒の言葉</strong>を持っているはず。次は、この2つの言葉をつなぐんですね。</div>
-        </div>
-        <div class="dialog-row">
-          <div class="dialog-character">
-            <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
-            <div class="dialog-name mentor">ねこ博士</div>
-          </div>
-          <div class="dialog-bubble">その接続こそ、次のステージの仕事だよ。翻訳ルールはたった2本。しかもどちらも、量子力学の教室ですでに出会っている式だ。プランクとアインシュタインが光に見つけ、ド・ブロイが電子へ裏返した、あの2本――E＝hν と p＝h/λ。次回、この「辞書」を丁寧に読み直そう。</div>
-        </div>
-      </div>
-
-      <div class="formula-box">
-        <span class="step">【このステージの成果】　電子の波：　ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></span>
-        <span class="step multi"><span class="item">強み①：|ψ|＝A で一定（波の強さが場所や時間で消えない）</span>　<span class="item">強み②：微分しても形が崩れない（i が前に出るだけ・詳細はSTAGE4）</span></span>
       </div>
 
       <h2 class="quiz-head">確認クイズ</h2>
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q1. 複素数に i を掛けることの、図形的な意味は？</p>
+        <p class="quiz-q">Q1. 光電効果で、当てる光の「色」を赤から青に変える（振動数 ν を上げる）と何が起きる？</p>
         <div class="choice-list">
-          <button class="choice-btn">矢印の長さを i 倍、つまり向きはそのままで長さだけを伸ばす</button>
-          <button class="choice-btn">矢印を上下にひっくり返す（虚部の符号を反転する）</button>
-          <button class="choice-btn">矢印を反時計回りに90°回す</button>
+          <button class="choice-btn">飛び出す電子1個1個の勢いが増す</button>
+          <button class="choice-btn">飛び出す電子の個数だけが増え、1個1個の勢いは変わらない</button>
+          <button class="choice-btn">光が強くならない限り何も変わらない</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ 1×i＝i（真横→真上）、i×i＝−1（真上→逆の真横）と、i を掛けるたびに90°回る。4回で i⁴＝1、ちょうど一周。この「i＝90°回転」が、e<sup>iθ</sup> が円を描く理由の心臓部だった。</div>
+        <div class="quiz-explain" hidden>正解！ 色（振動数）は光子1個のエネルギー E＝hν を決める。青いほど1個が強く、叩き出される電子1個の勢いが増す。個数を決めるのは明るさ（光子の数）のほう。この「明るさと色の役割分担」こそ、光が粒であることの動かぬ証拠だった。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q2. e<sup>iθ</sup> の大きさ（矢印の長さ）|e<sup>iθ</sup>| は？</p>
+        <p class="quiz-q">Q2. ド・ブロイが1924年にやったことは？</p>
         <div class="choice-list">
-          <button class="choice-btn">θ によらず、いつも 1</button>
-          <button class="choice-btn">θ が増えるほど大きくなる</button>
-          <button class="choice-btn">sinθ と同じように 1 と −1 の間で振動する</button>
+          <button class="choice-btn">電子のビームを結晶に当てて回折の縞模様を観測し、電子が波であることを実験で初めて確かめた</button>
+          <button class="choice-btn">光電効果の実験結果から E＝hν を発見し、光が粒であることを示した</button>
+          <button class="choice-btn">光で見つかった波↔粒の翻訳ルールを裏返し「電子も波長 h/p の波だ」と予言した</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ e<sup>iθ</sup> は単位円の上を回る矢印だから、長さはいつも1（|e<sup>iθ</sup>|²＝cos²θ＋sin²θ＝1）。回転は向きを変えるだけで長さを変えない。だから ψ＝Ae<sup>i(kx−ωt)</sup> の大きさは常に A で、「波が周期的に消える」問題が解決した。</div>
+        <div class="quiz-explain" hidden>正解！ ド・ブロイの仕事は理論的な「裏返し」の予言。実験で確認したのは1927年のデイヴィソンとガーマー（選択肢1）、E＝hν の発見はアインシュタイン（選択肢2）。類推→予言→実験による確認、という科学の王道リレーだ。</div>
       </div>
 
       <div class="quiz-card" data-quiz>
-        <p class="quiz-q">Q3. 電子の波を sin ではなく e<sup>i(kx−ωt)</sup> で書く強みとして、このステージで挙げた2つの組み合わせは？</p>
+        <p class="quiz-q">Q3. ℏ（エイチバー）とは何？</p>
         <div class="choice-list">
-          <button class="choice-btn">式が sin より短く書ける／計算機での計算が速くなる</button>
-          <button class="choice-btn">大きさ |ψ| が一定に保たれる／微分しても形が崩れない</button>
-          <button class="choice-btn">波の進む速さが上がる／波の振幅 A が時間とともに大きくなる</button>
+          <button class="choice-btn">プランク定数 h を 2 で割ったもの（E＝hν/2・p＝h/2λ と半分にした形の定数）</button>
+          <button class="choice-btn">プランク定数 h を 2π で割ったもの（E＝ℏω・p＝ℏk と対称な形になる）</button>
+          <button class="choice-btn">光の速さ c をプランク定数 h で割ったもので、光と電子をつなぐ定数</button>
         </div>
-        <div class="quiz-explain" hidden>正解！ ①回る矢印の長さは一定だから、波の強さが場所や時間で消えたり現れたりしない。②e<sup>iθ</sup> は「変化の速さ＝i×いまの値」なので、微分しても i が前に出るだけで自分自身のまま。この②が、次の次のステージ（STAGE4）で E と p の「検出器」を組み立てる生命線になる。</div>
+        <div class="quiz-explain" hidden>正解！ ℏ＝h/2π ≈ 1.05×10⁻³⁴ J·s。波の言葉を ν・λ から ω・k に乗り換えたとき、換算で必ず 2π が現れるので、h/2π をひとまとめにした。以後、量子力学の式にはほぼ ℏ の顔しか出てこない。</div>
       </div>
 
       <div class="stage-nav">
@@ -328,187 +366,117 @@
 
 <script>
 (function(){
-  var svg = document.getElementById('euler-svg');
+  var svg = document.getElementById('ph-svg');
   if (!svg) return;
-  var vec = document.getElementById('e-vec'), vech = document.getElementById('e-vech'),
-      tx = document.getElementById('e-tx'), ty = document.getElementById('e-ty'),
-      lb = document.getElementById('e-lb'), lbc = document.getElementById('e-cos'), lbs = document.getElementById('e-sin');
-  var CX = 120, CY = 115, R = 62;
+  var H = 6.626e-34, C = 2.998e8, BALL = 0.145;
+  var X0 = 30, X1 = 316, SPAN = 1500, PXNM = (X1 - X0) / SPAN;
+  var wave = document.getElementById('ph-wave'), band = document.getElementById('ph-band');
+  var lam = document.getElementById('ph-lam'), lh1 = document.getElementById('ph-lh1'), lh2 = document.getElementById('ph-lh2'),
+      lamtxt = document.getElementById('ph-lamtxt');
+  var parrow = document.getElementById('ph-p'), phead = document.getElementById('ph-ph');
+  var sl = document.getElementById('ph-l'), slv = document.getElementById('ph-lv');
+  var oNu = document.getElementById('ph-nu'), oE = document.getElementById('ph-e'),
+      oP = document.getElementById('ph-p-val'), oB = document.getElementById('ph-ball');
 
-  function draw(th) {
-    var px = CX + R * Math.cos(th), py = CY - R * Math.sin(th);
-    vec.setAttribute('x2', px.toFixed(1)); vec.setAttribute('y2', py.toFixed(1));
-    var bx = CX + (R - 9) * Math.cos(th), by = CY - (R - 9) * Math.sin(th);
-    var nx = Math.sin(th) * 4, ny = Math.cos(th) * 4;
-    vech.setAttribute('points', px.toFixed(1) + ',' + py.toFixed(1) + ' ' + (bx - nx).toFixed(1) + ',' + (by - ny).toFixed(1) + ' ' + (bx + nx).toFixed(1) + ',' + (by + ny).toFixed(1));
-    tx.setAttribute('x1', px.toFixed(1)); tx.setAttribute('y1', py.toFixed(1));
-    tx.setAttribute('x2', px.toFixed(1)); tx.setAttribute('y2', CY);
-    ty.setAttribute('x1', px.toFixed(1)); ty.setAttribute('y1', py.toFixed(1));
-    ty.setAttribute('x2', CX); ty.setAttribute('y2', py.toFixed(1));
-    lb.setAttribute('x', (CX + (R + 12) * Math.cos(th)).toFixed(1));
-    lb.setAttribute('y', (CY - (R + 12) * Math.sin(th) + 4).toFixed(1));
-    lbc.setAttribute('x', (CX + R * Math.cos(th) / 2 - 16).toFixed(1));
-    lbs.setAttribute('y', (CY - R * Math.sin(th) / 2 + 4).toFixed(1));
+  /* 数値を「仮数×10のべき乗」の形のHTMLにする（上付き文字つき） */
+  function sci(v, d) {
+    var e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
+    if (m >= 9.995) { m /= 10; e += 1; }
+    return m.toFixed(d) + '×10<sup>' + String(e).replace('-', '−') + '</sup>';
   }
-  draw(Math.PI / 5);
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var t = Math.PI / 5, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.012;
-    if (t > 2 * Math.PI) t -= 2 * Math.PI;
-    draw(t);
-    raf = requestAnimationFrame(loop);
-  }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
-})();
-</script>
-
-<script>
-/* ψ＝Ae^{i(kx−ωt)}：場所ごとに立つ針の列（3D）。高さ＝虚部、手前＝実部。針の高さを結んだ影が sin の波 */
-(function(){
-  var cv = document.getElementById('hands3d');
-  if (!cv) return;
-  var ctx = cv.getContext('2d');
-  var sk = document.getElementById('h-k'), sw = document.getElementById('h-w'),
-      sa = document.getElementById('h-a'), stt = document.getElementById('h-t');
-  var vk = document.getElementById('h-kv'), vw = document.getElementById('h-wv'),
-      va = document.getElementById('h-av'), vt = document.getElementById('h-tv');
-  var roLam = document.getElementById('h-ro-lam'), roT = document.getElementById('h-ro-t');
-  var btn = document.getElementById('h-play');
-  var XM = 8, XS = 3.4, N = 44, HZ = 4.2, DIM = 3.6;
-  var yaw = 0.3, pitch = -0.55, W = 0, H = 0, sc = 1, cx = 0, cy = 0, t = 0;
-  var C = { gold: '#a6742a', blue: '#2f6fa6', muted: '#8a7a5c', ink: '#241d12', shadow: 'rgba(47,111,166,.9)', env: 'rgba(166,116,42,.5)' };
-  var F = '800 11px "GreekNu",system-ui,-apple-system,"Hiragino Sans","Yu Gothic",sans-serif';
-
-  function k() { return +sk.value; }
-  function w() { return +sw.value; }
-  function amp() { return +sa.value; }
-  function period() { return w() > 0.02 ? 2 * Math.PI / w() : 6.28; }
-
-  function proj(X, Y, Z) {
-    var cw = Math.cos(yaw), swy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
-    var X1 = X * cw + Z * swy, Z1 = -X * swy + Z * cw;
-    var Y2 = Y * cp - Z1 * sp;
-    return [cx + sc * X1, cy - sc * Y2];
-  }
-  /* 場所 x、虚部（高さ）、実部（手前） */
-  function P(x, im, re) { return proj((x - XM / 2) * XS, HZ * im, -DIM * re); }
-  function line(pts, color, wd, dash) {
-    ctx.strokeStyle = color; ctx.lineWidth = wd; ctx.setLineDash(dash || []); ctx.beginPath();
-    for (var i = 0; i < pts.length; i++) { var p = pts[i]; if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-  function arrow(p1, p2, label, dxl, dyl) {
-    line([p1, p2], C.muted, 1.5);
-    var ang = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]);
-    ctx.fillStyle = C.muted; ctx.beginPath();
-    ctx.moveTo(p2[0] + Math.cos(ang) * 9, p2[1] + Math.sin(ang) * 9);
-    ctx.lineTo(p2[0] + Math.cos(ang + 2.5) * 6, p2[1] + Math.sin(ang + 2.5) * 6);
-    ctx.lineTo(p2[0] + Math.cos(ang - 2.5) * 6, p2[1] + Math.sin(ang - 2.5) * 6);
-    ctx.closePath(); ctx.fill();
-    ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText(label, p2[0] + dxl, p2[1] + dyl);
+  /* 可視光（380〜780nm）のおおよその色。範囲外は灰色 */
+  function color(nm) {
+    var r = 0, g = 0, b = 0;
+    if (nm < 380 || nm > 780) return '#8a7a5c';
+    if (nm < 440) { r = (440 - nm) / 60; b = 1; }
+    else if (nm < 490) { g = (nm - 440) / 50; b = 1; }
+    else if (nm < 510) { g = 1; b = (510 - nm) / 20; }
+    else if (nm < 580) { r = (nm - 510) / 70; g = 1; }
+    else if (nm < 645) { r = 1; g = (645 - nm) / 65; }
+    else { r = 1; }
+    var f = nm > 700 ? 0.3 + 0.7 * (780 - nm) / 80 : (nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : 1);
+    var q = function(v){ return Math.round(255 * Math.pow(Math.max(v, 0) * f, 0.8)); };
+    return 'rgb(' + q(r) + ',' + q(g) + ',' + q(b) + ')';
   }
 
   function draw() {
-    var kk = k(), ww = w(), aa = amp(), i, x;
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = C.ink; ctx.font = '900 12px "GreekNu",system-ui,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillText('横：場所 x　高さ：針の縦成分（虚部）　手前：横成分（実部）', 14, 12);
-    var o = proj((0 - XM / 2) * XS - 1, 0, 0);
-    arrow(o, proj((XM - XM / 2) * XS + 2.5, 0, 0), 'x（場所）', -56, 16);
-    arrow(o, proj((0 - XM / 2) * XS - 1, HZ * 1.5, 0), '虚部', 6, 2);
-    arrow(o, proj((0 - XM / 2) * XS - 1, 0, -DIM * 1.4), '実部', 6, 10);
-    line([P(0, 0, 0), P(XM, 0, 0)], C.muted, 1);
-    /* 影：針の高さ（虚部）だけを結ぶ＝A sin(kx−ωt) */
-    var sh = [], env = [];
-    for (i = 0; i <= 120; i++) { x = XM * i / 120; var th = kk * x - ww * t; sh.push(P(x, aa * Math.sin(th), 0)); env.push(P(x, aa * Math.sin(th), aa * Math.cos(th))); }
-    line(sh, C.shadow, 1.8, [5, 4]);
-    /* 針の列：角度 kx−ωt、長さ A */
-    for (i = 0; i <= N; i++) {
-      x = XM * i / N; var th2 = kk * x - ww * t;
-      var base = P(x, 0, 0), tip = P(x, aa * Math.sin(th2), aa * Math.cos(th2));
-      line([base, tip], C.gold, 1.6);
-      ctx.fillStyle = C.gold; ctx.beginPath(); ctx.arc(tip[0], tip[1], 2.2, 0, 7); ctx.fill();
+    var nm = +sl.value, m = nm * 1e-9;
+    var nu = C / m, E = H * nu, p = H / m;
+
+    var per = nm * PXNM, d = '', first = true;
+    for (var x = X0; x <= X1; x += 2) {
+      var y = 58 - 18 * Math.sin(2 * Math.PI * (x - X0) / per);
+      d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
+      first = false;
     }
-    line(env, C.env, 1.6);
-    /* 1波長の目盛り */
-    var lam = 2 * Math.PI / kk;
-    if (lam <= XM) {
-      var a0 = P(0, 0, 0), a1 = P(lam, 0, 0);
-      line([a0, a1], C.gold, 2);
-      ctx.fillStyle = C.gold; ctx.font = F; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('λ＝' + lam.toFixed(2) + ' m', (a0[0] + a1[0]) / 2, Math.max(a0[1], a1[1]) + 6);
+    wave.setAttribute('d', d);
+    wave.setAttribute('stroke', color(nm));
+
+    var xe = X0 + per;
+    lam.setAttribute('x1', X0); lam.setAttribute('x2', xe.toFixed(1));
+    lh1.setAttribute('points', X0 + ',92 ' + (X0 + 7) + ',88.5 ' + (X0 + 7) + ',95.5');
+    lh2.setAttribute('points', xe.toFixed(1) + ',92 ' + (xe - 7).toFixed(1) + ',88.5 ' + (xe - 7).toFixed(1) + ',95.5');
+    if (per < 78) {                      /* 矢印が短いときは、ラベルを右横に逃がす */
+      lamtxt.setAttribute('x', (xe + 8).toFixed(1));
+      lamtxt.setAttribute('y', '96');
+      lamtxt.setAttribute('text-anchor', 'start');
+    } else {
+      lamtxt.setAttribute('x', ((X0 + xe) / 2).toFixed(1));
+      lamtxt.setAttribute('y', '87');
+      lamtxt.setAttribute('text-anchor', 'middle');
     }
-    ctx.font = F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-    ctx.fillStyle = C.gold; ctx.fillText('金の針：本体 ψ。場所とともに向きがねじれ（らせん）、時間とともに全部が回る', 14, H - 26);
-    ctx.fillStyle = C.blue; ctx.fillText('青の点線：針の高さだけを結んだ影＝sin の波。針が回ると波が走る', 14, H - 12);
+    lamtxt.textContent = 'λ＝' + nm + ' nm';
 
-    vk.textContent = kk.toFixed(2); vw.textContent = ww.toFixed(2); va.textContent = aa.toFixed(2);
-    vt.textContent = t.toFixed(2) + ' s';
-    roLam.textContent = lam.toFixed(2);
-    roT.textContent = ww > 0.02 ? period().toFixed(2) : '∞';
-  }
-  function resize() {
-    var w0 = cv.clientWidth || 320, h0 = Math.round(Math.max(w0 * 0.66, 280)), d = window.devicePixelRatio || 1;
-    cv.width = Math.round(w0 * d); cv.height = Math.round(h0 * d); cv.style.height = h0 + 'px';
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    W = w0; H = h0; sc = w0 / 36; cx = w0 / 2 + 6; cy = h0 / 2 + 4;
-    draw();
-  }
-  function syncTimeRange() { var T = period(); stt.max = T.toFixed(2); if (t > T) t = t % T; stt.value = t.toFixed(2); }
-  var queued = false;
-  function invalidate() { if (queued) return; queued = true; requestAnimationFrame(function(){ queued = false; draw(); }); }
+    band.textContent = nm < 380 ? '紫外線' : (nm > 780 ? '赤外線' : '可視光');
 
-  var playing = false, userPaused = false, raf = null, last = 0;
-  function frame(now) {
-    if (!playing) return;
-    var dt = last ? Math.min((now - last) / 1000, 0.05) : 0; last = now;
-    var T = period(); t += dt; if (t >= T) t -= T;
-    stt.value = t.toFixed(2);
-    draw(); raf = requestAnimationFrame(frame);
-  }
-  function play() { if (playing) return; playing = true; last = 0; btn.textContent = '⏸ 時間を止める'; btn.setAttribute('aria-pressed', 'true'); raf = requestAnimationFrame(frame); }
-  function pause() { playing = false; if (raf) { cancelAnimationFrame(raf); raf = null; } btn.textContent = '▶ 時間を進める'; btn.setAttribute('aria-pressed', 'false'); }
-  btn.addEventListener('click', function(){ if (playing) { userPaused = true; pause(); } else { userPaused = false; play(); } });
-  sk.addEventListener('input', invalidate);
-  sa.addEventListener('input', invalidate);
-  sw.addEventListener('input', function(){ syncTimeRange(); invalidate(); });
-  stt.addEventListener('input', function(){ userPaused = true; pause(); t = +stt.value; draw(); });
+    var L = 240 * 100 / nm, xp = X0 + L;
+    parrow.setAttribute('x2', xp.toFixed(1));
+    phead.setAttribute('points', (xp + 9).toFixed(1) + ',150 ' + xp.toFixed(1) + ',144 ' + xp.toFixed(1) + ',156');
 
-  var dragging = false, lx = 0, ly = 0;
-  function down(e) { dragging = true; var p = e.touches ? e.touches[0] : e; lx = p.clientX; ly = p.clientY; cv.style.cursor = 'move'; if (e.cancelable) e.preventDefault(); }
-  function move(e) {
-    if (!dragging) return;
-    var p = e.touches ? e.touches[0] : e;
-    yaw -= (p.clientX - lx) * 0.01; pitch -= (p.clientY - ly) * 0.01;
-    if (pitch > 1.5) pitch = 1.5; if (pitch < -1.5) pitch = -1.5;
-    lx = p.clientX; ly = p.clientY; invalidate();
-    if (e.cancelable) e.preventDefault();
+    slv.textContent = nm + ' nm';
+    oNu.innerHTML = sci(nu, 1);
+    oE.innerHTML = sci(E, 1);
+    oP.innerHTML = sci(p, 1);
+    oB.innerHTML = sci(p / BALL, 1);
   }
-  function up() { dragging = false; cv.style.cursor = 'move'; }
-  cv.addEventListener('mousedown', down); window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
-  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
-  window.addEventListener('resize', resize);
-  syncTimeRange(); resize();
-
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { userPaused = true; pause(); return; }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){ if (es[0].isIntersecting && !userPaused) play(); else if (!es[0].isIntersecting) pause(); }, { threshold: 0.15 }).observe(cv);
-  } else { play(); }
+  sl.addEventListener('input', draw);
+  draw();
 })();
 </script>
+
 <script>
-/* ギリシャ文字用の webフォントが読み込まれたら、canvas の図を描き直す（各図は resize で再描画する） */
-if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function(){ window.dispatchEvent(new Event('resize')); }); }
+(function(){
+  var svg = document.getElementById('tri-svg');
+  if (!svg) return;
+  var LX = 45, RX = 195, BY = 125, BASE = RX - LX;   /* 底辺＝mc² */
+  var legP = document.getElementById('tri-p'), hyp = document.getElementById('tri-h'),
+      arc = document.getElementById('tri-arc'), gap = document.getElementById('tri-gap'),
+      plb = document.getElementById('tri-plb'), elb = document.getElementById('tri-elb');
+  var sl = document.getElementById('tri-v'), slv = document.getElementById('tri-vv');
+  var r1 = document.getElementById('tri-r1'), r2 = document.getElementById('tri-r2'), r3 = document.getElementById('tri-r3');
+
+  function draw() {
+    var b = +sl.value, g = 1 / Math.sqrt(1 - b * b);
+    var lp = BASE * g * b, le = BASE * g;            /* pc と E の長さ（mc²＝BASE として） */
+    var ty = BY - lp, ex = LX + le;
+
+    legP.setAttribute('y2', ty.toFixed(1));
+    hyp.setAttribute('x2', RX); hyp.setAttribute('y2', ty.toFixed(1));
+    arc.setAttribute('d', 'M' + RX + ' ' + ty.toFixed(1) + ' A ' + le.toFixed(1) + ' ' + le.toFixed(1) + ' 0 0 1 ' + ex.toFixed(1) + ' ' + BY);
+    gap.setAttribute('x1', RX); gap.setAttribute('x2', ex.toFixed(1));
+    plb.setAttribute('y', ((BY + ty) / 2 + 4).toFixed(1));
+    elb.setAttribute('y', (BY - lp * 0.52 - 6).toFixed(1));
+    elb.setAttribute('x', (LX + BASE * 0.44).toFixed(1));
+
+    slv.textContent = b.toFixed(2) + ' c';
+    r1.textContent = (g * b).toFixed(3);
+    r2.textContent = ((g + 1) / 2).toFixed(3);
+    r3.textContent = g.toFixed(3);
+  }
+  sl.addEventListener('input', draw);
+  draw();
+})();
 </script>
 </body>
 </html>

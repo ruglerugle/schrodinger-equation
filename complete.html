@@ -13,14 +13,14 @@
   gtag('config', 'G-9RTQCP2HXM');
 </script>
 <title>全ステージクリア ― シュレディンガー方程式を導く</title>
-<meta name="description" content="シュレディンガー方程式を導く、全8ステージクリアおめでとう。ここまでの導出の旅を振り返ろう。">
+<meta name="description" content="シュレディンガー方程式を導く、全7ステージクリアおめでとう。ここまでの導出の旅を振り返ろう。">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/complete">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="シュレディンガー方程式を導く">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:title" content="全ステージクリア ― シュレディンガー方程式を導く">
-<meta property="og:description" content="全8ステージクリアおめでとう。導出の旅を振り返ろう。">
+<meta property="og:description" content="全7ステージクリアおめでとう。導出の旅を振り返ろう。">
 <meta property="og:url" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/complete">
 <meta property="og:image" content="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/images/ogp.png">
 <meta property="og:image:width" content="1200">
@@ -43,7 +43,7 @@
   <header class="hero">
     <div class="hero-copy">
       <h1><span class="line">導出完了。iℏ∂ψ/∂t ＝ Ĥψ ∎</span></h1>
-      <p>「波を数式でどう書くんですか？」という素朴な問いから出発して、sin、回る矢印 e<sup>iθ</sup>、2本の辞書、微分の検出器、そしてエネルギー保存則。1926年にシュレディンガーが世界に示した方程式を、きみは部品集めから最終組み立てまで、自分の手でやり切った。そのうえで方程式を実際に解いて、量子化・確率解釈・原子の安定まで見届けた。旅を振り返ろう。</p>
+      <p>不確定性原理の教室で手に入れた回る針の列 e<sup>ikx</sup> に時間を入れるところから出発して、走る波 ψ＝Ae<sup>i(kx−ωt)</sup>、2本の辞書、微分の検出器、そしてエネルギー保存則。1926年にシュレディンガーが世界に示した方程式を、きみは部品集めから最終組み立てまで、自分の手でやり切った。そのうえで方程式を実際に解いて、量子化・確率解釈・原子の安定まで見届けた。旅を振り返ろう。</p>
     </div>
   </header>
 
@@ -56,34 +56,30 @@
       <div class="recap-list">
         <div class="recap-item">
           <span class="recap-num">1</span>
-          <div class="recap-body"><span class="recap-title">波を数式で書く。</span> <span class="recap-desc">sin＝円を回る点の高さ。平行移動の技で波を走らせ、y＝A sin(kx−ωt) を組み立てた。</span></div>
+          <div class="recap-body"><span class="recap-title">回る針に時間を入れる。</span> <span class="recap-desc">不確定性原理の教室の針の列 e<sup>ikx</sup> を回して、走る電子の波 ψ＝Ae<sup>i(kx−ωt)</sup> に。本体は針、sin は影。大きさが消えず、微分で形が崩れない。</span></div>
         </div>
         <div class="recap-item">
           <span class="recap-num">2</span>
-          <div class="recap-body"><span class="recap-title">回る矢印 e<sup>iθ</sup>。</span> <span class="recap-desc">オイラーの公式で「波＝回る針の列」。大きさが消えず、微分で形が崩れない複素数の波 ψ＝Ae<sup>i(kx−ωt)</sup> に乗り換えた。</span></div>
-        </div>
-        <div class="recap-item">
-          <span class="recap-num">3</span>
           <div class="recap-body"><span class="recap-title">光の粒と物質の波。</span> <span class="recap-desc">光電効果の E＝hν、ド・ブロイの裏返し p＝h/λ。ℏ を使って辞書 E＝ℏω・p＝ℏk を整えた。</span></div>
         </div>
         <div class="recap-item">
-          <span class="recap-num">4</span>
+          <span class="recap-num">3</span>
           <div class="recap-body"><span class="recap-title">微分という検出器。</span> <span class="recap-desc">肩の係数が前に飛び出す。−iℏ∂/∂x が p を、iℏ∂/∂t が E を、−ℏ²∂²/∂x² が p² を波から読み出した。</span></div>
         </div>
         <div class="recap-item">
-          <span class="recap-num">5</span>
+          <span class="recap-num">4</span>
           <div class="recap-body"><span class="recap-title">方程式が生まれる瞬間。</span> <span class="recap-desc">E＝p²/2m＋V に検出器を代入。iℏ∂ψ/∂t＝−(ℏ²/2m)∂²ψ/∂x²＋Vψ が組み上がり、i が居座った。</span></div>
         </div>
         <div class="recap-item">
-          <span class="recap-num">6</span>
+          <span class="recap-num">5</span>
           <div class="recap-body"><span class="recap-title">箱の中の電子。</span> <span class="recap-desc">壁にちょうどはまる波だけが生き残り、Eₙ＝n²h²/8mL²。量子化と零点エネルギーが計算から転がり出た。</span></div>
         </div>
         <div class="recap-item">
-          <span class="recap-num">7</span>
+          <span class="recap-num">6</span>
           <div class="recap-body"><span class="recap-title">ψ の正体。</span> <span class="recap-desc">シュレディンガーの「実体の雲」は敗れ、ボルンの |ψ|²＝確率の台帳が勝った。規格化で振幅まで決まった。</span></div>
         </div>
         <div class="recap-item">
-          <span class="recap-num">8</span>
+          <span class="recap-num">7</span>
           <div class="recap-body"><span class="recap-title">定常状態と時間発展。</span> <span class="recap-desc">針は回るのに景色は凍る。原子は潰れず、段差が光の色 hν＝E₂−E₁ を決め、水素原子が完全に解けた。</span></div>
         </div>
       </div>

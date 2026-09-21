@@ -6,7 +6,7 @@
 (function (global) {
   "use strict";
 
-  var STORAGE_KEY = "schrodingerQuestProgress_v2";
+  var STORAGE_KEY = "schrodingerQuestProgress_v3";
 
   var BOOK_RECOMMEND = {
     title: "松浦壮『量子とはなんだろう 宇宙を支配する究極のしくみ』（ブルーバックス）",
@@ -15,25 +15,23 @@
 
   // 各ステージのクイズ正解（クイズカードの出現順に、正解の選択肢のインデックス）
   var ANSWERS = {
-    1: [1, 2, 0],
-    2: [2, 0, 1],
-    3: [0, 2, 1],
-    4: [1, 0, 2],
-    5: [2, 1, 0],
-    6: [0, 1, 2],
-    7: [1, 2, 0],
-    8: [2, 0, 1]
+    1: [1, 0, 2],
+    2: [0, 2, 1],
+    3: [1, 0, 2],
+    4: [2, 1, 0],
+    5: [0, 1, 2],
+    6: [1, 2, 0],
+    7: [2, 0, 1]
   };
 
   var STAGES = [
-    { n: 1, file: "stage1.html", title: "波を数式で書く", sub: "sin で波を描く" },
-    { n: 2, file: "stage2.html", title: "回る矢印 e^iθ", sub: "複素数の波" },
-    { n: 3, file: "stage3.html", title: "光の粒と物質の波", sub: "E=hν と p=h/λ" },
-    { n: 4, file: "stage4.html", title: "微分という検出器", sub: "波から E と p を取り出す" },
-    { n: 5, file: "stage5.html", title: "方程式が生まれる瞬間", sub: "エネルギー保存則に代入" },
-    { n: 6, file: "stage6.html", title: "箱の中の電子", sub: "解くと「飛び飛び」が出る" },
-    { n: 7, file: "stage7.html", title: "ψ の正体", sub: "ボルンの確率解釈" },
-    { n: 8, file: "stage8.html", title: "定常状態と時間発展", sub: "方程式が世界を動かす" }
+    { n: 1, file: "stage1.html", title: "回る針に時間を入れる", sub: "電子の波 ψ＝A e^i(kx−ωt)" },
+    { n: 2, file: "stage2.html", title: "光の粒と物質の波", sub: "E=hν と p=h/λ" },
+    { n: 3, file: "stage3.html", title: "微分という検出器", sub: "波から E と p を取り出す" },
+    { n: 4, file: "stage4.html", title: "方程式が生まれる瞬間", sub: "エネルギー保存則に代入" },
+    { n: 5, file: "stage5.html", title: "箱の中の電子", sub: "解くと「飛び飛び」が出る" },
+    { n: 6, file: "stage6.html", title: "ψ の正体", sub: "ボルンの確率解釈" },
+    { n: 7, file: "stage7.html", title: "定常状態と時間発展", sub: "方程式が世界を動かす" }
   ];
 
   function getCleared() {
