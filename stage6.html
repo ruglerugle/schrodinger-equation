@@ -274,11 +274,10 @@
     var fringe = Math.cos(u * 2.0);
     return env * fringe * fringe;
   }
-  var d = '', first = true;
+  var d = '';
   for (var y = Y0; y <= Y1; y += 1.5) {
     var x = SX + 6 + 68 * density(y);
-    d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1);
-    first = false;
+    d += ' L' + x.toFixed(1) + ' ' + y.toFixed(1);
   }
   prob.setAttribute('d', 'M' + (SX + 6) + ' ' + Y0 + ' ' + d + ' L' + (SX + 6) + ' ' + Y1 + ' Z');
 
