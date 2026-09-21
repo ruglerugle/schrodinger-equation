@@ -170,7 +170,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">やってみせよう。使うのは<strong>因数分解</strong>だけだよ。まず (mc²)² を左辺に移す。<br>E²−(mc²)²＝(pc)²<br>左辺は「2乗ひく2乗」の形だから、<strong>和と差の積</strong>に分解できるね。<br>(E−mc²)(E＋mc²)＝(pc)²<br>ここで「ゆっくり」が効いてくる。ゆっくり動くものは、<strong>動きのぶん pc が、質量のぶん mc² に比べてうんと小さい</strong>。すると全エネルギー E は mc² とほとんど同じ大きさになるから、E＋mc² は <strong>2mc²</strong> とみなしていい。<br>(E−mc²)×2mc² ≒ p²c²<br>両辺を 2mc² で割ると、c² が約分されて<br><strong>E−mc² ≒ p²/(2m)</strong><br>この左辺 E−mc² は、止まっているときのエネルギー mc² を<strong>超えた分</strong>――つまり<strong>運動エネルギー</strong>だ。そしてニュートン力学では、運動エネルギーは <strong>½mv²</strong> と書ける。同じものを2通りに書いたのだから、等しいとおいてごらん。<br>p²/(2m) ＝ ½mv²　→　p²＝m²v²　→　<strong>p＝mv</strong><br>ほら、戻ってきた。効いたのは「E＋mc² ≒ 2mc²」の一手だけ。これが成り立つのは、pc が mc² に比べて小さいとき――つまり光速よりずっと遅いとき、という条件つきだよ。</div>
+          <div class="dialog-bubble">やってみせよう。使うのは<strong>因数分解</strong>だけだよ。まず (mc²)² を左辺に移す。<br>E²−(mc²)²＝(pc)²<br>左辺は「2乗ひく2乗」の形だから、<strong>和と差の積</strong>に分解できるね。<br>(E−mc²)(E＋mc²)＝(pc)²<br>この式を、知りたい量について解こう。両辺を (E＋mc²) で割れば<br><strong>E−mc² ＝ (pc)² ／ (E＋mc²)</strong><br>ここまでは近似なしの、<strong>正確な式</strong>だ。左辺の E−mc² は、止まっているときのエネルギー mc² を<strong>超えた分</strong>――つまり<strong>運動エネルギー</strong>だよ。それが右辺の割り算で与えられている。ここで「ゆっくり」が効いてくる。ゆっくり動くものは、<strong>動きのぶん pc が、質量のぶん mc² に比べてうんと小さい</strong>。すると E は mc² よりほんの少し大きいだけだから、分母の E＋mc² は <strong>2mc²</strong> とみなしていい。近似するのは、この<strong>分母の一か所だけ</strong>だ。<br>E−mc² ≒ p²c²／(2mc²)<br>c² が約分されて<br><strong>E−mc² ≒ p²/(2m)</strong><br>そしてニュートン力学では、運動エネルギーは <strong>½mv²</strong> と書ける。同じものを2通りに書いたのだから、等しいとおいてごらん。<br>p²/(2m) ＝ ½mv²　→　p²＝m²v²　→　<strong>p＝mv</strong><br>ほら、戻ってきた。効いたのは「分母の E＋mc² ≒ 2mc²」の一手だけ。これが成り立つのは、pc が mc² に比べて小さいとき――つまり光速よりずっと遅いとき、という条件つきだよ。</div>
         </div>
       </div>
 
@@ -198,7 +198,7 @@
           <span style="color:#2f6fa6">pc ÷ mc² ＝ <b id="tri-r1">0.314</b></span>
           <span>E＋mc² ÷ 2mc² ＝ <b id="tri-r2">1.024</b></span>
           <span style="color:#b5504a">p ÷ mv ＝ <b id="tri-r3">1.048</b></span>
-          <span class="sub">まん中が「E＋mc² ≒ 2mc²」の近似の精度。右がその結果として p＝mv がどれだけ合っているか</span>
+          <span class="sub">まん中が分母の近似「E＋mc² ≒ 2mc²」の精度。右がその結果として p＝mv がどれだけ合っているか</span>
         </div>
         <div class="diagram-caption">E²＝(pc)²＋(mc²)² は、<strong>直角をはさむ2辺が pc と mc²、斜辺が E</strong> の三角形と同じ形をしている（三平方の定理）。速さ v を上げると縦の辺 pc が伸び、斜辺 E が底辺より目に見えて長くなる。逆に<strong>ゆっくりのときは縦の辺がほとんど無く、E は mc² とほぼ同じ長さ</strong>――だから E＋mc² を 2mc² で置き換えてよく、そこから p＝mv が出てくる。音速（秒速340 m）でも v は光速の 0.0001 % ほどしかないので、p÷mv は 1.0000000000006 くらい。日常では p＝mv が完璧に見えるのは、このためだよ。光速の 50% まで動かせる</div>
       </div>
@@ -209,14 +209,14 @@
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">ひとつ引っかかります。E＋mc² を 2mc² とみなしたのは、E ≒ mc² だからですよね。それなら同じ理屈で、E−mc² も 0 になってしまいませんか。片方だけ生かすのは、ずるい気がします。</div>
+          <div class="dialog-bubble">ひとつ引っかかります。分母の E＋mc² は 2mc² に置き換えたのに、左辺の E−mc² は 0 に置き換えませんでした。E が mc² とほとんど同じなら、どちらも同じ扱いになりそうなのに、どうして分母だけなんですか。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">いい引っかかりだ。E と mc² の差を、小さな量 ε（イプシロン）と書いてみよう。E＝mc²＋ε だ。すると E＋mc²＝2mc²＋ε、E−mc²＝ε。同じ ε なのに、<strong>居場所が違う</strong>。上の式では、ε は 2mc² という巨大な数に足されている。数字で言えば、mc² が 100万で ε が 1 なら 2mc²＋ε＝2,000,001。これを 2,000,000 とみなしても、狂いは 200万分の 1 だ。ところが下の式では、ε が<strong>そのまま答え</strong>になる。1 を 0 とみなしたら、答えそのものが消えてしまう。<strong>小さい量は、大きい量に足されているときは無視できるが、それ自体が答えのときは無視できない</strong>。「隣にある量と比べて小さいかどうか」で決める、という判断だよ。だから E＋mc² ≒ 2mc² は許されて、E−mc² ≒ 0 は許されない。</div>
+          <div class="dialog-bubble">いい引っかかりだ。E と mc² の差を、小さな量 ε（イプシロン）と書いてみよう。E＝mc²＋ε だ。すると E＋mc²＝2mc²＋ε、E−mc²＝ε。同じ ε なのに、<strong>居場所が違う</strong>。上の式では、ε は 2mc² という巨大な数に足されている。数字で言えば、mc² が 100万で ε が 1 なら 2mc²＋ε＝2,000,001。これを 2,000,000 とみなしても、狂いは 200万分の 1 だ。ところが下の式では、ε が<strong>そのまま答え</strong>になる。1 を 0 とみなしたら、答えそのものが消えてしまう。<strong>小さい量は、大きい量に足されているときは無視できるが、それ自体が答えのときは無視できない</strong>。「隣にある量と比べて小さいかどうか」で決める、という判断だよ。だから分母の E＋mc² ≒ 2mc² は許されて、左辺の E−mc² ≒ 0 は許されない。近似したのは、分母のその一か所だけだよ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
