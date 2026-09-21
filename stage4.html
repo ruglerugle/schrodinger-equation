@@ -108,27 +108,15 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">前回の宿題はこうだった。電子の波 ψ＝A e<sup>i(px−Et)/ℏ</sup> の中には、運動量 p とエネルギー E が「位相の進むペース」として記録されている。ならば、<strong>式への操作でそれを取り出せないか</strong>。その道具が<strong>微分</strong>だ。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で「傾きを読む道具」として手に入れ、運動量を取り出す操作まで組み上げたね。今日はそれを時間の方向にも広げる。念のため、定義から確かめ直しておこう。<strong>グラフの傾きを読む</strong>。それだけだ。関数 f(x) のグラフの上で、x をほんの少し（d とする）進めたときの<strong>高さの増え幅を、進んだ幅 d で割る</strong>：(f(x＋d)−f(x))／d。d をどんどん小さくしていったときにこの割合が近づく値を、<strong>x での微分（傾き）</strong>と呼んで、df/dx と書く。この <strong>d</strong> は、記号を考えたライプニッツが <strong>differentia</strong>（ラテン語で「差」。英語の difference と同じ語源）の頭文字として使ったものでね。df/dx は「<strong>f の差 ÷ x の差</strong>」と読める形になっている。坂道の勾配と同じだね。「3%の坂」が、100m進むと3m上がる坂のことであるようにさ。</div>
+          <div class="dialog-bubble">前回の宿題はこうだった。電子の波 ψ＝A e<sup>i(px−Et)/ℏ</sup> の中には、運動量 p とエネルギー E が「位相の進むペース」として記録されている。ならば、<strong>式への操作でそれを取り出せないか</strong>。その道具が<strong>微分</strong>だ。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で「傾きを読む道具」として手に入れ、運動量を取り出す操作まで組み上げたね。今日はそれを<strong>時間の方向にも広げる</strong>。定義はあのときと同じ、グラフの傾きを読むことだ。記号の由来だけ足しておこう。df/dx の <strong>d</strong> は、記号を考えたライプニッツが <strong>differentia</strong>（ラテン語で「差」。英語の difference と同じ語源）の頭文字として使ったものでね。df/dx は「<strong>f の差 ÷ x の差</strong>」と読める形になっている。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">傾きなら中学の一次関数と、不確定性原理の教室でやりました。y＝2x の傾きは 2。ただ、あれは直線だから傾きがどこでも同じでした。曲線だと場所ごとに傾きが違う――だから「d を小さくして、その場所のすぐ近くだけで測る」わけですね。<strong>df/dx は「x のいまの場所での、局所的な傾き」</strong>。d で割っているのは、幅あたりに直すため。</div>
+          <div class="dialog-bubble">不確定性原理の教室では、曲線でも1点のまわりをどんどん拡大すればまっすぐに見えてきて、そのまっすぐな線の傾きが微分でした。<strong>df/dx は「x のいまの場所での、局所的な傾き」</strong>で、d で割っているのは幅あたりに直すため、でしたね。</div>
         </div>
-      </div>
-
-      <div class="diagram-box">
-        <svg class="sq-svg" id="slope-svg" viewBox="0 0 340 180" width="100%" role="img" aria-label="曲線の上を動く点と、その点での接線。場所によって傾きが変わる様子を示す。傾きを読む操作が微分">
-          <text class="strong" x="14" y="16">微分＝その場所での「傾き」を読む操作</text>
-          <line class="axis" x1="14" y1="150" x2="326" y2="150"></line>
-          <path class="wave" id="s-curve"></path>
-          <line class="tang" id="s-tan" x1="0" y1="0" x2="0" y2="0"></line>
-          <circle class="tdot" id="s-dot" cx="0" cy="0" r="4.5"></circle>
-          <text class="lbA" id="s-txt" x="20" y="40">傾き＝df/dx</text>
-        </svg>
-        <div class="diagram-caption">曲線の各点には、その点だけの<strong>傾き</strong>（赤い接線）がある。x を少し進めたときの高さの増え幅÷進んだ幅、の極限が微分 df/dx。上り坂ではプラス、山の頂上ではゼロ、下り坂ではマイナスと、場所とともに変わっていく</div>
       </div>
 
       <div class="dialogue-scene">
@@ -167,7 +155,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">さて、微分の計算規則はたくさんあるけれど、今日の仕事に必要なのは<strong>たった1つ</strong>。指数関数の微分だ。ステージ2で確認した e の心臓部――<strong>関数 e<sup>t</sup> は「増える速さ＝いまの量」</strong>を思い出してごらん。式で書けば d(e<sup>t</sup>)/dt＝e<sup>t</sup>。微分しても自分のまま、という唯一無二の関数だ。では e<sup>at</sup>（a は定数）ならどうなるかな。中身の時計 at は、t の <strong>a 倍の速さ</strong>で進む。早回しで観察しているのと同じだから、変化の速さも a 倍。つまり――<br><strong>d(e<sup>at</sup>)/dt ＝ a e<sup>at</sup></strong><br>「<strong>肩の係数が、そのまま前に飛び出してくる</strong>」。これが今日使う唯一のルールで、a が複素数（i を含む数）でもそのまま成り立つことが知られている。</div>
+          <div class="dialog-bubble">さて、微分の計算規則で今日使うのは<strong>たった1つ</strong>。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で組み立てた「<strong>e の肩に式が乗っているときは、肩を微分したものが前に降りてきて、e はそのまま残る</strong>」という規則だ。肩が at（a は定数）なら、肩の微分は a。だから<br><strong>d(e<sup>at</sup>)/dt ＝ a e<sup>at</sup></strong><br>a が複素数（i を含む数）でも、この規則はそのまま成り立つ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -245,7 +233,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。伏線は回収された。……最後に、次回への仕込みをひとつだけ。この先で必要になるのは、実は p そのものよりも <strong>p²</strong>（運動量の2乗）なんだ。検出器を<strong>2回連続で</strong>通せばいい。1回目で ik が前に出て、2回目でもう1個 ik が出る。つまり x で2回微分（∂²/∂x² と書く）すると (ik)²＝−k² が前に出る：<br>∂²ψ/∂x² ＝ −k²ψ<br>両辺に −ℏ² を掛ければ、−ℏ² ∂²ψ/∂x² ＝ ℏ²k²ψ ＝ <strong>p²ψ</strong>。<strong>p² の検出器は −ℏ²∂²/∂x²</strong> だ。2回微分は「傾きの傾き」、グラフの言葉で言えば<strong>曲がり具合（カーブのきつさ）</strong>を読む操作だよ。細かい波ほど鋭く曲がる――だから曲がり具合が p² の目盛りになる。</div>
+          <div class="dialog-bubble">そのとおり。伏線は回収された。……最後に、次回への仕込みをひとつだけ。この先で必要になるのは、実は p そのものよりも <strong>p²</strong>（運動量の2乗）なんだ。これも不確定性原理の教室で一度やったね――検出器を<strong>2回連続で</strong>通す。x で2回微分（∂²/∂x² と書く）すると (ik)²＝−k² が前に出て、−ℏ² を掛ければ ℏ²k²ψ＝<strong>p²ψ</strong>。<strong>p² の検出器は −ℏ²∂²/∂x²</strong> だった。ひとつだけ絵を足しておこう。2回微分は「傾きの傾き」、グラフの言葉で言えば<strong>曲がり具合（カーブのきつさ）</strong>を読む操作だよ。細かい波ほど鋭く曲がる――だから曲がり具合が p² の目盛りになる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -307,53 +295,6 @@
 <script src="js/progress.js"></script>
 <script>SQ.initStagePage(4);</script>
 
-<script>
-(function(){
-  var svg = document.getElementById('slope-svg');
-  if (!svg) return;
-  var curve = document.getElementById('s-curve'), tan = document.getElementById('s-tan'),
-      dot = document.getElementById('s-dot'), txt = document.getElementById('s-txt');
-  var X0 = 20, X1 = 320, AXIS = 100, AMP = 42, LAM = 200;
-
-  function yAt(x) { return AXIS - AMP * Math.sin(2 * Math.PI * (x - X0) / LAM); }
-  function slopeAt(x) { return -AMP * (2 * Math.PI / LAM) * Math.cos(2 * Math.PI * (x - X0) / LAM); }
-
-  var d = '', first = true;
-  for (var x = X0; x <= X1 + 0.001; x += 3) {
-    d += (first ? 'M' : 'L') + x.toFixed(1) + ' ' + yAt(x).toFixed(1);
-    first = false;
-  }
-  curve.setAttribute('d', d);
-
-  function draw(px) {
-    var py = yAt(px), m = slopeAt(px), L = 34;
-    var dx = L / Math.sqrt(1 + m * m), dy = m * dx;
-    tan.setAttribute('x1', (px - dx).toFixed(1)); tan.setAttribute('y1', (py - dy).toFixed(1));
-    tan.setAttribute('x2', (px + dx).toFixed(1)); tan.setAttribute('y2', (py + dy).toFixed(1));
-    dot.setAttribute('cx', px.toFixed(1)); dot.setAttribute('cy', py.toFixed(1));
-    txt.setAttribute('x', Math.min(px + 10, 250).toFixed(1));
-    txt.setAttribute('y', Math.max(py - 14, 32).toFixed(1));
-  }
-  draw(90);
-
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var t = 0, running = false, raf = null;
-  function loop() {
-    if (!running) return;
-    t += 0.008;
-    var px = X0 + 10 + (X1 - X0 - 20) * (0.5 - 0.5 * Math.cos(t));
-    draw(px);
-    raf = requestAnimationFrame(loop);
-  }
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(es){
-      if (es[0].isIntersecting && !running) { running = true; loop(); }
-      else if (!es[0].isIntersecting && running) { running = false; if (raf) cancelAnimationFrame(raf); }
-    }, {threshold: 0.15}).observe(svg);
-  } else { running = true; loop(); }
-})();
-</script>
 <script>
 /* ψ(x,t) の立体グラフ：ドラッグで自由に回せる3Dワイヤーフレーム。
    同じ1点でも「x方向へ歩くか、t方向へ歩くか」で傾きが変わる＝偏微分の絵 */
