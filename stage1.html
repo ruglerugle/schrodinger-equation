@@ -13,7 +13,7 @@
   gtag('config', 'G-9RTQCP2HXM');
 </script>
 <title>STAGE1 回る針に時間を入れる ― シュレディンガー方程式を導く</title>
-<meta name="description" content="不確定性原理の教室で手に入れた回る針の列 e^ikx に時間を入れ、走る電子の波 ψ＝Ae^i(kx−ωt) を組み立てる。本体は針、sin は影――複素数の波の2つの強みが、時間を入れても崩れないことを確かめる。">
+<meta name="description" content="『不確定性原理の証明』で手に入れた回る針の列 e^ikx に時間を入れ、走る電子の波 ψ＝Ae^i(kx−ωt) を組み立てる。本体は針、sin は影――複素数の波の2つの強みが、時間を入れても崩れないことを確かめる。">
 <link rel="canonical" href="https://quantum-mechanics.habatakijuku.com/schrodinger-equation/stage1">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="シュレディンガー方程式を導く">
@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="design-system.css">
 <style>
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
-     （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
+     （『<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学概要</a>』のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
   .sim-ctrl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 10px;align-items:center;
     max-width:440px;margin:12px auto 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper2)}
@@ -86,7 +86,7 @@
 
       <div class="mission-box">
         <div class="mission-label">🎯 ミッション</div>
-        <div class="mission-text">不確定性原理の教室で手に入れた回る針の列 e<sup>ikx</sup> に時間を入れて、走る電子の波 ψ＝A e<sup>i(kx−ωt)</sup> を組み立てよう。針が回ると影の sin が走って見える理由と、複素数の波の2つの強みが時間を入れても崩れない理由を説明できれば合格。</div>
+        <div class="mission-text">『不確定性原理の証明』で手に入れた回る針の列 e<sup>ikx</sup> に時間を入れて、走る電子の波 ψ＝A e<sup>i(kx−ωt)</sup> を組み立てよう。針が回ると影の sin が走って見える理由と、複素数の波の2つの強みが時間を入れても崩れない理由を説明できれば合格。</div>
         <span class="mission-status" id="mission-status">未達成</span>
       </div>
 
@@ -96,7 +96,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">現在地を確認しよう。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で、運動量がぴったり決まった電子の波を <strong>e<sup>ikx</sup></strong> と書いたね。数直線の各地点に長さ1の針が立ち、x が進むごとに角度が k ずつ進む――向きだけがくるくる回って、絶対値はどこでも1。あれが今日の出発点だ。ただ、あの針の列は<strong>写真</strong>だった。時間が止まっている。実際の波は走る。今日はその針に<strong>時間を入れて</strong>、走る電子の波の式を組み立てる。まず点検から。e<sup>ikx</sup> が何だったか、自分の言葉で整理してごらん。</div>
+          <div class="dialog-bubble">現在地を確認しよう。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">『不確定性原理の証明』</a>で、運動量がぴったり決まった電子の波を <strong>e<sup>ikx</sup></strong> と書いたね。数直線の各地点に長さ1の針が立ち、x が進むごとに角度が k ずつ進む――向きだけがくるくる回って、絶対値はどこでも1。あれが今日の出発点だ。ただ、あの針の列は<strong>写真</strong>だった。時間が止まっている。実際の波は走る。今日はその針に<strong>時間を入れて</strong>、走る電子の波の式を組み立てる。まず点検から。e<sup>ikx</sup> が何だったか、自分の言葉で整理してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -110,7 +110,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そう。では時間を入れよう。波が走るというのは、<strong>各地点の針が時間とともに回る</strong>ことだ。1秒あたりに進む角度が<strong>角振動数 ω</strong>――不確定性原理の教室で「時間の顔」として出会った、1秒あたりのラジアン角度だね。すると場所 x、時刻 t での針の角度は <strong>kx−ωt</strong>。針の長さは、この波をどれくらいの強さにするかを決める定数 <strong>A</strong> にしておこう。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>マイナスの意味を確かめておこう。ある瞬間に角度が 0 だった地点は kx−ωt＝0、つまり x＝(ω/k)t。時間が進むほど、この地点は右へ動く。<strong>同じ角度の場所が右へ流れていくから、波は右へ走る</strong>。速さは ω/k だ。絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針が1本ずつ立っている</strong>。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
+          <div class="dialog-bubble">そう。では時間を入れよう。波が走るというのは、<strong>各地点の針が時間とともに回る</strong>ことだ。1秒あたりに進む角度が<strong>角振動数 ω</strong>――『不確定性原理の証明』で「時間の顔」として出会った、1秒あたりのラジアン角度だね。すると場所 x、時刻 t での針の角度は <strong>kx−ωt</strong>。針の長さは、この波をどれくらいの強さにするかを決める定数 <strong>A</strong> にしておこう。<br><strong>ψ(x, t) ＝ A e<sup>i(kx−ωt)</sup></strong><br>マイナスの意味を確かめておこう。ある瞬間に角度が 0 だった地点は kx−ωt＝0、つまり x＝(ω/k)t。時間が進むほど、この地点は右へ動く。<strong>同じ角度の場所が右へ流れていくから、波は右へ走る</strong>。速さは ω/k だ。絵で想像してごらん。数直線の<strong>各地点 x に、小さな時計の針が1本ずつ立っている</strong>。ある瞬間 t で見ると、右の地点ほど kx のぶん角度が進んでいる――針の向きが場所とともにくるくるねじれて、<strong>らせん階段</strong>のようになっている。そして時間が経つと、ωt のぶん<strong>すべての針がいっせいに回る</strong>。</div>
         </div>
       </div>
 
@@ -152,7 +152,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ電子の波は本体（複素数）で書くのか。理由は2つあって、どちらも不確定性原理の教室で e<sup>ikx</sup> について確かめたものだ。今日は、時間の因子 e<sup>−iωt</sup> が加わっても崩れないことを見ておこう。<strong>強みその1</strong>は、あの不都合の解消。影（sin）の高さは、場所を右へたどるだけで A→0→−A→0 と上下に暴れる。では、回っている針そのものの長さは、場所や時刻でどう変わるかな。</div>
+          <div class="dialog-bubble">「本体は針で、sin は影」――今日の教訓を先取りされてしまったね。では、なぜ電子の波は本体（複素数）で書くのか。理由は2つあって、どちらも『不確定性原理の証明』で e<sup>ikx</sup> について確かめたものだ。今日は、時間の因子 e<sup>−iωt</sup> が加わっても崩れないことを見ておこう。<strong>強みその1</strong>は、あの不都合の解消。影（sin）の高さは、場所を右へたどるだけで A→0→−A→0 と上下に暴れる。では、回っている針そのものの長さは、場所や時刻でどう変わるかな。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -166,7 +166,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。|e<sup>iθ</sup>|＝1 だから |ψ|＝A で一定――時間が加わっても、針は回るだけで長さは変えない。<strong>強みその2</strong>は<strong>微分</strong>だ。不確定性原理の教室で見たとおり、e<sup>ikx</sup> は微分しても ik が前に出るだけで<strong>自分自身のまま</strong>。sin は微分すると cos に化け、cos は −sin に化けて<strong>形がころころ変わる</strong>のに対して、e の波は形が崩れない。この性質が、次の次のステージで方程式を組むときの生命線になる。</div>
+          <div class="dialog-bubble">そのとおり。|e<sup>iθ</sup>|＝1 だから |ψ|＝A で一定――時間が加わっても、針は回るだけで長さは変えない。<strong>強みその2</strong>は<strong>微分</strong>だ。『不確定性原理の証明』で見たとおり、e<sup>ikx</sup> は微分しても ik が前に出るだけで<strong>自分自身のまま</strong>。sin は微分すると cos に化け、cos は −sin に化けて<strong>形がころころ変わる</strong>のに対して、e の波は形が崩れない。この性質が、次の次のステージで方程式を組むときの生命線になる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -194,7 +194,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その接続こそ、次のステージの仕事だよ。翻訳ルールはたった2本。しかもどちらも、量子力学の教室ですでに出会っている式だ。プランクとアインシュタインが光に見つけ、ド・ブロイが電子へ裏返した、あの2本――E＝hν と p＝h/λ。次回、この「辞書」を丁寧に読み直そう。</div>
+          <div class="dialog-bubble">その接続こそ、次のステージの仕事だよ。翻訳ルールはたった2本。しかもどちらも、『量子力学概要』ですでに出会っている式だ。プランクとアインシュタインが光に見つけ、ド・ブロイが電子へ裏返した、あの2本――E＝hν と p＝h/λ。次回、この「辞書」を丁寧に読み直そう。</div>
         </div>
       </div>
 

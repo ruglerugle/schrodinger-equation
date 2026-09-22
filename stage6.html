@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="design-system.css">
 <style>
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
-     （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
+     （『量子力学概要』のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
   .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
   .sq-svg .prob{fill:rgba(197,154,58,.18);stroke:var(--gold-dark);stroke-width:2}
@@ -107,7 +107,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。そこで1926年の夏、<strong>マックス・ボルン</strong>がまったく別の読み方を提案した。<strong>ψ は物質の濃さではない。「見つかりやすさ」の濃さだ</strong>。……この読み方自体は、<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学の教室</a>でひととおり出会っているね。二重スリットの縞がどう説明されたのかも含めて、自分の言葉で復習してごらん。</div>
+          <div class="dialog-bubble">そのとおり。そこで1926年の夏、<strong>マックス・ボルン</strong>がまったく別の読み方を提案した。<strong>ψ は物質の濃さではない。「見つかりやすさ」の濃さだ</strong>。……この読み方自体は、<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">『量子力学概要』</a>でひととおり出会っているね。二重スリットの縞がどう説明されたのかも含めて、自分の言葉で復習してごらん。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -121,21 +121,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">うん、それで十分だ。言葉だけ確かめ直しておこう。|ψ|² は「1点ぴったりで見つかる確率」ではなく、<strong>小さな区間 Δx の中で見つかる確率が |ψ(x)|²×Δx</strong> になる「幅あたり」の量――人口密度が「1km²あたりの人数」であるのと同じ文法で、<strong>確率密度</strong>と呼ぶのだったね。不確定性原理の教室で |ψ(x)|² dx を「幅 dx の区間で見つかる確率」と読んだ、あれだ。ボルンがこの規則を論文の脚注で書き足した、という話もあの教室でしたね。</div>
+          <div class="dialog-bubble">うん、それで十分だ。言葉だけ確かめ直しておこう。|ψ|² は「1点ぴったりで見つかる確率」ではなく、<strong>小さな区間 Δx の中で見つかる確率が |ψ(x)|²×Δx</strong> になる「幅あたり」の量――人口密度が「1km²あたりの人数」であるのと同じ文法で、<strong>確率密度</strong>と呼ぶのだったね。『不確定性原理の証明』で |ψ(x)|² dx を「幅 dx の区間で見つかる確率」と読んだ、あれだ。ボルンがこの規則を論文の脚注で書き足した、という話もあの教室でしたね。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">2乗のほうは、不確定性原理の教室で納得しました。ψ は複素数――回る矢印で、そのままでは<strong>確率になれない</strong>。矢印から作れる0以上の実数といえば<strong>長さ |ψ|</strong>で、その2乗 |ψ|²＝ψψ* なら必ず0以上になる、と。ボルンが論文の脚注で「2乗に比例する」と書き足した約束事だ、という話もありました。ステージ1の伏線「観測にかかるのは |ψ|」も、これで回収ですね。……ただ、長さそのものではなく<strong>2乗</strong>を選ぶ理由までは、まだ分かっていません。</div>
+          <div class="dialog-bubble">2乗のほうは、『不確定性原理の証明』で納得しました。ψ は複素数――回る矢印で、そのままでは<strong>確率になれない</strong>。矢印から作れる0以上の実数といえば<strong>長さ |ψ|</strong>で、その2乗 |ψ|²＝ψψ* なら必ず0以上になる、と。ボルンが論文の脚注で「2乗に比例する」と書き足した約束事だ、という話もありました。ステージ1の伏線「観測にかかるのは |ψ|」も、これで回収ですね。……ただ、長さそのものではなく<strong>2乗</strong>を選ぶ理由までは、まだ分かっていません。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。2乗を選ぶのは、波の世界の勘定の流儀に合わせたからだよ。光の明るさも音の大きさも、波が運ぶ勢いは<strong>振幅の2乗</strong>に比例することが知られている。高さ2倍の波は、エネルギーが4倍なんだ。ψ の「見つかりやすさ」もこの流儀で数えるのが自然だし、何より、|ψ|² と読んだときにだけ<strong>二重スリットの縞の濃淡が実験とぴったり一致する</strong>。最後は自然が2乗を選んだ、というわけだね。すると、<strong>会計上の義務</strong>も付いてくる。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>の<strong>規格化条件</strong>――電子は必ずどこかに1個いるから、見つかる確率を全空間ぶん足し合わせて ∫|ψ|²dx＝1――だ。これを満たすように振幅 A を調整する。箱の中の電子でやってみよう。|A sin(nπx/L)|² の面積は、sin² が 0 と 1 を対称に行き来する（平均すると常にちょうど ½ になる）ことから A²×L/2。これが 1 だから <strong>A＝√(2/L)</strong>。波の高さまで、確率の会計から決まってしまうんだ。</div>
+          <div class="dialog-bubble">その通り。2乗を選ぶのは、波の世界の勘定の流儀に合わせたからだよ。光の明るさも音の大きさも、波が運ぶ勢いは<strong>振幅の2乗</strong>に比例することが知られている。高さ2倍の波は、エネルギーが4倍なんだ。ψ の「見つかりやすさ」もこの流儀で数えるのが自然だし、何より、|ψ|² と読んだときにだけ<strong>二重スリットの縞の濃淡が実験とぴったり一致する</strong>。最後は自然が2乗を選んだ、というわけだね。すると、<strong>会計上の義務</strong>も付いてくる。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">『不確定性原理の証明』</a>の<strong>規格化条件</strong>――電子は必ずどこかに1個いるから、見つかる確率を全空間ぶん足し合わせて ∫|ψ|²dx＝1――だ。これを満たすように振幅 A を調整する。箱の中の電子でやってみよう。|A sin(nπx/L)|² の面積は、sin² が 0 と 1 を対称に行き来する（平均すると常にちょうど ½ になる）ことから A²×L/2。これが 1 だから <strong>A＝√(2/L)</strong>。波の高さまで、確率の会計から決まってしまうんだ。</div>
         </div>
       </div>
 
@@ -204,7 +204,7 @@
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">道具（方程式）は完璧に働くのに、意味の解釈では作者本人が反対派……。物理学って人間くさいですね。……残る宿題は<strong>時間</strong>です。ステージ5で「エネルギーが決まった状態では、すべての針がそろって回る」と置きましたよね。あれ、量子力学の教室で<strong>定常状態</strong>という名前で習った状態ですよね。針がいっせいに回るだけなら針どうしの長さの差は変わらないから、|ψ|² の形は時間がたっても動かない――と。ただ、あのときは絵で納得しただけでした。いまの私たちは ψ＝φ(x)e<sup>−iEt/ℏ</sup> という<strong>式</strong>を持っています。<strong>式のほうから確かめ直せませんか？</strong></div>
+          <div class="dialog-bubble">道具（方程式）は完璧に働くのに、意味の解釈では作者本人が反対派……。物理学って人間くさいですね。……残る宿題は<strong>時間</strong>です。ステージ5で「エネルギーが決まった状態では、すべての針がそろって回る」と置きましたよね。あれ、『量子力学概要』で<strong>定常状態</strong>という名前で習った状態ですよね。針がいっせいに回るだけなら針どうしの長さの差は変わらないから、|ψ|² の形は時間がたっても動かない――と。ただ、あのときは絵で納得しただけでした。いまの私たちは ψ＝φ(x)e<sup>−iEt/ℏ</sup> という<strong>式</strong>を持っています。<strong>式のほうから確かめ直せませんか？</strong></div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">

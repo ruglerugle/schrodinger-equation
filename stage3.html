@@ -29,7 +29,7 @@
 <link rel="stylesheet" href="design-system.css">
 <style>
   /* 線の太さは viewBox の拡大率に引きずられず、画面上のCSSピクセルで決まるようにする
-     （量子力学の教室のcanvas図と同じ基準・同じ線の重さにそろえるため） */
+     （『<a href="https://quantum-mechanics.habatakijuku.com/general/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">量子力学概要</a>』のcanvas図と同じ基準・同じ線の重さにそろえるため） */
   .sq-svg *{vector-effect:non-scaling-stroke}
   .sq-svg .wave{fill:none;stroke:var(--gold);stroke-width:2}
   .sq-svg .axis{stroke:var(--muted);stroke-width:1.2}
@@ -108,14 +108,14 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">前回の宿題はこうだった。電子の波 ψ＝A e<sup>i(px−Et)/ℏ</sup> の中には、運動量 p とエネルギー E が「位相の進むペース」として記録されている。ならば、<strong>式への操作でそれを取り出せないか</strong>。その道具が<strong>微分</strong>だ。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で「傾きを読む道具」として手に入れ、運動量を取り出す操作まで組み上げたね。今日はそれを<strong>時間の方向にも広げる</strong>。定義はあのときと同じ、グラフの傾きを読むことだ。</div>
+          <div class="dialog-bubble">前回の宿題はこうだった。電子の波 ψ＝A e<sup>i(px−Et)/ℏ</sup> の中には、運動量 p とエネルギー E が「位相の進むペース」として記録されている。ならば、<strong>式への操作でそれを取り出せないか</strong>。その道具が<strong>微分</strong>だ。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">『不確定性原理の証明』</a>で「傾きを読む道具」として手に入れ、運動量を取り出す操作まで組み上げたね。今日はそれを<strong>時間の方向にも広げる</strong>。定義はあのときと同じ、グラフの傾きを読むことだ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbit.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">不確定性原理の教室では、曲線でも1点のまわりをどんどん拡大すればまっすぐに見えてきて、そのまっすぐな線の傾きが微分でした。<strong>df/dx は「x のいまの場所での、局所的な傾き」</strong>で、d で割っているのは幅あたりに直すため、でしたね。</div>
+          <div class="dialog-bubble">『不確定性原理の証明』では、曲線でも1点のまわりをどんどん拡大すればまっすぐに見えてきて、そのまっすぐな線の傾きが微分でした。<strong>df/dx は「x のいまの場所での、局所的な傾き」</strong>で、d で割っているのは幅あたりに直すため、でしたね。</div>
         </div>
       </div>
 
@@ -125,7 +125,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">それで十分だ。ひとつだけ記号の注意をね。私たちの ψ は、場所 x と時刻 t の<strong>2つ</strong>を入力に取る関数だ。だから「傾き」も2種類ある。<strong>時刻 t を凍結して、x 方向の傾きを読む</strong>操作を ∂ψ/∂x、<strong>場所 x を凍結して、t 方向の変化の速さを読む</strong>操作を ∂ψ/∂t と書く。d の代わりに使う ∂（ラウンドディー）という丸い文字は、量子力学の教室でシュレディンガー方程式を読んだときに出てきたね。「他の入力は凍結していますよ」という目印で、この流儀の微分を<strong>偏微分</strong>と呼ぶのだった。読み方は d のときと同じで、∂ψ/∂x は「x を少し動かしたら ψ がどれだけ変わるか」だよ。</div>
+          <div class="dialog-bubble">それで十分だ。ひとつだけ記号の注意をね。私たちの ψ は、場所 x と時刻 t の<strong>2つ</strong>を入力に取る関数だ。だから「傾き」も2種類ある。<strong>時刻 t を凍結して、x 方向の傾きを読む</strong>操作を ∂ψ/∂x、<strong>場所 x を凍結して、t 方向の変化の速さを読む</strong>操作を ∂ψ/∂t と書く。d の代わりに使う ∂（ラウンドディー）という丸い文字は、『量子力学概要』でシュレディンガー方程式を読んだときに出てきたね。「他の入力は凍結していますよ」という目印で、この流儀の微分を<strong>偏微分</strong>と呼ぶのだった。読み方は d のときと同じで、∂ψ/∂x は「x を少し動かしたら ψ がどれだけ変わるか」だよ。</div>
         </div>
       </div>
 
@@ -155,21 +155,21 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">さて、微分の計算規則で今日使うのは<strong>たった1つ</strong>。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">不確定性原理の教室</a>で組み立てた「<strong>e の肩に式が乗っているときは、肩を微分したものが前に降りてきて、e はそのまま残る</strong>」という規則だ。肩が at（a は定数）なら、肩の微分は a。だから<br><strong>d(e<sup>at</sup>)/dt ＝ a e<sup>at</sup></strong><br>a が複素数（i を含む数）でも、この規則はそのまま成り立つ。</div>
+          <div class="dialog-bubble">さて、微分の計算規則で今日使うのは<strong>たった1つ</strong>。<a href="https://quantum-mechanics.habatakijuku.com/kennard-inequality/" target="_blank" rel="noopener" style="color:#a6742a;text-decoration:underline">『不確定性原理の証明』</a>で組み立てた「<strong>e の肩に式が乗っているときは、肩を微分したものが前に降りてきて、e はそのまま残る</strong>」という規則だ。肩が at（a は定数）なら、肩の微分は a。だから<br><strong>d(e<sup>at</sup>)/dt ＝ a e<sup>at</sup></strong><br>a が複素数（i を含む数）でも、この規則はそのまま成り立つ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
             <div class="dialog-avatar student"><img src="images/rabbitThink.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name student">うさ美</div>
           </div>
-          <div class="dialog-bubble">肩の係数が前に飛び出す……これは不確定性原理の教室で確かめた性質ですね。私たちの波は ψ＝A e<sup>i(kx−ωt)</sup>。肩は i(kx−ωt)。このうち <strong>−iωt には x が入っていません</strong>から、t を凍結すればただの定数で、x で微分しても何も出てこない。残る <strong>ikx から x の係数 ik が前に飛び出してくる</strong>はず。そして k は運動量の暗号（p＝ℏk）……。やってみます。t を凍結して x で微分：<br>∂ψ/∂x ＝ (ik − 0) × A e<sup>i(kx−ωt)</sup> ＝ <strong>ik ψ</strong><br>出ました。<strong>波を x で微分すると、自分自身の ik 倍が返ってくる</strong>。</div>
+          <div class="dialog-bubble">肩の係数が前に飛び出す……これは『不確定性原理の証明』で確かめた性質ですね。私たちの波は ψ＝A e<sup>i(kx−ωt)</sup>。肩は i(kx−ωt)。このうち <strong>−iωt には x が入っていません</strong>から、t を凍結すればただの定数で、x で微分しても何も出てこない。残る <strong>ikx から x の係数 ik が前に飛び出してくる</strong>はず。そして k は運動量の暗号（p＝ℏk）……。やってみます。t を凍結して x で微分：<br>∂ψ/∂x ＝ (ik − 0) × A e<sup>i(kx−ωt)</sup> ＝ <strong>ik ψ</strong><br>出ました。<strong>波を x で微分すると、自分自身の ik 倍が返ってくる</strong>。</div>
         </div>
         <div class="dialog-row">
           <div class="dialog-character">
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">その通り。ここまでは、不確定性原理の教室で組み立てた運動量演算子そのものだね。ほしいのは ik ψ ではなく p ψ＝ℏk ψ。邪魔者は i だけだから、<strong>−iℏ を掛けて</strong>消す。−i×i＝−i²＝1 だからね。<br>(−iℏ) ∂ψ/∂x ＝ (−iℏ)(ik) ψ ＝ ℏk ψ ＝ <strong>p ψ</strong><br>今日の新しい一歩はここからだ。まったく同じことを時間方向にもやってごらん。肩の t の係数は −iω だ。</div>
+          <div class="dialog-bubble">その通り。ここまでは、『不確定性原理の証明』で組み立てた運動量演算子そのものだね。ほしいのは ik ψ ではなく p ψ＝ℏk ψ。邪魔者は i だけだから、<strong>−iℏ を掛けて</strong>消す。−i×i＝−i²＝1 だからね。<br>(−iℏ) ∂ψ/∂x ＝ (−iℏ)(ik) ψ ＝ ℏk ψ ＝ <strong>p ψ</strong><br>今日の新しい一歩はここからだ。まったく同じことを時間方向にもやってごらん。肩の t の係数は −iω だ。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -204,7 +204,7 @@
           <text class="strong" x="14" y="186">どちらも「波それ自身 × 取り出したい値」を返す。</text>
           <text class="label" x="14" y="208">波の形を壊さずに値だけ読める――e<tspan baseline-shift="super" font-size="8">iθ</tspan> が微分で形を崩さないおかげ</text>
         </svg>
-        <div class="diagram-caption">2つの検出器。<strong>−iℏ∂/∂x</strong> は x 方向の傾き（波の細かさ）から運動量 p を、<strong>iℏ∂/∂t</strong> は時間変化の速さ（振動の速さ）からエネルギー E を読み出し、どちらも「ψ×その値」の形で返す。このような「関数への操作」が<strong>演算子</strong>――量子力学の教室では Ĥ という完成品として渡されるだけだったものを、ここでは部品から組み立てている</div>
+        <div class="diagram-caption">2つの検出器。<strong>−iℏ∂/∂x</strong> は x 方向の傾き（波の細かさ）から運動量 p を、<strong>iℏ∂/∂t</strong> は時間変化の速さ（振動の速さ）からエネルギー E を読み出し、どちらも「ψ×その値」の形で返す。このような「関数への操作」が<strong>演算子</strong>――『量子力学概要』では Ĥ という完成品として渡されるだけだったものを、ここでは部品から組み立てている</div>
       </div>
 
       <div class="formula-box">
@@ -219,7 +219,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">こうした「関数を入れると、加工した関数が返ってくる操作」――量子力学の教室で<strong>演算子</strong>と呼んだ、あれだね。あのときは Ĥ という完成品を外から眺めるだけだったけれど、不確定性原理の教室で運動量の演算子を自分の手で組み上げ、今日はエネルギーの演算子まで加わった。運動量の演算子には p̂（ピーハット）という帽子つきの記号を使うのが習わしだよ。p̂＝−iℏ∂/∂x。ここで、きみに確かめてほしいことがある。もし前々回の忠告を無視して、波を<strong>実数の sin のまま</strong>にしていたら、この検出器はどうなっていたかな。sin の微分は cos になることが知られている（円の絵で言えば、縦の位置の変化の速さは横の位置になる、ということだ）。</div>
+          <div class="dialog-bubble">こうした「関数を入れると、加工した関数が返ってくる操作」――『量子力学概要』で<strong>演算子</strong>と呼んだ、あれだね。あのときは Ĥ という完成品を外から眺めるだけだったけれど、『不確定性原理の証明』で運動量の演算子を自分の手で組み上げ、今日はエネルギーの演算子まで加わった。運動量の演算子には p̂（ピーハット）という帽子つきの記号を使うのが習わしだよ。p̂＝−iℏ∂/∂x。ここで、きみに確かめてほしいことがある。もし前々回の忠告を無視して、波を<strong>実数の sin のまま</strong>にしていたら、この検出器はどうなっていたかな。sin の微分は cos になることが知られている（円の絵で言えば、縦の位置の変化の速さは横の位置になる、ということだ）。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
@@ -233,7 +233,7 @@
             <div class="dialog-avatar mentor"><img src="images/cat.webp" width="300" height="386" alt=""></div>
             <div class="dialog-name mentor">ねこ博士</div>
           </div>
-          <div class="dialog-bubble">そのとおり。伏線は回収された。……最後に、次回への仕込みをひとつだけ。この先で必要になるのは、実は p そのものよりも <strong>p²</strong>（運動量の2乗）なんだ。これも不確定性原理の教室で一度やったね――検出器を<strong>2回連続で</strong>通す。x で2回微分（∂²/∂x² と書く）すると (ik)²＝−k² が前に出て、−ℏ² を掛ければ ℏ²k²ψ＝<strong>p²ψ</strong>。<strong>p² の検出器は −ℏ²∂²/∂x²</strong> だった。ひとつだけ絵を足しておこう。2回微分は「傾きの傾き」、グラフの言葉で言えば<strong>曲がり具合（カーブのきつさ）</strong>を読む操作だよ。細かい波ほど鋭く曲がる――だから曲がり具合が p² の目盛りになる。</div>
+          <div class="dialog-bubble">そのとおり。伏線は回収された。……最後に、次回への仕込みをひとつだけ。この先で必要になるのは、実は p そのものよりも <strong>p²</strong>（運動量の2乗）なんだ。これも『不確定性原理の証明』で一度やったね――検出器を<strong>2回連続で</strong>通す。x で2回微分（∂²/∂x² と書く）すると (ik)²＝−k² が前に出て、−ℏ² を掛ければ ℏ²k²ψ＝<strong>p²ψ</strong>。<strong>p² の検出器は −ℏ²∂²/∂x²</strong> だった。ひとつだけ絵を足しておこう。2回微分は「傾きの傾き」、グラフの言葉で言えば<strong>曲がり具合（カーブのきつさ）</strong>を読む操作だよ。細かい波ほど鋭く曲がる――だから曲がり具合が p² の目盛りになる。</div>
         </div>
         <div class="dialog-row right">
           <div class="dialog-character">
